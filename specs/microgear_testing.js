@@ -128,6 +128,372 @@ describe('Connect successfully, valid input', function () {
 
 });
 
+describe.only('Connect unsuccessfully due to invalid input', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+    var isConnected;
+
+    beforeEach(function () {
+        appkey = 'NLc1b8a3UZPMhOY';
+        appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
+        appid = 'testNodeJs';
+        isConnected = false;
+
+ if (fs.existsSync(filePath)) {
+     fs.writeFile(filePath, '{"_":null}', function (err) {
+         if (err) {
+             return console.log(err);
+         }
+         console.log("clear cache");
+     });
+ }
+    });
+
+    it.skip('should throw error when appkey change its case', function (done) {
+        this.timeout(10000);
+
+        var loweredAppkey = appkey.toLowerCase();
+        expect(loweredAppkey).to.equal('nlc1b8a3uzpmhoy');
+
+        microgear = MicroGear.create({
+            key: loweredAppkey,
+            secret: appsecret
+        });
+        expect(microgear.gearkey).to.equal(loweredAppkey);
+        expect(microgear.gearsecret).to.equal(appsecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+            expect(stubConnect.called).to.be.false;
+            expect(stubError.called).to.be.true;
+            expect(stubError.calledBefore(stubConnect));
+            done();
+        }, 3000);
+    });
+
+    it.skip('should throw error when appkey is trimmed', function (done) {
+        this.timeout(10000);
+        var trimmedGearKey = appkey.substring(0, appkey.length - 2);
+        expect(trimmedGearKey).to.equal('NLc1b8a3UZPMh');
+
+        microgear = MicroGear.create({
+            key: trimmedGearKey,
+            secret: appsecret
+        });
+
+        expect(microgear.gearkey).to.equal(trimmedGearKey);
+        expect(microgear.gearsecret).to.equal(appsecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+            expect(stubConnect.called).to.be.false;
+            expect(stubError.called).to.be.true;
+            expect(stubError.calledBefore(stubConnect));
+            done();
+        }, 3000);
+
+    });
+
+    it.skip('should throw error when appkey is added', function (done) {
+        this.timeout(10000);
+        var addedGearKey = appkey + "xx";
+        expect(addedGearKey).to.equal('NLc1b8a3UZPMhOYxx');
+
+        microgear = MicroGear.create({
+            key: addedGearKey,
+            secret: appsecret
+        });
+
+        expect(microgear.gearkey).to.equal(addedGearKey);
+        expect(microgear.gearsecret).to.equal(appsecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubError.calledBefore(stubConnect));
+        done();
+        }, 3000);
+    });
+
+    it.skip('should throw error when uses another appkey', function (done) {
+        this.timeout(10000);
+        var anotherGearKey = "9O0xiA2lHXz01iE";
+        microgear = MicroGear.create({
+            key: anotherGearKey,
+            secret: appsecret
+        });
+
+        expect(microgear.gearkey).to.equal(anotherGearKey);
+        expect(microgear.gearsecret).to.equal(appsecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+            expect(stubConnect.called).to.be.false;
+            expect(stubError.called).to.be.true;
+            expect(stubError.calledBefore(stubConnect));
+            done();
+        }, 3000);
+
+
+
+    });
+
+    it.skip('should throw error when appsecret is trimmed', function (done) {
+        this.timeout(10000);
+        var trimmedGearSecret = appsecret.substring(0, appsecret.length - 2);
+
+
+        expect(trimmedGearSecret).to.equal('tLzjQQ6FiGUhOX1LTSjtVKsnSExu');
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: trimmedGearSecret
+        });
+
+        expect(microgear.gearkey).to.equal(appkey);
+        expect(microgear.gearsecret).to.equal(trimmedGearSecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+                    expect(stubConnect.called).to.be.false;
+                    expect(stubError.called).to.be.true;
+                    expect(stubError.calledBefore(stubConnect));
+                    done();
+            }, 3000);
+
+    });
+
+    it.skip('should throw error when appsecret is added', function (done) {
+        this.timeout(10000);
+        var addedGearSecret = appsecret + "xx";
+
+        expect(addedGearSecret).to.equal('tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7xx');
+
+        microgear = MicroGear.create({
+            key: addedGearSecret,
+            secret: appsecret
+        });
+
+        expect(microgear.gearkey).to.equal(appkey);
+        expect(microgear.gearsecret).to.equal(addedGearSecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+            expect(stubConnect.called).to.be.false;
+            expect(stubError.called).to.be.true;
+            expect(stubError.calledBefore(stubConnect));
+            done();
+        }, 3000);
+    });
+
+    it.skip('should throw error when appsecret change its case', function (done) {
+        this.timeout(10000);
+        var loweredGearSecret = appsecret.toLowerCase();
+
+        expect(loweredGearSecret).to.equal('tLzjqq6figuhox1ltsjtvksnsexux7xx');
+        microgear = MicroGear.create({
+            key : appkey,
+            secret : loweredGearSecret
+        });
+
+        expect(microgear.gearkey).to.equal(appkey);
+        expect(microgear.gearsecret).to.equal(loweredGearSecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+            expect(stubConnect.called).to.be.false;
+            expect(stubError.called).to.be.true;
+            expect(stubError.calledBefore(stubConnect));
+            done();
+        }, 3000);
+    });
+
+    it.skip('should throw error when uses another appsecret', function (done) {
+        this.timeout(10000);
+
+        var anotherGearSecret = "VqHTfrj8QlI3ydc1nWQCDK0amtt9aV";
+
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: anotherGearSecret
+        });
+
+        expect(microgear.gearkey).to.equal(appkey);
+        expect(microgear.gearsecret).to.equal(anotherGearSecret);
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubError = sinon.spy();
+        microgear.on('error', stubError);
+
+        microgear.connect(appid, function(){
+            isConnected = true;
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.true;
+            expect(stubConnect.called).to.be.false;
+            expect(stubError.called).to.be.true;
+            expect(stubError.calledBefore(stubConnect));
+            done();
+        }, 3000);
+    });
+
+    it('should throw error when appid change its case', function (done) {
+        this.timeout(10000);
+
+        microgear = MicroGear.create({
+            key : appkey,
+            secret : appsecret
+        });
+
+        expect(microgear.gearkey).to.equal(appkey);
+        expect(microgear.gearsecret).to.equal(appsecret);
+
+
+        var loweredAppid = appid.toLowerCase();
+        expect(loweredAppid).to.equal('testnodejs');
+
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        microgear.connect(loweredAppid, function(){
+            isConnected = true;
+            console.log("i am in");
+        });
+
+        setTimeout(function () {
+            expect(isConnected).to.be.false;
+            expect(stubConnect.called).to.be.false;
+            done();
+        }, 3000);
+    });
+    //
+    //it('should throw error when appid is trimmed', function (done) {
+    //    var trimmedAppId = appid.substring(0, appid.length - 2);
+    //
+    //    microgear = MicroGear.create({
+    //        key: appkey,
+    //        secret: appsecret
+    //    });
+    //
+    //    try{
+    //        microgear.connect(trimmedAppId, done);
+    //    }
+    //    catch(err){
+    //        console.log(err + "   hello");
+    //        expect(err.toString()).to.equal("Error: request token is not issued, please check your key and secret.");
+    //    }
+    //});
+    //
+    //it('should throw error when appid is added', function (done) {
+    //    var addedAppId = appid + "xx";
+    //
+    //    microgear = MicroGear.create({
+    //        key: appkey,
+    //        secret: appsecret
+    //    });
+    //
+    //    try{
+    //        microgear.connect(addedAppId, done);
+    //    }
+    //    catch(err){
+    //        console.log(err + "   hello");
+    //        expect(err.toString()).to.equal("Error: request token is not issued, please check your key and secret.");
+    //    }
+    //});
+    //
+    //it('should throw error when uses another appsecret', function (done) {
+    //    var anotherAppId = "testNodeJsHelper";
+    //
+    //    microgear = MicroGear.create({
+    //        key: appkey,
+    //        secret: appsecret
+    //    });
+    //
+    //    try{
+    //        microgear.connect(anotherAppId, done);
+    //    }
+    //    catch(err){
+    //        console.log(err + "   hello");
+    //    }
+    //});
+
+});
+
 //require token first
 describe('Chat with myself', function () {
     var isConnected;
@@ -174,7 +540,9 @@ describe('Chat with myself', function () {
             microgear.setalias("myself");
                    microgear.chat('myself', message);
             setTimeout(function () {
-                sinon.assert.calledOnce(stubMessage);
+                expect(stubMessage).to.have.been.calledOnce;
+                expect(stubMessage).to.have.been.calledTwice;
+                expect(stubMessage).callCount.to.equal(3);
                 expect(""+stubMessage.args[0][1]).to.equal(message);
                        //TODO: gearalias not set.
                        //expect(topic).to.be(appid + "/" + "gearname" + "/" + microgear.gearalias);
@@ -430,12 +798,12 @@ describe('Code 1: Unsubscribe the same topic twice starts from unsubscribe', fun
          .onSecondCall().returns(false);
    microgear.on('message', stubMessage2);
 
-   var stubConnect2 = sinon.stub();
-   stubConnect2.withArgs('isConnected').returns(true);
-   microgear.on('connected', stubConnect2);
+   var stubConnect = sinon.stub();
+   stubConnect.withArgs('isConnected').returns(true);
+   microgear.on('connected', stubConnect);
 
    setTimeout(function () {
-     isConnected = stubConnect2('isConnected');
+     isConnected = stubConnect('isConnected');
      expect(isConnected).to.be.true;
      console.log("subscribe");
      subscribed = true;
@@ -572,7 +940,8 @@ describe('Subscribe same topic twice', function () {
 });
 
 //pre-re: should run publish_helper.js 4 first.
-describe.only('Subscribe topic after unsubscribe before', function () {
+//TODO: need to think of a better way to test
+describe('Subscribe topic after unsubscribe before', function () {
     var microgear;
     var topic = "/firstTopic";
     var message = "Hello from helper.";
@@ -598,7 +967,7 @@ describe.only('Subscribe topic after unsubscribe before', function () {
         }
     });
 
-    it('should receive message when helper publish topic', function (done) {
+    it('should receive message when helper publishes topic', function (done) {
         this.timeout(10000);
 
         var stubMessage = sinon.stub();
@@ -611,16 +980,16 @@ describe.only('Subscribe topic after unsubscribe before', function () {
             sinon.assert.calledOnce(stubConnect);
             microgear.subscribe(topic);
             setTimeout(function () {
-                expect(message).to.equal("" + stubMessage.args[0][1]);
                 sinon.assert.calledOnce(stubMessage);
+                expect(message).to.equal("" + stubMessage.args[0][1]);
                 microgear.unsubscribe(topic);
                 setTimeout(function () {
                     sinon.assert.calledOnce(stubMessage);
                     microgear.subscribe(topic);
                     setTimeout(function () {
                         sinon.assert.calledTwice(stubMessage);
-                    }, 1000);
-                }, 1000);
+                    }, 5000);
+                }, 4000);
             }, 3000);
         }, 2000);
 
@@ -657,7 +1026,7 @@ describe.only('Subscribe topic after unsubscribe before', function () {
 });
 
 //prerequisite: helper code 4. need to end helper. publish_helper.js
-xdescribe('Subscribe invalid topic - no slash', function () {
+describe('Subscribe invalid topic - no slash', function () {
     var microgear;
     var received;
     var topic = "firstTopic";
@@ -880,7 +1249,7 @@ xdescribe('Publish to topic that subscribe afterwards + publish to topic empty s
                         return console.log(err);
                     }
                     console.log("this is da" + data.toString() + "her");
-                    expect(data.toString()).toEqual(message);
+                    expect(data.toString()).to.equal(message);
                     clearInterval();
                     fs.unwatchFile(pathToFile);
                     done();
@@ -907,7 +1276,7 @@ xdescribe('Publish to topic that subscribe afterwards + publish to topic empty s
                         return console.log(err);
                     }
                     console.log("this is da" + data.toString() + "her");
-                    expect(data.toString()).toEqual(message);
+                    expect(data.toString()).to.equal(message);
                     clearInterval();
                     fs.unwatchFile(pathToFile);
                     done();
@@ -1038,7 +1407,7 @@ xdescribe('Publish to microgear that subscribe other topic', function () {
                         return console.log(err);
                     }
                     console.log("this is da" + data.toString() + "her");
-                    expect(data.toString()).toEqual(message);
+                    expect(data.toString()).to.equal(message);
                 });
             });
 
