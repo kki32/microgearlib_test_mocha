@@ -8,7 +8,7 @@
     "node": ">= 0.4.x < 0.7.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha specs --require specs/helpers/chai.js"
+    "test": "./node_modules/.bin/mocha --recursive -R xunit specs/ > test-results.xml --require specs/helpers/chai.js"
   },
   "dependencies": {
     "chai": "^3.4.1",

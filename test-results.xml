@@ -1,0 +1,7 @@
+<testsuite name="Mocha Tests" tests="5" failures="0" errors="0" skipped="0" timestamp="Tue, 19 Jan 2016 17:00:25 GMT" time="0.012">
+<testcase classname="Code 1: Create microgear with different parameters" name="should save gearkey" time="0.002"/>
+<testcase classname="Code 1: Create microgear with different parameters" name="should save appsecret" time="0.001"/>
+<testcase classname="Code 1: Create microgear with different parameters" name="should ignore empty gearkey" time="0"/>
+<testcase classname="Code 1: Create microgear with different parameters" name="should save the info only the lastest one when create microgear twice" time="0.001"/>
+<testcase classname="Code 1: Create microgear with different parameters" name="should ignore empty gearsecret" time="0"/>
+</testsuite>
