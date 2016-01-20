@@ -20,8 +20,6 @@ console.log(filePath);
  * Created by tsn on 1/20/2016 AD.
  */
 
-
-
 // //pre-re: should run publish_helper.js 4 first. ensure the test and its helper does not share the same microgear.cache
 //describe('Code 1: Unsubscribe the same topic twice starts from unsubscribe', function () {
 //   var microgear;
@@ -155,58 +153,7 @@ console.log(filePath);
 // });
 //
 //
-////pre-re: should run publish_helper.js 4 first.
-//describe('Subscribe one topic', function () {
-//    var microgear;
-//    var topic = "/firstTopic";
-//    var message = "Hello from helper.";
-//    var connected = false;
-//    var appkey = 'NLc1b8a3UZPMhOY';
-//    var appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
-//    var appid = 'testNodeJs';
-//
-//    beforeEach(function () {
-//        microgear = MicroGear.create({
-//            key: appkey,
-//            secret: appsecret
-//        });
-//    });
-//
-//    afterEach(function () {
-//        if(connected){
-//            microgear.client.end();
-//        }
-//    });
-//
-//    it('should receive message from topic that the helper publish', function (done) {
-//        this.timeout(10000);
-//
-//        var stubMessage = sinon.stub();
-//        stubMessage.withArgs('received').returns(true);
-//        microgear.on('message', stubMessage);
-//
-//        var stubConnect = sinon.stub();
-//        stubConnect.withArgs('isConnected').returns(true);
-//        microgear.on('connected', stubConnect);
-//
-//        setTimeout(function () {
-//            sinon.assert.calledOnce(stubConnect);
-//            connected = true;
-//            microgear.subscribe(topic);
-//            setTimeout(function () {
-//                sinon.assert.calledOnce(stubMessage);
-//                expect(message).to.equal(""+stubMessage.args[0][1]);
-//                done();
-//            }, 2000);
-//        }, 3000);
-//
-//
-//
-//
-//        microgear.connect(appid);
-//    });
-//});
-//
+
 ////pre-re: should run publish_helper.js 4 first.
 //describe('Subscribe same topic twice', function () {
 //    var microgear;

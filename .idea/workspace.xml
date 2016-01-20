@@ -2,10 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0a6f2ea-d80d-4a4e-944f-501a0edd93c2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/specs/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/calculator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/hello_http.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/helper.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgearHelper_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/call_helper.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chai.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/chat_helper_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/chat_helper_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/lay3/chat_helper_3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/lay3/lay4/chat_helper_4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/lay3/lay4/lay5/chat_helper_5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/lay3/lay4/lay5/lay6/chat_helper_6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/lay3/lay4/lay5/lay6/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/lay3/lay4/lay5/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/lay2/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/chat_helper/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/event_connected_helper/event_connected_helper_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/event_error_helper/event_error_helper_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/publish_helper/TestHelper.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/publish_helper/lay2/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/publish_helper/lay2/publish_helper_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/publish_helper/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/publish_helper/publish_helper.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/setalias_helper/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/setalias_helper/setalias_helper_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/subscribe_helper/lay2/subscribe_helper_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/subscribe_helper/microgear.cache" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/subscribe_helper/subscribe_helper_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/microgear_helpers/subscribe_helper/subscriber_helper_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/untitled folder/example2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/untitled folder/microgear.cache" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/example.js" afterPath="$PROJECT_DIR$/lib/example.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/microgear/index.js" afterPath="$PROJECT_DIR$/node_modules/microgear/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run_tests.sh" afterPath="$PROJECT_DIR$/run_tests.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specs/all_testing.js" afterPath="$PROJECT_DIR$/specs/all_testing.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specs/microgear_testing.js" afterPath="$PROJECT_DIR$/specs/microgear_testing.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test-results.xml" afterPath="$PROJECT_DIR$/test-results.xml" />
     </list>
     <ignored path="MyMochaChaiSinonExample.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,24 +60,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="microgear_testing.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="microgear_testing.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.31862745">
+              <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
               <folding>
-                <element signature="e#21674#22564#0" expanded="false" />
+                <element signature="e#707#2823#0" expanded="false" />
+                <element signature="e#18618#19939#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="all_testing.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="all_testing.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/specs/all_testing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.59850377">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+              <folding>
+                <element signature="e#4627#4676#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -52,12 +89,8 @@
         <entry file="file://$PROJECT_DIR$/node_modules/microgear/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="3" selection-start-line="45" selection-start-column="3" selection-end-line="45" selection-end-column="3" />
-              <folding>
-                <marker date="1453265900000" expanded="true" signature="102:151" placeholder="/** General API Endpoint ...*/" />
-                <marker date="1453265900000" expanded="true" signature="1256:1680" placeholder="{...}" />
-                <marker date="1453265900000" expanded="true" signature="2032:2072" placeholder="/**...*/" />
-              </folding>
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -75,7 +108,7 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.375">
+            <state vertical-scroll-proportion="0.0">
               <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
               <folding />
             </state>
@@ -117,8 +150,7 @@
     <data>$USER_HOME$/node_modules/mocha</data>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="41" />
-    <option name="y" value="93" />
+    <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="709" />
   </component>
@@ -394,7 +426,13 @@
       <option name="project" value="LOCAL" />
       <updated>1453263862639</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="add resettoken test case">
+      <created>1453265922552</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1453265922552</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -412,27 +450,27 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="41" y="93" width="1280" height="709" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="709" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24609375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281493" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -460,7 +498,8 @@
     <MESSAGE value="test only three" />
     <MESSAGE value="test only four" />
     <MESSAGE value="add resettoken test case" />
-    <option name="LAST_COMMIT_MESSAGE" value="add resettoken test case" />
+    <MESSAGE value="try helper on bash" />
+    <option name="LAST_COMMIT_MESSAGE" value="try helper on bash" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -479,7 +518,7 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="20" />
+      <option name="time" value="21" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -489,7 +528,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#21674#22564#0" expanded="false" />
+            <element signature="e#707#2823#0" expanded="false" />
+            <element signature="e#18618#19939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -507,7 +547,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#21674#22564#0" expanded="false" />
+            <element signature="e#707#2823#0" expanded="false" />
+            <element signature="e#18618#19939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -517,7 +558,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#21674#22564#0" expanded="false" />
+            <element signature="e#707#2823#0" expanded="false" />
+            <element signature="e#18618#19939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -527,7 +569,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="163" column="21" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="21" />
           <folding>
-            <element signature="e#21674#22564#0" expanded="false" />
+            <element signature="e#707#2823#0" expanded="false" />
+            <element signature="e#18618#19939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -544,7 +587,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#21674#22564#0" expanded="false" />
+            <element signature="e#707#2823#0" expanded="false" />
+            <element signature="e#18618#19939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -580,39 +624,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.375">
+        <state vertical-scroll-proportion="0.0">
           <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/specs/all_testing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+          <folding>
+            <element signature="e#4627#4676#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/microgear/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="3" selection-start-line="45" selection-start-column="3" selection-end-line="45" selection-end-column="3" />
-          <folding>
-            <marker date="1453265900000" expanded="true" signature="102:151" placeholder="/** General API Endpoint ...*/" />
-            <marker date="1453265900000" expanded="true" signature="1256:1680" placeholder="{...}" />
-            <marker date="1453265900000" expanded="true" signature="2032:2072" placeholder="/**...*/" />
-          </folding>
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.31862745">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
           <folding>
-            <element signature="e#21674#22564#0" expanded="false" />
+            <element signature="e#707#2823#0" expanded="false" />
+            <element signature="e#18618#19939#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/specs/all_testing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59850377">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
