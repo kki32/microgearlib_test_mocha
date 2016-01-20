@@ -10,9 +10,9 @@ var sinon = require('sinon');
 var pathToFile = "/Users/tsn/Desktop/microgearlib_test_jasmine/helper/receiver.txt";
 var pathToFile2 = "/Users/tsn/Desktop/microgearlib_test_jasmine/helper/receiver2.txt";
 
-var filePath = "/Users/Shared/Jenkins/Home/jobs/microgearlib_testing_mocha/workspace/spec/microgear.cache";
+var filePath = "/Users/Shared/Jenkins/Home/jobs/microgearlib_testing_mocha/workspace/specs/microgear.cache";
 //var topModule = module;
-//var filePath = require('path').dirname(topModule.filename) + '/microgear.cache';
+//var filePath = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/microgear.cache";
 console.log(filePath);
 
 
@@ -542,6 +542,7 @@ describe('Chat with myself', function () {
     var appid;
 
     beforeEach(function (done) {
+        this.timeout(10000);
         microgear = undefined;
         gearname = 'myself';
         message = "Hello myself.";

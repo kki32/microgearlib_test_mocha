@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d0a6f2ea-d80d-4a4e-944f-501a0edd93c2" name="Default" comment="">
+    <list default="true" id="d0a6f2ea-d80d-4a4e-944f-501a0edd93c2" name="Default" comment="test only three">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specs/microgear.cache" afterPath="$PROJECT_DIR$/specs/microgear.cache" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specs/microgear_testing.js" afterPath="$PROJECT_DIR$/specs/microgear_testing.js" />
     </list>
     <ignored path="MyMochaChaiSinonExample.iws" />
@@ -27,12 +28,13 @@
       <file leaf-file-name="microgear_testing.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5561097">
-              <caret line="534" column="0" selection-start-line="534" selection-start-column="0" selection-end-line="598" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.037406486">
+              <caret line="548" column="39" selection-start-line="548" selection-start-column="39" selection-end-line="548" selection-end-column="39" />
               <folding>
-                <element signature="e#705#2821#0" expanded="false" />
-                <element signature="e#1865#2582#0" expanded="false" />
-                <element signature="e#2891#4035#0" expanded="false" />
+                <element signature="e#708#2824#0" expanded="false" />
+                <element signature="e#1868#2585#0" expanded="false" />
+                <element signature="e#2894#4038#0" expanded="false" />
+                <element signature="e#4042#4121#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -333,7 +335,13 @@
       <option name="project" value="LOCAL" />
       <updated>1453257603088</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="test only three">
+      <created>1453257729711</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1453257729711</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -352,14 +360,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-72" y="23" width="1280" height="709" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24609375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -408,12 +416,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>691</line>
+          <line>692</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>600</line>
+          <line>601</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -432,9 +440,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#705#2821#0" expanded="false" />
-            <element signature="e#1865#2582#0" expanded="false" />
-            <element signature="e#2891#4035#0" expanded="false" />
+            <element signature="e#708#2824#0" expanded="false" />
+            <element signature="e#1868#2585#0" expanded="false" />
+            <element signature="e#2894#4038#0" expanded="false" />
+            <element signature="e#4042#4121#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -452,9 +461,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#705#2821#0" expanded="false" />
-            <element signature="e#1865#2582#0" expanded="false" />
-            <element signature="e#2891#4035#0" expanded="false" />
+            <element signature="e#708#2824#0" expanded="false" />
+            <element signature="e#1868#2585#0" expanded="false" />
+            <element signature="e#2894#4038#0" expanded="false" />
+            <element signature="e#4042#4121#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -464,9 +474,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#705#2821#0" expanded="false" />
-            <element signature="e#1865#2582#0" expanded="false" />
-            <element signature="e#2891#4035#0" expanded="false" />
+            <element signature="e#708#2824#0" expanded="false" />
+            <element signature="e#1868#2585#0" expanded="false" />
+            <element signature="e#2894#4038#0" expanded="false" />
+            <element signature="e#4042#4121#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -476,9 +487,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="163" column="21" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="21" />
           <folding>
-            <element signature="e#705#2821#0" expanded="false" />
-            <element signature="e#1865#2582#0" expanded="false" />
-            <element signature="e#2891#4035#0" expanded="false" />
+            <element signature="e#708#2824#0" expanded="false" />
+            <element signature="e#1868#2585#0" expanded="false" />
+            <element signature="e#2894#4038#0" expanded="false" />
+            <element signature="e#4042#4121#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -495,9 +507,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#705#2821#0" expanded="false" />
-            <element signature="e#1865#2582#0" expanded="false" />
-            <element signature="e#2891#4035#0" expanded="false" />
+            <element signature="e#708#2824#0" expanded="false" />
+            <element signature="e#1868#2585#0" expanded="false" />
+            <element signature="e#2894#4038#0" expanded="false" />
+            <element signature="e#4042#4121#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -541,12 +554,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5561097">
-          <caret line="534" column="0" selection-start-line="534" selection-start-column="0" selection-end-line="598" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.037406486">
+          <caret line="548" column="39" selection-start-line="548" selection-start-column="39" selection-end-line="548" selection-end-column="39" />
           <folding>
-            <element signature="e#705#2821#0" expanded="false" />
-            <element signature="e#1865#2582#0" expanded="false" />
-            <element signature="e#2891#4035#0" expanded="false" />
+            <element signature="e#708#2824#0" expanded="false" />
+            <element signature="e#1868#2585#0" expanded="false" />
+            <element signature="e#2894#4038#0" expanded="false" />
+            <element signature="e#4042#4121#0" expanded="false" />
           </folding>
         </state>
       </provider>
