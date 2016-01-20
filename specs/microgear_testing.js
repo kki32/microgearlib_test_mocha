@@ -91,51 +91,51 @@ describe('Code 1: Create microgear with different parameters', function () {
 
 });
 
-//describe('Code 2: Connect successfully, valid input', function () {
-//    var microgear;
-//    var appkey;
-//    var appsecret;
-//    var appid;
-//    var isConnected;
-//
-//    beforeEach(function () {
-//        appkey    = 'NLc1b8a3UZPMhOY';
-//        appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
-//        appid = 'testNodeJs';
-//        isConnected =false;
-//
-//        microgear = MicroGear.create({
-//            key : appkey,
-//            secret : appsecret});
-//    });
-//    afterEach(function (done){
-//        //should fail here if microgear is not connect
-//        this.timeout(10000);
-//
-//        microgear.on('disconnected', function() {
-//            console.log("disconnected");
-//            done();
-//        });
-//        console.log("cut connection");
-//        microgear.disconnect();
-//    });
-//
-//    it('should be able to connect without any errors', function (done) {
-//        this.timeout(10000);
-//        var stubConnect = sinon.spy();
-//        microgear.on('connected', stubConnect);
-//
-//        setTimeout(function () {
-//            expect(stubConnect.called).to.be.true;
-//            expect(stubConnect.callCount).to.equal(1);
-//            stubConnect.restore;
-//
-//            done();
-//        }, 4000);
-//        microgear.connect(appid);
-//    });
-//});
-//
+describe('Code 2: Connect successfully, valid input', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+    var isConnected;
+
+    beforeEach(function () {
+        appkey    = 'NLc1b8a3UZPMhOY';
+        appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
+        appid = 'testNodeJs';
+        isConnected =false;
+
+        microgear = MicroGear.create({
+            key : appkey,
+            secret : appsecret});
+    });
+    afterEach(function (done){
+        //should fail here if microgear is not connect
+        this.timeout(10000);
+
+        microgear.on('disconnected', function() {
+            console.log("disconnected");
+            done();
+        });
+        console.log("cut connection");
+        microgear.disconnect();
+    });
+
+    it('should be able to connect without any errors', function (done) {
+        this.timeout(10000);
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
+            expect(stubConnect.callCount).to.equal(1);
+            stubConnect.restore;
+
+            done();
+        }, 4000);
+        microgear.connect(appid);
+    });
+});
+
 //describe('Code 3: Connect unsuccessfully due to invalid input', function () {
 //    var microgear;
 //    var appkey;
@@ -528,70 +528,70 @@ describe('Code 1: Create microgear with different parameters', function () {
 //    });
 //
 //});
-//
-//describe('Chat with myself', function () {
-//    var message;
-//    var gearname;
-//    var microgear;
-//    var appkey;
-//    var appsecret;
-//    var appid;
-//
-//    beforeEach(function (done) {
-//        microgear = undefined;
-//        gearname = 'myself';
-//        message = "Hello myself.";
-//        appkey     = 'NLc1b8a3UZPMhOY';
-//        appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
-//        appid = 'testNodeJs';
-//
-//        expect(microgear).to.be.undefined;
-//
-//        microgear = MicroGear.create({
-//            key : appkey,
-//            secret : appsecret});
-//
-//        fs.writeFile(filePath, '{"_":null}', function (err) {
-//            if (err) {
-//                return console.log(err);
-//            }
-//            console.log("clear cache");
-//            done();
-//        });
-//    });
-//
-//    afterEach(function (){
-//        //should fail if microgear is not connected
-//        microgear.client.end();
-//    });
-//
-//    it('should receive message', function (done) {
-//        this.timeout(10000);
-//        var stubConnect = sinon.spy();
-//        microgear.on('connected', stubConnect);
-//
-//        var stubMessage = sinon.spy();
-//        microgear.on('message', stubMessage);
-//
-//        microgear.connect(appid);
-//
-//        setTimeout(function () {
-//            microgear.setalias(gearname);
-//            microgear.chat(gearname, message);
-//            setTimeout(function () {
-//                expect(stubConnect.called).to.be.true;
-//                expect(stubMessage.called).to.be.true;
-//                expect(stubConnect.callCount).to.equal(1);
-//                expect(stubMessage.callCount).to.equal(1);
-//                expect(stubConnect.calledBefore(stubMessage)).to.be.true;
-//                expect(""+stubMessage.args[0][1]).to.equal(message);
-//                //TODO: gearalias not set.
-//                //expect(topic).to.be(appid + "/" + "gearname" + "/" + microgear.gearalias);
-//                done();
-//            },4000);
-//        }, 3000);
-//    });
-//});
+
+describe('Chat with myself', function () {
+    var message;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+
+    beforeEach(function (done) {
+        microgear = undefined;
+        gearname = 'myself';
+        message = "Hello myself.";
+        appkey     = 'NLc1b8a3UZPMhOY';
+        appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
+        appid = 'testNodeJs';
+
+        expect(microgear).to.be.undefined;
+
+        microgear = MicroGear.create({
+            key : appkey,
+            secret : appsecret});
+
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
+    });
+
+    afterEach(function (){
+        //should fail if microgear is not connected
+        microgear.client.end();
+    });
+
+    it('should receive message', function (done) {
+        this.timeout(10000);
+        var stubConnect = sinon.spy();
+        microgear.on('connected', stubConnect);
+
+        var stubMessage = sinon.spy();
+        microgear.on('message', stubMessage);
+
+        microgear.connect(appid);
+
+        setTimeout(function () {
+            microgear.setalias(gearname);
+            microgear.chat(gearname, message);
+            setTimeout(function () {
+                expect(stubConnect.called).to.be.true;
+                expect(stubMessage.called).to.be.true;
+                expect(stubConnect.callCount).to.equal(1);
+                expect(stubMessage.callCount).to.equal(1);
+                expect(stubConnect.calledBefore(stubMessage)).to.be.true;
+                expect(""+stubMessage.args[0][1]).to.equal(message);
+                //TODO: gearalias not set.
+                //expect(topic).to.be(appid + "/" + "gearname" + "/" + microgear.gearalias);
+                done();
+            },4000);
+        }, 3000);
+    });
+});
 
 //describe('Resettoken when have microgear.cache and microgear is offline', function () {
 //    var message;
