@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d0a6f2ea-d80d-4a4e-944f-501a0edd93c2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specs/microgear_testing.js" afterPath="$PROJECT_DIR$/specs/microgear_testing.js" />
     </list>
     <ignored path="MyMochaChaiSinonExample.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -346,7 +345,13 @@
       <option name="project" value="LOCAL" />
       <updated>1453258124719</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="test only four">
+      <created>1453258248886</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1453258248886</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -410,7 +415,8 @@
     <MESSAGE value="fix jenkins configuration" />
     <MESSAGE value="test only two" />
     <MESSAGE value="test only three" />
-    <option name="LAST_COMMIT_MESSAGE" value="test only three" />
+    <MESSAGE value="test only four" />
+    <option name="LAST_COMMIT_MESSAGE" value="test only four" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
