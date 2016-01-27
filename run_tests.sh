@@ -6,27 +6,28 @@ echo "
 "
 
 
-# echo "Code 1 start~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-# mocha -g 'Code 1: Case 1' specs --require specs/helpers/chai.js
-# sleep 3
+echo "Code 1 start~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+mocha -g 'Code 1: Case 1' specs --require specs/helpers/chai.js
+sleep 3
 
-# mocha -g 'Code 1: Case 2.2' specs --require specs/helpers/chai.js
-# sleep 3
+mocha -g 'Code 1: Case 2.2' specs --require specs/helpers/chai.js
+sleep 3
 
-# node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 10 &
-# sleep 3
-# mocha -g 'Code 1: Case 4 C' specs --require specs/helpers/chai.js
-# sleep 3
-# killall node
-# sleep 3
+node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 10 &
+sleep 3
+mocha -g 'Code 1: Case 4 C' specs --require specs/helpers/chai.js
+sleep 3
+killall node
+sleep 3
 
-# node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 19 &
-# sleep 3
-# mocha -g 'Code 1: Case 4.3' specs --require specs/helpers/chai.js
-# sleep 3
-# killall node
-# sleep 3
-# echo "Code 1 done~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 19 &
+sleep 3
+mocha -g 'Code 1: Case 4.3' specs --require specs/helpers/chai.js
+sleep 3
+killall node
+sleep 3
+echo "Code 1 done~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
 
 
 # echo "Code 2 start~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -122,44 +123,45 @@ echo "
 # echo "Code 4 done~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
 
-echo "Code 5 start~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 4 &
-sleep 3
-mocha -g 'Code 5: Case 1' specs --require specs/helpers/chai.js
-sleep 3
-killall node
-sleep 3
+#not yet
+# echo "Code 5 start~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+# node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 4 &
+# sleep 3
+# mocha -g 'Code 5: Case 1' specs --require specs/helpers/chai.js
+# sleep 3
+# killall node
+# sleep 3
 
-mocha -g 'Code 5: Case 2' specs --require specs/helpers/chai.js
-sleep 3
+# mocha -g 'Code 5: Case 2' specs --require specs/helpers/chai.js
+# sleep 3
 
-mocha -g 'Code 5: Case 3' specs --require specs/helpers/chai.js
-sleep 3
-killall node
-sleep 3
+# mocha -g 'Code 5: Case 3' specs --require specs/helpers/chai.js
+# sleep 3
+# killall node
+# sleep 3
 
-mocha -g 'Code 5: Case 4' specs --require specs/helpers/chai.js
-sleep 3
+# mocha -g 'Code 5: Case 4' specs --require specs/helpers/chai.js
+# sleep 3
 
-node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 9 &
-sleep 3
-mocha -g 'Code 5: Case 5' specs --require specs/helpers/chai.js
-killall node
-sleep 3
+# node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 9 &
+# sleep 3
+# mocha -g 'Code 5: Case 5' specs --require specs/helpers/chai.js
+# killall node
+# sleep 3
 
-node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 8 &
-sleep 3
-mocha -g 'Code 5: Case 6' specs --require specs/helpers/chai.js
-killall node
-sleep 3
+# node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 8 &
+# sleep 3
+# mocha -g 'Code 5: Case 6' specs --require specs/helpers/chai.js
+# killall node
+# sleep 3
 
-node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 4 &
-sleep 3
-mocha -g 'Code 5: Case 7' specs --require specs/helpers/chai.js
-killall node
-sleep 3
+# node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 4 &
+# sleep 3
+# mocha -g 'Code 5: Case 7' specs --require specs/helpers/chai.js
+# killall node
+# sleep 3
 
-echo "Code 5 done~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+# echo "Code 5 done~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
 echo "Code 6 start~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 # node /Users/tsn/Desktop/microgear_helpers/publish_helper/publish_helper.js 4 &

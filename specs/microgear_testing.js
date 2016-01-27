@@ -7,17 +7,44 @@ var sinon = require('sinon');
 
 //mocha specs --require specs/helpers/chai.js
 //TODO: depend
-var pathToFile = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver.txt";
-var pathToFile2 = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver2.txt";
+
+var pathToFile = __dirname + "/receiver.txt";
+var pathToFile2 = __dirname + "/receiver2.txt";
+
+
+// var pathToFile = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver.txt";
+// var pathToFile2 = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver2.txt";
 
 var connectTimeout = 10000;
 var messageTimeout = 13000;
 var itTimeout = 60000;
 var beforeTimeout = 10000;
 
+
 //var filePath = "/Users/Shared/Jenkins/Home/jobs/microgearlib_testing_mocha/workspace/specs/microgear.cache";
 //var topModule = module;
-var filePath = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/microgear.cache";
+// var filePath = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/microgear.cache";
+
+
+var topModule = module;
+
+while(topModule.parent) {
+  topModule = topModule.parent;
+}
+
+var appdir = require('path').dirname(topModule.filename);
+var filePath = appdir + "/microgear.cache";
+console.log("inside testing file~~~~~~~~");
+
+console.log("in microgear-testing");
+console.log("filePath to cache file: "+filePath);
+console.log("receiver file: " +pathToFile);
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+// var filePath = appdir + "/microgear.cache";
+// console.log((pathToFile, pathToFile2, appdir, 'good'));
+
+
+
 
 describe('Code 1: Create', function() {
     describe('Code 1: Case 1, 2.1, 3.1, 7: Create microgear with gearkey and gearsecret parameter', function () {
