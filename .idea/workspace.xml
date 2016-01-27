@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d0a6f2ea-d80d-4a4e-944f-501a0edd93c2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microgear_helpers/helper.js" afterPath="$PROJECT_DIR$/microgear_helpers/helper.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run_tests.sh" afterPath="$PROJECT_DIR$/run_tests.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specs/microgear_testing.js" afterPath="$PROJECT_DIR$/specs/microgear_testing.js" />
     </list>
     <ignored path="MyMochaChaiSinonExample.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +39,8 @@
       <file leaf-file-name="run_tests.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_tests.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19856887">
-              <caret line="180" column="32" selection-start-line="180" selection-start-column="32" selection-end-line="180" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.57423973">
+              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -623,7 +621,13 @@
       <option name="project" value="LOCAL" />
       <updated>1453886839793</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="try to run on jenkins">
+      <created>1453898298140</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1453898298140</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -676,7 +680,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying to implement error. most of error fails." />
     <MESSAGE value="tests together.&#10;ensure each test runs properly then ensure it runs when runs with other tests" />
     <MESSAGE value="change package.json in order to integrate with jenkins" />
     <MESSAGE value="add package.json and run_tests.sh to git" />
@@ -701,7 +704,8 @@
     <MESSAGE value="will change helper file" />
     <MESSAGE value="change configuration for pathToFile, filePath, and appdir" />
     <MESSAGE value="change bash file" />
-    <option name="LAST_COMMIT_MESSAGE" value="change bash file" />
+    <MESSAGE value="try to run on jenkins" />
+    <option name="LAST_COMMIT_MESSAGE" value="try to run on jenkins" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1404,8 +1408,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run_tests.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19856887">
-          <caret line="180" column="32" selection-start-line="180" selection-start-column="32" selection-end-line="180" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.57423973">
+          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
           <folding />
         </state>
       </provider>
