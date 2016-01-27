@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d0a6f2ea-d80d-4a4e-944f-501a0edd93c2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/microgear_helpers/helper.js" afterPath="$PROJECT_DIR$/microgear_helpers/helper.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run_tests.sh" afterPath="$PROJECT_DIR$/run_tests.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/specs/microgear_testing.js" afterPath="$PROJECT_DIR$/specs/microgear_testing.js" />
     </list>
     <ignored path="MyMochaChaiSinonExample.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,12 +29,10 @@
       <file leaf-file-name="microgear_testing.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.679245">
-              <caret line="1181" column="35" selection-start-line="1181" selection-start-column="35" selection-end-line="1181" selection-end-column="35" />
+            <state vertical-scroll-proportion="-2.54717">
+              <caret line="396" column="22" selection-start-line="396" selection-start-column="22" selection-end-line="396" selection-end-column="22" />
               <folding>
-                <element signature="e#61100#63946#0" expanded="false" />
-                <element signature="e#64098#66894#0" expanded="false" />
-                <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+                <element signature="e#4551#13688#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -41,8 +41,8 @@
       <file leaf-file-name="run_tests.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_tests.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.08050089">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.19856887">
+              <caret line="180" column="32" selection-start-line="180" selection-start-column="32" selection-end-line="180" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -164,6 +164,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="helper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/microgear_helpers/helper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5555556">
+              <caret line="34" column="18" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
+              <folding>
+                <marker date="1453897995000" expanded="true" signature="1092:1093" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
@@ -196,6 +208,7 @@
         <option value="$PROJECT_DIR$/specs/createSpec.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/specs/all_testing.js" />
+        <option value="$PROJECT_DIR$/microgear_helpers/helper.js" />
         <option value="$PROJECT_DIR$/specs/microgear_testing.js" />
         <option value="$PROJECT_DIR$/run_tests.sh" />
       </list>
@@ -210,7 +223,7 @@
     <data>$USER_HOME$/node_modules/mocha</data>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="88" />
+    <option name="x" value="24" />
     <option name="y" value="23" />
     <option name="width" value="1025" />
     <option name="height" value="709" />
@@ -604,7 +617,13 @@
       <option name="project" value="LOCAL" />
       <updated>1453886728280</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="change bash file">
+      <created>1453886839793</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1453886839793</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -622,7 +641,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="88" y="23" width="1025" height="709" extended-state="0" />
+    <frame x="24" y="23" width="1025" height="709" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24585366" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -657,7 +676,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change from jasmine syntax to mocha syntax" />
     <MESSAGE value="trying to implement error. most of error fails." />
     <MESSAGE value="tests together.&#10;ensure each test runs properly then ensure it runs when runs with other tests" />
     <MESSAGE value="change package.json in order to integrate with jenkins" />
@@ -682,7 +700,8 @@
     <MESSAGE value="publish test cases" />
     <MESSAGE value="will change helper file" />
     <MESSAGE value="change configuration for pathToFile, filePath, and appdir" />
-    <option name="LAST_COMMIT_MESSAGE" value="change configuration for pathToFile, filePath, and appdir" />
+    <MESSAGE value="change bash file" />
+    <option name="LAST_COMMIT_MESSAGE" value="change bash file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -693,17 +712,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>125</line>
+          <line>100</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>392</line>
+          <line>365</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2383</line>
+          <line>2371</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -713,52 +732,52 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2323</line>
+          <line>2311</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2733</line>
+          <line>2706</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1967</line>
+          <line>1960</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>910</line>
+          <line>883</line>
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1521</line>
+          <line>1483</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1192</line>
+          <line>1165</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>981</line>
+          <line>954</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1258</line>
+          <line>1231</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1594</line>
+          <line>1567</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1125</line>
+          <line>1098</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
       </breakpoints>
@@ -772,9 +791,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -904,9 +921,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="845" column="2" selection-start-line="845" selection-start-column="2" selection-end-line="845" selection-end-column="2" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1036,9 +1051,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1168,9 +1181,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1188,9 +1199,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1200,9 +1209,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1212,9 +1219,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="163" column="21" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="21" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1231,9 +1236,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1381,20 +1384,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.679245">
-          <caret line="1181" column="35" selection-start-line="1181" selection-start-column="35" selection-end-line="1181" selection-end-column="35" />
+        <state vertical-scroll-proportion="-2.54717">
+          <caret line="396" column="22" selection-start-line="396" selection-start-column="22" selection-end-line="396" selection-end-column="22" />
           <folding>
-            <element signature="e#61100#63946#0" expanded="false" />
-            <element signature="e#64098#66894#0" expanded="false" />
-            <marker date="1453886140000" expanded="true" signature="41306:41569" placeholder="..." />
+            <element signature="e#4551#13688#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/microgear_helpers/helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5555556">
+          <caret line="34" column="18" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
+          <folding>
+            <marker date="1453897995000" expanded="true" signature="1092:1093" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/run_tests.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08050089">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.19856887">
+          <caret line="180" column="32" selection-start-line="180" selection-start-column="32" selection-end-line="180" selection-end-column="32" />
           <folding />
         </state>
       </provider>

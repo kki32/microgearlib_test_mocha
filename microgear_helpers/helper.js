@@ -33,15 +33,14 @@ message = 'Hello';
 //how to know whether that message is from chat or from publish
 helperGearname = 'helper';
 gearname = "main";
-appkey = 'kzo3i5CapTE1O7b';
-appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+appkey = 'jX2viqgprq3XRhv';
+appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
 appid = 'testNodeJs';
 subscribeAfter = false;
 // if (fs.existsSync(filePath)) {
 // 	fs.unlinkSync(filePath);
 // }
 //
-var filePath = "/Users/tsn/Desktop/microgear_helpers/publish_helper/microgear.cache";
 fs.writeFile(filePath, '{"_":null}', function (err) {
 	if (err) {
 		return console.log(err);

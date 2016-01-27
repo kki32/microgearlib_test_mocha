@@ -55,8 +55,8 @@ describe('Code 1: Create', function() {
         beforeEach(function () {
             //initialise variables
             microgear = undefined;
-            appkey = 'kzo3i5CapTE1O7b';
-            appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
         });
 
 
@@ -134,8 +134,8 @@ describe('Code 1: Create', function() {
         beforeEach(function (done) {
             //initialise variables
             this.timeout(beforeTimeout);
-            appkey = 'kzo3i5CapTE1O7b';
-            appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
             appid = 'testNodeJs';
 
             //clear cache file
@@ -153,7 +153,7 @@ describe('Code 1: Create', function() {
 
             //change appkey to lowercase
             var loweredAppkey = appkey.toLowerCase();
-            expect(loweredAppkey).to.equal('kzo3i5CapTE1O7b');
+            expect(loweredAppkey).to.equal('jX2viqgprq3XRhv');
 
             //ensure microgear is undefined before create
             expect(microgear).to.be.undefined;
@@ -214,7 +214,7 @@ describe('Code 1: Create', function() {
         it('Code 1: Case 2.3 should throw error when appkey is added', function (done) {
             this.timeout(itTimeout);
             var addedGearKey = appkey + "xx";
-            expect(addedGearKey).to.equal('kzo3i5CapTE1O7bxx');
+            expect(addedGearKey).to.equal('jX2viqgprq3XRhvxx');
 
             microgear = MicroGear.create({
                 key: addedGearKey,
@@ -273,7 +273,7 @@ describe('Code 1: Create', function() {
             this.timeout(itTimeout);
             var loweredGearSecret = appsecret.toLowerCase();
 
-            expect(loweredGearSecret).to.equal('wdD2LarBlW4C7qeG5RQwDpnx8XWoyNxx');
+            expect(loweredGearSecret).to.equal('3uscc5uX4Hh6lYkmtKJbljxMtMl1tLxx');
             microgear = MicroGear.create({
                 key: appkey,
                 secret: loweredGearSecret
@@ -333,7 +333,7 @@ describe('Code 1: Create', function() {
             this.timeout(itTimeout);
             var addedGearSecret = appsecret + "xx";
 
-            expect(addedGearSecret).to.equal('wdD2LarBlW4C7qeG5RQwDpnx8XWoyNxx');
+            expect(addedGearSecret).to.equal('3uscc5uX4Hh6lYkmtKJbljxMtMl1tLxx');
 
             microgear = MicroGear.create({
                 key: addedGearSecret,
@@ -400,8 +400,8 @@ describe('Code 1: Create', function() {
 
         beforeEach(function (done) {
             microgear = undefined;
-            appkey = 'kzo3i5CapTE1O7b';
-            appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
             appid = 'testNodeJs';
             gearname = 'main';
             message = 'Hello';
@@ -531,8 +531,8 @@ describe('Code 1: Create', function() {
 
         beforeEach(function () {
             microgear = undefined;
-            appkey = 'kzo3i5CapTE1O7b';
-            appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
             appid = 'testNodeJs';
             gearname = 'main';
             message = 'Hello';
@@ -601,8 +601,8 @@ describe('Code 1: Create', function() {
 
             beforeEach(function () {
                 this.timeout(beforeTimeout);
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
 
@@ -649,8 +649,8 @@ describe('Code 1: Create', function() {
 
             beforeEach(function () {
                 this.timeout(beforeTimeout);
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 //
                 //fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -826,8 +826,8 @@ describe('Code 1: Create', function() {
 
             beforeEach(function () {
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 gearname = 'main';
                 message = 'Hello';
@@ -887,8 +887,8 @@ describe('Code 1: Create', function() {
 
             beforeEach(function (done) {
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 gearname = 'main';
                 newGearname = 'mainNew';
@@ -1077,8 +1077,8 @@ describe('Code 1: Create', function() {
 
             beforeEach(function (done) {
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 emptyGearname = '';
                 message = 'Hello';
@@ -1133,8 +1133,8 @@ describe('Code 1: Create', function() {
 
             beforeEach(function (done) {
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 message = 'Hello';
                 gearnameTopic = '/firstTopic';
@@ -1203,8 +1203,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 gearname = 'main';
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 expect(microgear).to.be.undefined;
@@ -1269,8 +1269,8 @@ describe('Code 1: Create', function() {
             beforeEach(function () {
                 this.timeout(beforeTimeout);
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 gearname = "main";
                 helperGearname = 'helper';
@@ -1361,8 +1361,8 @@ describe('Code 1: Create', function() {
 
             beforeEach(function () {
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 gearname = "main";
                 helperGearname = 'helper';
@@ -1442,8 +1442,8 @@ describe('Code 1: Create', function() {
             beforeEach(function () {
                 this.timeout(beforeTimeout);
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 gearname = "main";
                 message = 'Hello';
@@ -1532,8 +1532,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 gearname = 'main';
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 expect(microgear).to.be.undefined;
@@ -1605,8 +1605,8 @@ describe('Code 1: Create', function() {
             beforeEach(function () {
                 this.timeout(beforeTimeout);
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 helperGearnameTopic = '/firstTopic';
                 message = 'Hello';
@@ -1687,8 +1687,8 @@ describe('Code 1: Create', function() {
             beforeEach(function () {
                 this.timeout(beforeTimeout);
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 modified = false;
                 message = 'Hello';
@@ -1773,8 +1773,8 @@ describe('Code 1: Create', function() {
             beforeEach(function () {
                 this.timeout(beforeTimeout);
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 helperGearnameTopic = '/firstTopic';
                 message = 'Hello';
@@ -1856,8 +1856,8 @@ describe('Code 1: Create', function() {
             beforeEach(function () {
                 this.timeout(beforeTimeout);
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 gearname = "main";
                 helperGearname = 'helper';
@@ -1982,8 +1982,8 @@ describe('Code 1: Create', function() {
                 topic = "/firstTopic";
                 topic = "/secondTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2046,8 +2046,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2113,8 +2113,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2184,8 +2184,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2265,8 +2265,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 expect(microgear).to.be.undefined;
 
@@ -2335,8 +2335,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 invalidTopic = "firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2396,8 +2396,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 gearname = 'main';
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 emptyTopic = "";
 
@@ -2458,8 +2458,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 topic = '/firstTopic';
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
 
@@ -2556,8 +2556,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2627,8 +2627,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2696,8 +2696,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
 
@@ -2823,8 +2823,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 emptyTopic = "";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2894,8 +2894,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 invalidTopic = "firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -2961,8 +2961,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = 'Hello';
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 expect(microgear).to.be.undefined;
 
@@ -3042,8 +3042,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 topic = "/firstTopic";
                 message = 'Hello';
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 expect(microgear).to.be.undefined;
 
@@ -3119,8 +3119,8 @@ describe('Code 1: Create', function() {
                 message = 'Hello';
                 modified = false;
                 microgear = undefined;
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 expect(microgear).to.be.undefined;
 
@@ -3202,8 +3202,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 emptyTopic = "";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 modified = false;
 
@@ -3291,8 +3291,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 invalidTopic = "firstTopic";
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 modified = false;
 
@@ -3567,8 +3567,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
 
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
 
@@ -3667,8 +3667,8 @@ describe('Code 1: Create', function() {
                 gearname = 'main';
                 newGearname = 'mainNew';
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
 
@@ -3764,8 +3764,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 topic = '/firstTopic';
                 message = "Hello";
-                appkey = 'kzo3i5CapTE1O7b';
-                appsecret = 'wdD2LarBlW4C7qeG5RQwDpnx8XWoyN';
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
 
