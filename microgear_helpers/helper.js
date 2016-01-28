@@ -114,8 +114,9 @@ microgear.on('connected', function() {
 		if(subscribex){
 			if(subscribeAfter){
 				setTimeout(function(){
+					console.log('subscribe');
 					microgear.subscribe(topic);
-				},6000)
+				},12000);
 			}
 			else{
 

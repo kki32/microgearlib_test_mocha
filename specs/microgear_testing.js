@@ -18,6 +18,7 @@ var pathToFile2 = __dirname + "/receiver2.txt";
 var connectTimeout = 10000;
 var messageTimeout = 13000;
 var itTimeout = 60000;
+var chatInterval = 1000;
 var beforeTimeout = 10000;
 
 
@@ -2445,7 +2446,8 @@ describe('Code 1: Create', function() {
         });
 
         //require helper.js 4 to publish to topic
-        describe('Code 5: Case 7 Subscribe that reconnect', function () {
+        //TODO
+        describe.skip('Code 5: Case 7 Subscribe that reconnect', function () {
             var message;
             var microgear;
             var appkey;
@@ -2454,7 +2456,7 @@ describe('Code 1: Create', function() {
             var topic;
 
             beforeEach(function (done) {
-                this.timeout(beforeTimeout+10000);
+                this.timeout(itTimeout);
                 microgear = undefined;
                 topic = '/firstTopic';
                 message = "Hello";
@@ -2783,9 +2785,9 @@ describe('Code 1: Create', function() {
                         expect(stubMessage.called).to.be.true;
                         expect(message).to.equal("" + stubMessage.args[0][1]);
                         //reset the count, it should not receive message after this
-                        stubMessage.reset();
                         console.log("unsub");
                         microgear.unsubscribe(topic);
+                        stubMessage.reset();
 
                         setTimeout(function () {
                             //should not receive message after unsubscribe
@@ -2797,8 +2799,8 @@ describe('Code 1: Create', function() {
                                 //should still not receive message
                                 expect(stubMessage.called).to.be.false;
                                 done();
-                            }, messageTimeout + 2000);
-                        }, messageTimeout + 1000);
+                            }, messageTimeout + 4000);
+                        }, messageTimeout + 2000);
                     }, messageTimeout);
                 }, connectTimeout);
 
@@ -2945,7 +2947,7 @@ describe('Code 1: Create', function() {
         });
     });
     describe('Code 7: Publish', function () {
-        ////prerequisite: need to call helper before/later code 15. publish_helper.js
+        ////prerequisite: need to call helper before/later code 22. publish_helper.js
         describe('Code 7: Case 1 Publish to topic that subscribe after', function () {
             var message;
             var topic;
@@ -2954,7 +2956,7 @@ describe('Code 1: Create', function() {
             var appkey;
             var appsecret;
             var appid;
-
+            var modified;
             beforeEach(function () {
                 this.timeout(beforeTimeout);
                 microgear = undefined;
@@ -2964,6 +2966,7 @@ describe('Code 1: Create', function() {
                 appkey = 'jX2viqgprq3XRhv';
                 appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
+                modified = false;
                 expect(microgear).to.be.undefined;
 
                 microgear = MicroGear.create({
@@ -2987,13 +2990,12 @@ describe('Code 1: Create', function() {
             });
 
             afterEach(function () {
-                clearInterval();
                 fs.unwatchFile(pathToFile);
                 microgear.client.end();
             });
 
-            //pre-re: should run helper.js 15 first
-            //TODO: not yet
+            //pre-re: should run helper.js 22 first
+            //TODO: time sensitive
             it('should publish to topic that subscribe before publisher starts', function (done) {
                 this.timeout(itTimeout);
                 var stubConnect = sinon.stub();
@@ -3003,12 +3005,9 @@ describe('Code 1: Create', function() {
 
                 setTimeout(function () {
                     expect(stubConnect.called).to.be.true;
-                    setInterval(function () {
-                        microgear.publish(topic, message);
-                        console.log("publish message");
-                    }, 1000);
 
                     fs.watchFile(pathToFile, function (curr, prev) {
+                        modified = true;
 
                         fs.readFile(pathToFile, 'utf8', function (err, data) {
                             if (err) {
@@ -3017,9 +3016,19 @@ describe('Code 1: Create', function() {
                             }
                             console.log("( " + data.toString() + " )");
                             expect(data.toString()).to.equal(message);
-                            done();
                         });
                     });
+                    expect(modified).to.be.false;
+
+                    setInterval(function () {
+                        microgear.publish(topic, message);
+                        console.log("publish message");
+                    }, chatInterval);
+
+                    setTimeout(function () {
+                        expect(modified).to.be.true;
+                        done();
+                    }, messageTimeout);
 
                 }, connectTimeout);
             });
@@ -3035,6 +3044,7 @@ describe('Code 1: Create', function() {
             var appkey;
             var appsecret;
             var appid;
+            var modified;
 
             beforeEach(function () {
                 this.timeout(beforeTimeout);
@@ -3045,6 +3055,7 @@ describe('Code 1: Create', function() {
                 appkey = 'jX2viqgprq3XRhv';
                 appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
+                modified = false;
                 expect(microgear).to.be.undefined;
 
                 microgear = MicroGear.create({
@@ -3084,12 +3095,8 @@ describe('Code 1: Create', function() {
 
                 setTimeout(function () {
                     expect(stubConnect.called).to.be.true;
-                    setInterval(function () {
-                        microgear.publish(topic, message);
-                        console.log("publish message");
-                    }, 1000);
-
                     fs.watchFile(pathToFile, function (curr, prev) {
+                        modified = true;
                         fs.readFile(pathToFile, 'utf8', function (err, data) {
                             if (err) {
                                 console.log("no file");
@@ -3097,16 +3104,27 @@ describe('Code 1: Create', function() {
                             }
                             console.log("( " + data.toString() + " )");
                             expect(data.toString()).to.equal(message);
-                            done();
                         });
                     });
+                    expect(modified).to.be.false;
+                    setInterval(function () {
+                        microgear.publish(topic, message);
+                        console.log("publish message");
+                    }, 1000);
+
+
+                    setTimeout(function () {
+                        expect(modified).to.be.true;
+                        done();
+                    }, messageTimeout);
+
                 }, connectTimeout);
             });
 
         });
 
         ///pre-re: should run helper.js 4 to publish topic
-        describe('Code 7 Case 3 Publish to microgear that subscribe other topic', function () {
+        describe('Code 7: Case 3 Publish to microgear that subscribe other topic', function () {
             var microgear;
             var appkey;
             var appsecret;
@@ -3114,7 +3132,7 @@ describe('Code 1: Create', function() {
             var anotherTopic;
             var message;
             var modified
-            beforeEach(function (done) {
+            beforeEach(function () {
                 anotherTopic = '/secondTopic';
                 message = 'Hello';
                 modified = false;
@@ -3129,7 +3147,6 @@ describe('Code 1: Create', function() {
                         return console.log(err);
                     }
                     console.log("clear cache");
-                    done();
                 });
 
                 fs.writeFile(pathToFile, "", function (err) {
@@ -3155,9 +3172,12 @@ describe('Code 1: Create', function() {
                 microgear.on('connected', stubConnect);
 
 
+                microgear.connect(appid);
+
                 setTimeout(function () {
                     //ensure microgear is connected before publish to the topic the helper subscribes
                     expect(stubConnect.called).to.be.true;
+                    expect(modified).to.be.false;
                     microgear.publish(anotherTopic, message);
 
                     //watch the receiver file for changes. this happens when the helper writes down the message
@@ -3178,10 +3198,6 @@ describe('Code 1: Create', function() {
                         done();
                     }, messageTimeout);
                 }, connectTimeout);
-
-
-                microgear.connect(appid);
-
 
             });
         });
@@ -3383,8 +3399,8 @@ describe('Code 1: Create', function() {
                 this.timeout(itTimeout);
                 microgear = undefined;
                 message = "Hello myself.";
-                appkey     = 'NLc1b8a3UZPMhOY';
-                appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
+                appkey     = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 microgear = MicroGear.create({
@@ -3421,8 +3437,8 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 gearname = 'myself';
                 message = "Hello myself.";
-                appkey     = 'NLc1b8a3UZPMhOY';
-                appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
+                appkey     = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 microgear = MicroGear.create({
@@ -3492,8 +3508,79 @@ describe('Code 1: Create', function() {
                 microgear = undefined;
                 gearname = 'myself';
                 message = "Hello myself.";
-                appkey     = 'NLc1b8a3UZPMhOY';
-                appsecret = 'tLzjQQ6FiGUhOX1LTSjtVKsnSExuX7';
+                appkey     = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+                appid = 'testNodeJs';
+
+                microgear = MicroGear.create({
+                    key: appkey,
+                    secret: appsecret
+                });
+
+                fs.writeFile(filePath, '{"_":null}', function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    console.log("clear cache");
+                });
+
+                var stubConnect = sinon.stub();
+                microgear.on('connected', stubConnect);
+
+                var stubDisconnect = sinon.stub();
+                microgear.on('disconnected', stubDisconnect);
+
+                microgear.connect(appid);
+
+                setTimeout(function () {
+                    expect(stubConnect.called).to.be.true;
+                    microgear.disconnect();
+                    setTimeout(function () {
+                        expect(stubDisconnect.called).to.be.true;
+                        done();
+                    }, connectTimeout);
+                }, connectTimeout);
+            });
+
+            afterEach(function () {
+                microgear.client.end();
+            });
+
+            it('should just resettoken like usual', function (done) {
+                this.timeout(itTimeout);
+
+                var data = fs.readFileSync(filePath, 'utf8');
+                expect(data.toString()).not.to.equal('{"_":null}');
+
+                microgear.resettoken(function (result) {
+                    var data2 = fs.readFileSync(filePath, 'utf8');
+                    expect(data2.toString()).to.equal('{"_":null}');
+
+                    microgear.resettoken(function (result2) {
+                        var data4 = fs.readFileSync(filePath, 'utf8');
+                        expect(data4.toString()).to.equal('{"_":null}');
+                        done();
+                    });
+                });
+
+            });
+        });
+        //TODO: need to implemnt
+        describe('Code 8: Case 4 Resettoken while still online', function () {
+            var message;
+            var gearname;
+            var microgear;
+            var appkey;
+            var appsecret;
+            var appid;
+
+            beforeEach(function (done) {
+                this.timeout(itTimeout);
+                microgear = undefined;
+                gearname = 'myself';
+                message = "Hello myself.";
+                appkey     = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
 
                 microgear = MicroGear.create({
@@ -3550,9 +3637,8 @@ describe('Code 1: Create', function() {
             });
         });
 
-
-
-        describe('Code 8: Case 4 Resettoken when offline, after create', function () {
+///pre-re: should run helper.js 10 to chat with gearname
+        describe('Code 8: Case 5 Resettoken when offline, after create', function () {
             var message;
             var gearname;
 
@@ -3562,7 +3648,7 @@ describe('Code 1: Create', function() {
             var appid;
 
             beforeEach(function (done) {
-                this.timeout(beforeTimeout+10000);
+                this.timeout(itTimeout);
                 microgear = undefined;
                 gearname = 'main';
 
@@ -3596,7 +3682,6 @@ describe('Code 1: Create', function() {
                 setTimeout(function () {
                     //setalias when microgear is connected
                     expect(stubConnect.called).to.be.true;
-
                     expect(microgear.gearalias).to.equal(gearname);
                     setTimeout(function () {
                         //should receive message
@@ -3652,7 +3737,7 @@ describe('Code 1: Create', function() {
         });
 
         ///pre-re: should run helper.js 10 to chat with gearname
-        describe('Code 8: Case 5 Resettoken when offline, after setalias', function () {
+        describe('Code 8: Case 6 Resettoken when offline, after setalias', function () {
             var message;
             var gearname;
             var newGearname;
@@ -3662,7 +3747,7 @@ describe('Code 1: Create', function() {
             var appid;
 
             beforeEach(function (done) {
-                this.timeout(beforeTimeout+10000);
+                this.timeout(itTimeout);
                 microgear = undefined;
                 gearname = 'main';
                 newGearname = 'mainNew';
@@ -3720,6 +3805,7 @@ describe('Code 1: Create', function() {
 
                 var stubMessage = sinon.stub();
                 microgear.on('message', stubMessage);
+
                 expect(stubConnect.called).to.be.false;
                 expect(stubMessage.called).to.be.false;
                 //ensure microgear.cache file is not empty
@@ -3751,7 +3837,7 @@ describe('Code 1: Create', function() {
         });
 
         //require helper.js 4 to publish to topic
-        describe('Code 8: Case 6 Resettoken when offline, after subscribe', function () {
+        describe('Code 8: Case 7 Resettoken when offline, after subscribe', function () {
             var message;
             var microgear;
             var appkey;
@@ -3760,7 +3846,7 @@ describe('Code 1: Create', function() {
             var topic;
 
             beforeEach(function (done) {
-                this.timeout(beforeTimeout+10000);
+                this.timeout(itTimeout);
                 microgear = undefined;
                 topic = '/firstTopic';
                 message = "Hello";
