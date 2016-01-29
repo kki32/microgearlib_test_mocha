@@ -2,6 +2,8 @@ var MicroGear = require('microgear');
 var chai = require('chai');
 var fs = require('fs');
 var sinon = require('sinon');
+var child_process = require('child_process');
+var fork = require('child_process').fork;
 //TODO: when one fail it does not go aftereach
 //"node":"4.2.4","npm":"3.5.2"
 
@@ -15,9 +17,12 @@ var pathToFile2 = __dirname + "/receiver2.txt";
 // var pathToFile = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver.txt";
 // var pathToFile2 = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver2.txt";
 
-var connectTimeout = 10000;
-var messageTimeout = 13000;
-var itTimeout = 60000;
+// var connectTimeout = 10000;
+// var messageTimeout = 13000;
+// var itTimeout = 60000;
+var connectTimeout = 3000;
+var messageTimeout = 4000;
+var itTimeout = 30000;
 var chatInterval = 1000;
 var beforeTimeout = 10000;
 
@@ -43,6 +48,91 @@ console.log("receiver file: " +pathToFile);
 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 // var filePath = appdir + "/microgear.cache";
 // console.log((pathToFile, pathToFile2, appdir, 'good'));
+
+
+const spawn = require('child_process').spawn;
+var bat;
+function helper(code, callback){
+bat = spawn('node', ["microgear_helpers/helper.js", " "+code]);
+
+bat.stdout.on('data', (data) => {
+  console.log("from helper got: "+data);
+  if(data.toString().trim() === 'Connected...'){
+    console.log("is connected + +");
+    callback();
+  }
+
+});
+
+// bat.stderr.on('data', (data) => {
+//   console.log(data+"");
+// });
+
+bat.on('exit', (code) => {
+  console.log('Child exited with code' + code);
+});
+
+}
+
+
+// function helper(code, callback){
+//     console.log("w");
+
+//     var options = {
+//   timeout: 30000,
+//   killSignal: 'SIGKILL'
+// }
+//   var exec = child_process.exec;
+//   var toExecute = 'node ./microgear_helpers/helper.js ' + code.toString();
+// //exec(command, [options], callback);
+// exec(toExecute, function(err,stdout,stderr) {
+//     if(stdout){
+//         console.log(stdout.toString() + "pass");
+//         callback();
+//         }
+//     });
+//   // if (err) {
+//   //       console.log("hellojal");
+//   //   return
+// }
+// process.stdin.on('data', function(data) { console.log("inini");
+// })
+
+// process.stdout.on('data', (data) => {
+//   console.log(data+" good");
+//   if(data == "Yes"){
+//     console.log("yes");
+//     // callback();
+//   }
+//   else{
+//     console.log("no");
+//   }
+// });
+
+
+function quit(code){
+        bat.kill('SIGINT');
+//     var options = {
+//       timeout: itTimeout,
+//       killSignal: 'SIGKILL'
+//   }
+//   var exec = child_process.execSync;
+//     var toExecute = 'pkill -f "node ./microgear_helpers/helper.js ' + code.toString() + '"';
+
+// exec(toExecute, function(err,stdout,stderr) {
+//   if (err) {
+//     console.log("helloja");
+//     return
+// }
+// // console.log(stdout);
+// });
+
+}
+
+// process.on('SIGKILL',function(){
+//     console.log("a");
+// });
+
 
 
 
@@ -124,15 +214,15 @@ describe('Code 1: Create', function() {
             expect(microgear.gearkey).to.equal(appkey2);
             expect(microgear.gearsecret).to.equal(appsecret2);
         });
-    });
+});
 
-    describe.skip('Code 1: Case 2.2, 2.3, 2.4, 3.2, 3.3, 3.4 Create with invalid input - require connect', function () {
-        var microgear;
-        var appkey;
-        var appsecret;
-        var appid;
+describe.skip('Code 1: Case 2.2, 2.3, 2.4, 3.2, 3.3, 3.4 Create with invalid input - require connect', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-        beforeEach(function (done) {
+    beforeEach(function (done) {
             //initialise variables
             this.timeout(beforeTimeout);
             appkey = 'jX2viqgprq3XRhv';
@@ -149,8 +239,8 @@ describe('Code 1: Create', function() {
             });
         });
 
-        it('Code 1: Case 2.2 should throw error when appkey change its case', function (done) {
-            this.timeout(itTimeout);
+    it('Code 1: Case 2.2 should throw error when appkey change its case', function (done) {
+        this.timeout(itTimeout);
 
             //change appkey to lowercase
             var loweredAppkey = appkey.toLowerCase();
@@ -183,212 +273,212 @@ describe('Code 1: Create', function() {
             }, connectTimeout);
         });
 
-        it('Code 1: Case 2.3 should throw error when appkey is trimmed', function (done) {
-            this.timeout(itTimeout);
-            var trimmedGearKey = appkey.substring(0, appkey.length - 2);
-            expect(trimmedGearKey).to.equal('NLc1b8a3UZPMh');
+it('Code 1: Case 2.3 should throw error when appkey is trimmed', function (done) {
+    this.timeout(itTimeout);
+    var trimmedGearKey = appkey.substring(0, appkey.length - 2);
+    expect(trimmedGearKey).to.equal('NLc1b8a3UZPMh');
 
-            microgear = MicroGear.create({
-                key: trimmedGearKey,
-                secret: appsecret
-            });
-
-            expect(microgear.gearkey).to.equal(trimmedGearKey);
-            expect(microgear.gearsecret).to.equal(appsecret);
-
-            var stubConnect = sinon.stub();
-            microgear.on('connected', stubConnect);
-
-            var stubError = sinon.stub();
-            microgear.on('error', stubError);
-
-            microgear.connect(appid);
-            setTimeout(function () {
-                expect(stubConnect.called).to.be.false;
-                expect(stubError.called).to.be.true;
-                expect(stubConnect.calledBefore(stubError)).to.be.true;
-                done();
-            }, connectTimeout);
-
-        });
-
-        it('Code 1: Case 2.3 should throw error when appkey is added', function (done) {
-            this.timeout(itTimeout);
-            var addedGearKey = appkey + "xx";
-            expect(addedGearKey).to.equal('jX2viqgprq3XRhvxx');
-
-            microgear = MicroGear.create({
-                key: addedGearKey,
-                secret: appsecret
-            });
-
-            expect(microgear.gearkey).to.equal(addedGearKey);
-            expect(microgear.gearsecret).to.equal(appsecret);
-
-            var stubConnect = sinon.stub();
-            microgear.on('connected', stubConnect);
-
-            var stubError = sinon.stub();
-            microgear.on('error', stubError);
-
-            microgear.connect(appid);
-
-            setTimeout(function () {
-                expect(stubConnect.called).to.be.false;
-                expect(stubError.called).to.be.true;
-                expect(stubConnect.calledBefore(stubError)).to.be.true;
-                done();
-            }, connectTimeout);
-        });
-
-        it('Code 1: Case 2.4 should throw error when uses another appkey', function (done) {
-            this.timeout(itTimeout);
-            var anotherGearKey = "9O0xiA2lHXz01iE";
-            microgear = MicroGear.create({
-                key: anotherGearKey,
-                secret: appsecret
-            });
-
-            expect(microgear.gearkey).to.equal(anotherGearKey);
-            expect(microgear.gearsecret).to.equal(appsecret);
-
-            var stubConnect = sinon.stub();
-            microgear.on('connected', stubConnect);
-
-            var stubError = sinon.stub();
-            microgear.on('error', stubError);
-
-            microgear.connect(appid);
-
-            setTimeout(function () {
-                expect(stubConnect.called).to.be.false;
-                expect(stubError.called).to.be.true;
-                expect(stubConnect.calledBefore(stubError)).to.be.true;
-                done();
-            }, connectTimeout);
-
-
-        });
-
-        it('Code 1: Case 3.2 should throw error when appsecret change its case', function (done) {
-            this.timeout(itTimeout);
-            var loweredGearSecret = appsecret.toLowerCase();
-
-            expect(loweredGearSecret).to.equal('3uscc5uX4Hh6lYkmtKJbljxMtMl1tLxx');
-            microgear = MicroGear.create({
-                key: appkey,
-                secret: loweredGearSecret
-            });
-
-            expect(microgear.gearkey).to.equal(appkey);
-            expect(microgear.gearsecret).to.equal(loweredGearSecret);
-
-            var stubConnect = sinon.stub();
-            microgear.on('connected', stubConnect);
-
-            var stubError = sinon.stub();
-            microgear.on('error', stubError);
-
-            microgear.connect(appid);
-
-            setTimeout(function () {
-                expect(stubConnect.called).to.be.false;
-                expect(stubError.called).to.be.true;
-                expect(stubConnect.calledBefore(stubError)).to.be.true;
-                done();
-            }, connectTimeout);
-        });
-
-        it('Code 1: Case 3.3 should throw error when appsecret is trimmed', function (done) {
-            this.timeout(itTimeout);
-            var trimmedGearSecret = appsecret.substring(0, appsecret.length - 2);
-
-
-            expect(trimmedGearSecret).to.equal('tLzjQQ6FiGUhOX1LTSjtVKsnSExu');
-            microgear = MicroGear.create({
-                key: appkey,
-                secret: trimmedGearSecret
-            });
-
-            expect(microgear.gearkey).to.equal(appkey);
-            expect(microgear.gearsecret).to.equal(trimmedGearSecret);
-
-            var stubConnect = sinon.stub();
-            microgear.on('connected', stubConnect);
-
-            var stubError = sinon.stub();
-            microgear.on('error', stubError);
-
-            microgear.connect(appid);
-
-            setTimeout(function () {
-                expect(stubConnect.called).to.be.false;
-                expect(stubError.called).to.be.true;
-                expect(stubConnect.calledBefore(stubError)).to.be.true;
-                done();
-            }, connectTimeout);
-
-        });
-
-        it('Code 1: Case 3.3 should throw error when appsecret is added', function (done) {
-            this.timeout(itTimeout);
-            var addedGearSecret = appsecret + "xx";
-
-            expect(addedGearSecret).to.equal('3uscc5uX4Hh6lYkmtKJbljxMtMl1tLxx');
-
-            microgear = MicroGear.create({
-                key: addedGearSecret,
-                secret: appsecret
-            });
-
-            expect(microgear.gearkey).to.equal(appkey);
-            expect(microgear.gearsecret).to.equal(addedGearSecret);
-
-            var stubConnect = sinon.stub();
-            microgear.on('connected', stubConnect);
-
-            var stubError = sinon.stub();
-            microgear.on('error', stubError);
-
-            microgear.connect(appid);
-
-            setTimeout(function () {
-                expect(stubConnect.called).to.be.false;
-                expect(stubError.called).to.be.true;
-                expect(stubConnect.calledBefore(stubError)).to.be.true;
-                done();
-            }, connectTimeout);
-        });
-
-        it('Code 1: Case 3.4 should throw error when uses another appsecret', function (done) {
-            this.timeout(itTimeout);
-
-            var anotherGearSecret = "VqHTfrj8QlI3ydc1nWQCDK0amtt9aV";
-
-            microgear = MicroGear.create({
-                key: appkey,
-                secret: anotherGearSecret
-            });
-
-            expect(microgear.gearkey).to.equal(appkey);
-            expect(microgear.gearsecret).to.equal(anotherGearSecret);
-
-            var stubConnect = sinon.stub();
-            microgear.on('connected', stubConnect);
-
-            var stubError = sinon.stub();
-            microgear.on('error', stubError);
-
-            microgear.connect(appid);
-            setTimeout(function () {
-                expect(stubConnect.called).to.be.false;
-                expect(stubError.called).to.be.true;
-                expect(stubConnect.calledBefore(stubError)).to.be.true;
-                done();
-            }, connectTimeout);
-        });
-
+    microgear = MicroGear.create({
+        key: trimmedGearKey,
+        secret: appsecret
     });
+
+    expect(microgear.gearkey).to.equal(trimmedGearKey);
+    expect(microgear.gearsecret).to.equal(appsecret);
+
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+
+    var stubError = sinon.stub();
+    microgear.on('error', stubError);
+
+    microgear.connect(appid);
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubConnect.calledBefore(stubError)).to.be.true;
+        done();
+    }, connectTimeout);
+
+});
+
+it('Code 1: Case 2.3 should throw error when appkey is added', function (done) {
+    this.timeout(itTimeout);
+    var addedGearKey = appkey + "xx";
+    expect(addedGearKey).to.equal('jX2viqgprq3XRhvxx');
+
+    microgear = MicroGear.create({
+        key: addedGearKey,
+        secret: appsecret
+    });
+
+    expect(microgear.gearkey).to.equal(addedGearKey);
+    expect(microgear.gearsecret).to.equal(appsecret);
+
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+
+    var stubError = sinon.stub();
+    microgear.on('error', stubError);
+
+    microgear.connect(appid);
+
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubConnect.calledBefore(stubError)).to.be.true;
+        done();
+    }, connectTimeout);
+});
+
+it('Code 1: Case 2.4 should throw error when uses another appkey', function (done) {
+    this.timeout(itTimeout);
+    var anotherGearKey = "9O0xiA2lHXz01iE";
+    microgear = MicroGear.create({
+        key: anotherGearKey,
+        secret: appsecret
+    });
+
+    expect(microgear.gearkey).to.equal(anotherGearKey);
+    expect(microgear.gearsecret).to.equal(appsecret);
+
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+
+    var stubError = sinon.stub();
+    microgear.on('error', stubError);
+
+    microgear.connect(appid);
+
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubConnect.calledBefore(stubError)).to.be.true;
+        done();
+    }, connectTimeout);
+
+
+});
+
+it('Code 1: Case 3.2 should throw error when appsecret change its case', function (done) {
+    this.timeout(itTimeout);
+    var loweredGearSecret = appsecret.toLowerCase();
+
+    expect(loweredGearSecret).to.equal('3uscc5uX4Hh6lYkmtKJbljxMtMl1tLxx');
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: loweredGearSecret
+    });
+
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(loweredGearSecret);
+
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+
+    var stubError = sinon.stub();
+    microgear.on('error', stubError);
+
+    microgear.connect(appid);
+
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubConnect.calledBefore(stubError)).to.be.true;
+        done();
+    }, connectTimeout);
+});
+
+it('Code 1: Case 3.3 should throw error when appsecret is trimmed', function (done) {
+    this.timeout(itTimeout);
+    var trimmedGearSecret = appsecret.substring(0, appsecret.length - 2);
+
+
+    expect(trimmedGearSecret).to.equal('tLzjQQ6FiGUhOX1LTSjtVKsnSExu');
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: trimmedGearSecret
+    });
+
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(trimmedGearSecret);
+
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+
+    var stubError = sinon.stub();
+    microgear.on('error', stubError);
+
+    microgear.connect(appid);
+
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubConnect.calledBefore(stubError)).to.be.true;
+        done();
+    }, connectTimeout);
+
+});
+
+it('Code 1: Case 3.3 should throw error when appsecret is added', function (done) {
+    this.timeout(itTimeout);
+    var addedGearSecret = appsecret + "xx";
+
+    expect(addedGearSecret).to.equal('3uscc5uX4Hh6lYkmtKJbljxMtMl1tLxx');
+
+    microgear = MicroGear.create({
+        key: addedGearSecret,
+        secret: appsecret
+    });
+
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(addedGearSecret);
+
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+
+    var stubError = sinon.stub();
+    microgear.on('error', stubError);
+
+    microgear.connect(appid);
+
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubConnect.calledBefore(stubError)).to.be.true;
+        done();
+    }, connectTimeout);
+});
+
+it('Code 1: Case 3.4 should throw error when uses another appsecret', function (done) {
+    this.timeout(itTimeout);
+
+    var anotherGearSecret = "VqHTfrj8QlI3ydc1nWQCDK0amtt9aV";
+
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: anotherGearSecret
+    });
+
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(anotherGearSecret);
+
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+
+    var stubError = sinon.stub();
+    microgear.on('error', stubError);
+
+    microgear.connect(appid);
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        expect(stubError.called).to.be.true;
+        expect(stubConnect.calledBefore(stubError)).to.be.true;
+        done();
+    }, connectTimeout);
+});
+
+});
 
     //pre-re: run helper.js 10 first.
     describe('Code 1: Case 4 Create with gearalias parameter', function () {
@@ -451,8 +541,8 @@ describe('Code 1: Create', function() {
             }, connectTimeout);
         });
 
-        it('Code 1: Case 4.2 should be able to connect when gearalias is empty string', function (done) {
-            this.timeout(itTimeout);
+it('Code 1: Case 4.2 should be able to connect when gearalias is empty string', function (done) {
+    this.timeout(itTimeout);
             //ensure microgear is undefined before create
             expect(microgear).to.be.undefined;
             var emptyGearname = '';
@@ -519,7 +609,7 @@ describe('Code 1: Create', function() {
         });
 
 
-    });
+});
 
     //pre-re: run helper.js 19 first to chat with gearname-topic
     describe.skip('Code 1: Case 4.3 Create with gearalias parameter', function () {
@@ -545,7 +635,7 @@ describe('Code 1: Create', function() {
             //    console.log("clear cache");
             //    done();
             //});
-        });
+    });
 
         //fail
         //pre-re: run helper.js 19 first to chat with gearname - topic
@@ -588,23 +678,23 @@ describe('Code 1: Create', function() {
         });
 
 
-    });
+});
 
 });
 
 
-    describe('Code 2: Connect', function () {
-        describe('Code 2: Case 1 Connect with valid appid', function () {
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 2: Connect', function () {
+    describe('Code 2: Case 1 Connect with valid appid', function () {
+        var microgear;
+        var appkey;
+        var appsecret;
+        var appid;
 
-            beforeEach(function () {
-                this.timeout(beforeTimeout);
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+        beforeEach(function () {
+            this.timeout(beforeTimeout);
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+            appid = 'testNodeJs';
 
 
                 //fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -615,31 +705,31 @@ describe('Code 1: Create', function() {
                 //    done();
                 //});
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
 
-            });
-            afterEach(function () {
+    });
+        afterEach(function () {
                 //should fail here if microgear is not connect
                 microgear.client.end();
             });
 
-            it('Code 2: Case 1 should be able to connect without any errors', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        it('Code 2: Case 1 should be able to connect without any errors', function (done) {
+            this.timeout(itTimeout);
+            var stubConnect = sinon.stub();
+            microgear.on('connected', stubConnect);
 
-                microgear.connect(appid);
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
-                    expect(stubConnect.callCount).to.equal(1);
-                    done();
-                }, connectTimeout);
+            microgear.connect(appid);
+            setTimeout(function () {
+                expect(stubConnect.called).to.be.true;
+                expect(stubConnect.callCount).to.equal(1);
+                done();
+            }, connectTimeout);
 
-            });
         });
+    });
 
         //fail
         describe.skip('Code 2: Case 2 Connect with invalid appid', function () {
@@ -661,7 +751,7 @@ describe('Code 1: Create', function() {
                 //    console.log("clear cache");
                 //    done();
                 //});
-            });
+        });
 
             it('Code 2: Case 2.1 should throw error when appid is empty string', function (done) {
                 this.timeout(itTimeout);
@@ -713,126 +803,126 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            it('Code 2: Case 2.2 should throw error when appid change its case', function (done) {
+    it('Code 2: Case 2.2 should throw error when appid change its case', function (done) {
 
-                this.timeout(itTimeout);
+    this.timeout(itTimeout);
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: appsecret
+    });
 
-                expect(microgear.gearkey).to.equal(appkey);
-                expect(microgear.gearsecret).to.equal(appsecret);
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(appsecret);
 
-                var loweredAppid = appid.toLowerCase();
-                expect(loweredAppid).to.equal('testnodejs');
+    var loweredAppid = appid.toLowerCase();
+    expect(loweredAppid).to.equal('testnodejs');
 
-                var stubConnect2 = sinon.stub();
-                microgear.on('connected', stubConnect2);
+    var stubConnect2 = sinon.stub();
+    microgear.on('connected', stubConnect2);
 
-                console.log(stubConnect2.callCount + 'a');
-                microgear.connect(loweredAppid);
-                console.log(stubConnect2.callCount + 's');
-                setTimeout(function () {
-                    console.log(stubConnect2.callCount + 'z');
-                    expect(stubConnect2.called).to.be.false;
+    console.log(stubConnect2.callCount + 'a');
+    microgear.connect(loweredAppid);
+    console.log(stubConnect2.callCount + 's');
+    setTimeout(function () {
+        console.log(stubConnect2.callCount + 'z');
+        expect(stubConnect2.called).to.be.false;
 
-                    done();
-                }, connectTimeout);
-            });
+        done();
+    }, connectTimeout);
+    });
 
-            it('Code 2: Case 2.3 should throw error when appid is trimmed', function (done) {
-                this.timeout(itTimeout);
+    it('Code 2: Case 2.3 should throw error when appid is trimmed', function (done) {
+    this.timeout(itTimeout);
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: appsecret
+    });
 
-                expect(microgear.gearkey).to.equal(appkey);
-                expect(microgear.gearsecret).to.equal(appsecret);
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(appsecret);
 
-                var trimmedAppId = appid.substring(0, appid.length - 2);
-                expect(trimmedAppId).to.equal('testNode');
+    var trimmedAppId = appid.substring(0, appid.length - 2);
+    expect(trimmedAppId).to.equal('testNode');
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                microgear.connect(trimmedAppId);
+    microgear.connect(trimmedAppId);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.false;
-                    done();
-                }, connectTimeout);
-            });
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        done();
+    }, connectTimeout);
+    });
 
-            it('Code 2: Case 2.3 should throw error when appid is added', function (done) {
-                this.timeout(itTimeout);
+    it('Code 2: Case 2.3 should throw error when appid is added', function (done) {
+    this.timeout(itTimeout);
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: appsecret
+    });
 
-                expect(microgear.gearkey).to.equal(appkey);
-                expect(microgear.gearsecret).to.equal(appsecret);
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(appsecret);
 
-                var addedAppId = appid + "xx";
-                expect(addedAppId).to.equal('testNodeJsxx');
+    var addedAppId = appid + "xx";
+    expect(addedAppId).to.equal('testNodeJsxx');
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                microgear.connect(addedAppId);
+    microgear.connect(addedAppId);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.false;
-                    done();
-                }, connectTimeout);
-            });
-            it('Code 2: Case 2.4 should throw error when uses another appid', function (done) {
-                this.timeout(itTimeout);
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        done();
+    }, connectTimeout);
+    });
+    it('Code 2: Case 2.4 should throw error when uses another appid', function (done) {
+    this.timeout(itTimeout);
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: appsecret
+    });
 
-                expect(microgear.gearkey).to.equal(appkey);
-                expect(microgear.gearsecret).to.equal(appsecret);
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(appsecret);
 
-                var anotherAppId = "testNodeJsHelper";
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var anotherAppId = "testNodeJsHelper";
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                microgear.connect(anotherAppId);
+    microgear.connect(anotherAppId);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.false;
-                    done();
-                }, connectTimeout);
-            });
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.false;
+        done();
+    }, connectTimeout);
+});
 
 
-        });
+    });
 
-        describe('Code 2: Case 3 Connect microgear when no microgear.cache file', function () {
-            var microgear;
-            var message
-            var appkey;
-            var appsecret;
-            var appid;
-            var gearname;
+describe('Code 2: Case 3 Connect microgear when no microgear.cache file', function () {
+    var microgear;
+    var message
+    var appkey;
+    var appsecret;
+    var appid;
+    var gearname;
 
-            beforeEach(function () {
-                microgear = undefined;
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                gearname = 'main';
-                message = 'Hello';
-                expect(microgear).to.be.undefined;
+    beforeEach(function () {
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        gearname = 'main';
+        message = 'Hello';
+        expect(microgear).to.be.undefined;
 
                 //fs.writeFile(filePath, '{"_":null}', function (err) {
                 //    if (err) {
@@ -844,37 +934,37 @@ describe('Code 1: Create', function() {
                 }
                 //
                 //});
-            });
+    });
 
-            it('should save setalias and receive message', function (done) {
-                this.timeout(itTimeout);
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-
-                expect(microgear).to.be.an('object');
-                expect(microgear.gearkey).to.equal(appkey);
-                expect(microgear.gearsecret).to.equal(appsecret);
-
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
-
-                microgear.connect(appid);
-
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
-                    expect(stubConnect.callCount).to.equal(1);
-                    if (fs.existsSync(filePath)) {
-                        done();
-                    }
-                }, connectTimeout);
-            });
+    it('should save setalias and receive message', function (done) {
+        this.timeout(itTimeout);
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
         });
+
+        expect(microgear).to.be.an('object');
+        expect(microgear.gearkey).to.equal(appkey);
+        expect(microgear.gearsecret).to.equal(appsecret);
+
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
+
+        microgear.connect(appid);
+
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
+            expect(stubConnect.callCount).to.equal(1);
+            if (fs.existsSync(filePath)) {
+                done();
+            }
+        }, connectTimeout);
+    });
+    });
 
     });
 
-    describe('Code 3: Setalias', function () {
+describe('Code 3: Setalias', function () {
 
         //pre-re: run helper.js 10 first to chat
         describe('Code 3: Case 1, 2, 3 Setalias', function () {
@@ -887,6 +977,9 @@ describe('Code 1: Create', function() {
             var newGearname;
 
             beforeEach(function (done) {
+                this.timeout(itTimeout);
+
+                console.log("yeah");
                 microgear = undefined;
                 appkey = 'jX2viqgprq3XRhv';
                 appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
@@ -901,15 +994,19 @@ describe('Code 1: Create', function() {
                         return console.log(err);
                     }
                     console.log("clear cache");
-                    done();
+               
                 });
+                helper(10, done);
             });
 
             afterEach(function () {
                 microgear.client.end();
+                quit(10);
+
             });
 
             it('Code 3: Case 1 should receive message from helper', function (done) {
+                console.log("test code");
                 this.timeout(itTimeout);
                 microgear = MicroGear.create({
                     key: appkey,
@@ -929,10 +1026,12 @@ describe('Code 1: Create', function() {
                 microgear.connect(appid);
 
                 setTimeout(function () {
+                    console.log("2");
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
                     microgear.setalias(gearname);
                     setTimeout(function () {
+                        console.log("3");
                         expect(stubMessage.called).to.be.true;
                         expect(message).to.equal("" + stubMessage.args[0][1]);
                         done();
@@ -940,26 +1039,27 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            it('Code 3: Case 2 should receive message from helper before setalias', function (done) {
-                this.timeout(itTimeout);
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret,
-                    alias: gearname
-                });
+it('Code 3: Case 2 should receive message from helper before setalias', function (done) {
+    console.log("i'm in");
+    this.timeout(itTimeout);
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: appsecret,
+        alias: gearname
+    });
 
-                expect(microgear).to.be.an('object');
-                expect(microgear.gearkey).to.equal(appkey);
-                expect(microgear.gearsecret).to.equal(appsecret);
-                expect(microgear.gearalias).to.equal(gearname);
+    expect(microgear).to.be.an('object');
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(appsecret);
+    expect(microgear.gearalias).to.equal(gearname);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    var stubMessage = sinon.stub();
+    microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                microgear.connect(appid);
+    microgear.connect(appid);
 
                 //should receive message after setalias
                 setTimeout(function () {
@@ -980,26 +1080,26 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            it('Code 3: Case 2 should receive message from helper after setalias', function (done) {
-                this.timeout(itTimeout);
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret,
-                    alias: newGearname
-                });
+it.skip('Code 3: Case 2 should receive message from helper after setalias', function (done) {
+    this.timeout(itTimeout);
+    microgear = MicroGear.create({
+        key: appkey,
+        secret: appsecret,
+        alias: newGearname
+    });
 
-                expect(microgear).to.be.an('object');
-                expect(microgear.gearkey).to.equal(appkey);
-                expect(microgear.gearsecret).to.equal(appsecret);
-                expect(microgear.gearalias).to.equal(newGearname);
+    expect(microgear).to.be.an('object');
+    expect(microgear.gearkey).to.equal(appkey);
+    expect(microgear.gearsecret).to.equal(appsecret);
+    expect(microgear.gearalias).to.equal(newGearname);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    var stubMessage = sinon.stub();
+    microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                microgear.connect(appid);
+    microgear.connect(appid);
 
                 //should not receive message after setalias
                 setTimeout(function () {
@@ -1062,10 +1162,10 @@ describe('Code 1: Create', function() {
                             }, messageTimeout + 2000);
                         }, messageTimeout + 1000);
                     }, messageTimeout);
-                }, connectTimeout);
-            });
+}, connectTimeout);
+});
 
-        });
+});
 
         //pre-re: run helper.js 12 first to chat with empty string gearname
         describe('Code 3: Case 4 Setalias as empty string', function () {
@@ -1141,7 +1241,7 @@ describe('Code 1: Create', function() {
                 gearnameTopic = '/firstTopic';
                 expect(microgear).to.be.undefined;
 
-           fs.writeFile(filePath, '{"_":null}', function (err) {
+                fs.writeFile(filePath, '{"_":null}', function (err) {
                     if (err) {
                         return console.log(err);
                     }
@@ -1186,35 +1286,35 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-        });
+});
 
-    });
+});
 
-    describe('Code 4: Chat', function () {
-        describe('Code 4: Case 1 Chat with main', function () {
-            var message;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 4: Chat', function () {
+    describe('Code 4: Case 1 Chat with main', function () {
+        var message;
+        var gearname;
+        var microgear;
+        var appkey;
+        var appsecret;
+        var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+        beforeEach(function (done) {
+            this.timeout(beforeTimeout);
+            microgear = undefined;
+            gearname = 'main';
+            message = "Hello";
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+            appid = 'testNodeJs';
 
-                expect(microgear).to.be.undefined;
+            expect(microgear).to.be.undefined;
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret,
-                    alias: gearname
-                });
+            microgear = MicroGear.create({
+                key: appkey,
+                secret: appsecret,
+                alias: gearname
+            });
 
                 //clear cache file
                 fs.writeFile(filePath, '{"_":null}', function (err) {
@@ -1226,18 +1326,18 @@ describe('Code 1: Create', function() {
                 });
             });
 
-            afterEach(function () {
+        afterEach(function () {
                 //should fail if microgear is not connected
                 microgear.client.end();
             });
 
-            it('should receive message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        it('should receive message', function (done) {
+            this.timeout(itTimeout);
+            var stubConnect = sinon.stub();
+            microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+            var stubMessage = sinon.stub();
+            microgear.on('message', stubMessage);
 
                 //chat
                 setTimeout(function () {
@@ -1255,36 +1355,37 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
                 microgear.connect(appid);
             });
-        });
+});
 //pre-re: should run helper.js 1 first. receive message
-        describe('Code 4: Case 2 Chat with other online microgear in same appid', function () {
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
-            var gearname;
-            var helperGearname;
-            var message;
-            var modified;
+describe('Code 4: Case 2 Chat with other online microgear in same appid', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+    var gearname;
+    var helperGearname;
+    var message;
+    var modified;
 
-            beforeEach(function () {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                gearname = "main";
-                helperGearname = 'helper';
-                message = 'Hello';
-                modified = false;
-                expect(microgear).to.be.undefined;
+    beforeEach(function () {
+        this.timeout(beforeTimeout);
+        helper();
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        gearname = "main";
+        helperGearname = 'helper';
+        message = 'Hello';
+        modified = false;
+        expect(microgear).to.be.undefined;
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
 
                 //create receiver file with empty string
                 fs.writeFile(pathToFile, "", function (err) {
@@ -1302,7 +1403,7 @@ describe('Code 1: Create', function() {
 
             });
 
-            afterEach(function () {
+afterEach(function () {
 
                 //clean up
                 fs.unwatchFile(pathToFile);
@@ -1310,18 +1411,18 @@ describe('Code 1: Create', function() {
                 //fs.unlinkSync(pathToFile); //delete file
             });
 
-            it('should send the message to helper', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+it('should send the message to helper', function (done) {
+    this.timeout(itTimeout);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                microgear.connect(appid);
-                setTimeout(function () {
-                    console.log("good");
+    microgear.connect(appid);
+    setTimeout(function () {
+        console.log("good");
 
-                    expect(stubConnect.called).to.be.true;
-                    microgear.setalias('main');
-                    microgear.chat(helperGearname, message + helperGearname);
+        expect(stubConnect.called).to.be.true;
+        microgear.setalias('main');
+        microgear.chat(helperGearname, message + helperGearname);
 
                     //watch if helper wrote something on receiver file
                     fs.watchFile(pathToFile, function (curr, prev) {
@@ -1340,14 +1441,14 @@ describe('Code 1: Create', function() {
                     });
 
                     setTimeout(function () {
-
+                        expect(modified).to.be.true;
                         done();
                     }, messageTimeout);
 
                 }, connectTimeout);
 
-            });
-        });
+});
+});
 
         //pre-re: should run helper.js 6 first. chat with same name but different id
         describe('Code 4: Case 3 Chat with other microgear in different appid', function () {
@@ -1392,21 +1493,21 @@ describe('Code 1: Create', function() {
 
             });
 
-            afterEach(function () {
-                microgear.client.end();
-                fs.unwatchFile(pathToFile);
-                fs.unlinkSync(pathToFile);
-            });
+afterEach(function () {
+    microgear.client.end();
+    fs.unwatchFile(pathToFile);
+    fs.unlinkSync(pathToFile);
+});
 
-            it('should not receive the message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+it('should not receive the message', function (done) {
+    this.timeout(itTimeout);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
-                    microgear.setalias(gearname);
-                    microgear.chat(helperGearname, message);
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.true;
+        microgear.setalias(gearname);
+        microgear.chat(helperGearname, message);
 
                     //watch receive file for changes
                     fs.watchFile(pathToFile, function (curr, prev) {
@@ -1426,36 +1527,36 @@ describe('Code 1: Create', function() {
                         done();
                     }, messageTimeout);
                 }, connectTimeout);
-                microgear.connect(appid);
-            });
-        });
+microgear.connect(appid);
+});
+});
 
 //pre-re: should run helper.js 7 first
-        describe('Code 4: Case 5 Chat with other microgear that shares the same name', function () {
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
-            var gearname;
-            var message;
-            var modified;
+describe('Code 4: Case 5 Chat with other microgear that shares the same name', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+    var gearname;
+    var message;
+    var modified;
 
-            beforeEach(function () {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                gearname = "main";
-                message = 'Hello';
-                modified = false;
+    beforeEach(function () {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        gearname = "main";
+        message = 'Hello';
+        modified = false;
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
 
                 //create receiver file with empty string
                 fs.writeFile(pathToFile, "", function (err) {
@@ -1472,23 +1573,23 @@ describe('Code 1: Create', function() {
                 });
             });
 
-            afterEach(function () {
-                microgear.client.end();
-                fs.unlinkSync(pathToFile);
-                fs.unwatchFile(pathToFile);
-            });
+    afterEach(function () {
+        microgear.client.end();
+        fs.unlinkSync(pathToFile);
+        fs.unwatchFile(pathToFile);
+    });
 
-            it('the helper should receive the message', function (done) {
-                console.log("hello");
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    it('the helper should receive the message', function (done) {
+        console.log("hello");
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
                     //watch receive file for changes
                     fs.watchFile(pathToFile, function (curr, prev) {
                         modified = true;
@@ -1515,9 +1616,9 @@ describe('Code 1: Create', function() {
                     }, messageTimeout + 2000);
                 }, connectTimeout);
 
-                microgear.connect(appid);
-            });
-        });
+microgear.connect(appid);
+});
+});
 
         //TODO: not sure
         describe.skip('Code 4: Case 7 Chat when not connect', function () {
@@ -1582,43 +1683,43 @@ describe('Code 1: Create', function() {
                 //        done();
                 //    }, messageTimeout);
                 //}, connectTimeout);
-                microgear.connect(appid, function () {
-                    expect(stubConnect.called).to.be.false;
-                    expect(stubError.called).to.be.false;
-                    done();
+microgear.connect(appid, function () {
+    expect(stubConnect.called).to.be.false;
+    expect(stubError.called).to.be.false;
+    done();
 
-                });
-            });
-        });
+});
+});
+});
 
 //fail
 //pre-re: should run helper.js 14 first to change gearname to topic
-        describe.skip('Code 4: Case 8 Chat to microgear that has gearname as topic', function () {
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
-            var topic;
-            var message;
-            var modified;
-            var helperGearnameTopic;
+describe.skip('Code 4: Case 8 Chat to microgear that has gearname as topic', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+    var topic;
+    var message;
+    var modified;
+    var helperGearnameTopic;
 
-            beforeEach(function () {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                helperGearnameTopic = '/firstTopic';
-                message = 'Hello';
-                modified = false;
+    beforeEach(function () {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        helperGearnameTopic = '/firstTopic';
+        message = 'Hello';
+        modified = false;
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
 
                 //create receiver file with empty string
                 fs.writeFile(pathToFile, "", function (err) {
@@ -1636,20 +1737,20 @@ describe('Code 1: Create', function() {
 
             });
 
-            afterEach(function () {
-                fs.unwatchFile(pathToFile);
-                microgear.client.end();
-                fs.unlinkSync(pathToFile);
-            });
+    afterEach(function () {
+        fs.unwatchFile(pathToFile);
+        microgear.client.end();
+        fs.unlinkSync(pathToFile);
+    });
 
-            it('should not receive the message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    it('should not receive the message', function (done) {
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
-                    microgear.chat(helperGearnameTopic, message);
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
+            microgear.chat(helperGearnameTopic, message);
 
                     //watch receive file for changes
                     fs.watchFile(pathToFile, function (curr, prev) {
@@ -1668,39 +1769,39 @@ describe('Code 1: Create', function() {
                         done();
                     }, messageTimeout);
                 }, connectTimeout);
-                microgear.connect(appid);
-            });
-        });
+        microgear.connect(appid);
+    });
+});
 
 
 
 //pre-re: should run helper.js 11 first to change gearname to empty string
-        describe('Code 4: Case 9 Chat to microgear that has empty string name', function () {
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
-            var emptyHelperGearname;
-            var message;
-            var modified;
+describe('Code 4: Case 9 Chat to microgear that has empty string name', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+    var emptyHelperGearname;
+    var message;
+    var modified;
 
 
-            beforeEach(function () {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                modified = false;
-                message = 'Hello';
-                emptyHelperGearname = '';
+    beforeEach(function () {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        modified = false;
+        message = 'Hello';
+        emptyHelperGearname = '';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
 
                 //create receiver file with empty string
                 fs.writeFile(pathToFile, "", function (err) {
@@ -1717,24 +1818,24 @@ describe('Code 1: Create', function() {
 
             });
 
-            afterEach(function () {
-                fs.unwatchFile(pathToFile);
-                microgear.client.end();
-                fs.unlinkSync(pathToFile);
-            });
+    afterEach(function () {
+        fs.unwatchFile(pathToFile);
+        microgear.client.end();
+        fs.unlinkSync(pathToFile);
+    });
 
-            it('should not receive the message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    it('should not receive the message', function (done) {
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                expect(stubConnect.called).to.be.false;
+        expect(stubConnect.called).to.be.false;
 
-                microgear.connect(appid);
-                setTimeout(function () {
+        microgear.connect(appid);
+        setTimeout(function () {
 
-                    expect(stubConnect.called).to.be.true;
-                    microgear.chat(emptyHelperGearname, message);
+            expect(stubConnect.called).to.be.true;
+            microgear.chat(emptyHelperGearname, message);
 
                     //watch receive file for changes
                     fs.watchFile(pathToFile, function (curr, prev) {
@@ -1756,37 +1857,37 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-            });
-        });
+});
+});
 
 
 //pre-re: should run helper.js 15 first that subscribe the topic
-        describe('Code 4: Case 10 Chat to topic that has subscriber', function () {
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
-            var topic;
-            var message;
-            var modified;
-            var helperGearnameTopic;
+describe('Code 4: Case 10 Chat to topic that has subscriber', function () {
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+    var topic;
+    var message;
+    var modified;
+    var helperGearnameTopic;
 
-            beforeEach(function () {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                helperGearnameTopic = '/firstTopic';
-                message = 'Hello';
-                modified = false;
+    beforeEach(function () {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        helperGearnameTopic = '/firstTopic';
+        message = 'Hello';
+        modified = false;
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
 
                 //create receiver file with empty string
                 fs.writeFile(pathToFile, "", function (err) {
@@ -1804,20 +1905,20 @@ describe('Code 1: Create', function() {
 
             });
 
-            afterEach(function () {
-                fs.unwatchFile(pathToFile);
-                microgear.client.end();
-                fs.unlinkSync(pathToFile);
-            });
+    afterEach(function () {
+        fs.unwatchFile(pathToFile);
+        microgear.client.end();
+        fs.unlinkSync(pathToFile);
+    });
 
-            it('should not receive the message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    it('should not receive the message', function (done) {
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
-                    microgear.chat(helperGearnameTopic, message);
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
+            microgear.chat(helperGearnameTopic, message);
 
                     //watch receive file for changes
                     fs.watchFile(pathToFile, function (curr, prev) {
@@ -1836,9 +1937,9 @@ describe('Code 1: Create', function() {
                         done();
                     }, messageTimeout);
                 }, connectTimeout);
-                microgear.connect(appid);
-            });
-        });
+        microgear.connect(appid);
+    });
+});
 
         //TODO: not sure
         //pre-re: should run two helper.js 1 first.
@@ -1900,7 +2001,7 @@ describe('Code 1: Create', function() {
 
             });
 
-            afterEach(function () {
+afterEach(function () {
                 microgear.client.end(); //will fail test if microgear did not connect
                 //clean up
                 fs.unwatchFile(pathToFile);
@@ -1909,17 +2010,17 @@ describe('Code 1: Create', function() {
                 fs.unlinkSync(pathToFile2); //delete file
             });
 
-            it('should send the message to helper', function (done) {
-                this.timeout(itTimeout+10000);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+it('should send the message to helper', function (done) {
+    this.timeout(itTimeout+10000);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
-                    microgear.chat(helperGearname, message + helperGearname);
-                    microgear.chat(helperGearname2, message + helperGearname2);
-                    console.log(message + helperGearname);
-                    console.log(message + helperGearname2);
+    setTimeout(function () {
+        expect(stubConnect.called).to.be.true;
+        microgear.chat(helperGearname, message + helperGearname);
+        microgear.chat(helperGearname2, message + helperGearname2);
+        console.log(message + helperGearname);
+        console.log(message + helperGearname2);
                     //watch if helper wrote something on receiver file
                     fs.watchFile(pathToFile, function (curr, prev) {
                         modified = true;
@@ -1956,15 +2057,15 @@ describe('Code 1: Create', function() {
                     }, messageTimeout + messageTimeout);
 
                 }, connectTimeout);
-                microgear.connect(appid);
-            });
-        });
+microgear.connect(appid);
+});
+});
 
 
 
-    });
+});
 
-    describe('Code 5: Subscribe', function () {
+describe('Code 5: Subscribe', function () {
         //TODO: not sure
         describe.skip('Code 5: Case 8 Subscribe more than one topic', function () {
             var message;
@@ -2028,57 +2129,57 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
             });
-        });
+});
 
 
 //pre-re: run helper.js 4 first to publish topic
-        describe('Code 5: Case 1 Subscribe one topic', function () {
-            var message;
-            var topic;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 5: Case 1 Subscribe one topic', function () {
+    var message;
+    var topic;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                topic = "/firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        topic = "/firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret,
-                    alias: gearname
-                });
-            });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret,
+            alias: gearname
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should receive message from that topic when the helper publishes', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    it('should receive message from that topic when the helper publishes', function (done) {
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                microgear.connect(appid);
-                setTimeout(function () {
+        microgear.connect(appid);
+        setTimeout(function () {
                     //ensure it is connected and there is initially no message
                     expect(stubConnect.called).to.be.true;
                     expect(stubConnect.callCount).to.equal(1);
@@ -2095,55 +2196,55 @@ describe('Code 1: Create', function() {
                         done();
                     }, messageTimeout);
                 }, connectTimeout);
-            });
-        });
+    });
+});
 
 //pre-re: run helper.js 4 first to publish topic
-        describe('Code 5: Case 2 Subscribe same topic twice', function () {
-            var message;
-            var topic;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 5: Case 2 Subscribe same topic twice', function () {
+    var message;
+    var topic;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                topic = "/firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        topic = "/firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should not change its behavior -> should still receive message from that topic when the helper publishes', function (done) {
-                this.timeout(itTimeout);
+    it('should not change its behavior -> should still receive message from that topic when the helper publishes', function (done) {
+        this.timeout(itTimeout);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage, done);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage, done);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
                 //ensure microgear is connected and there is no message initially
                 setTimeout(function () {
@@ -2167,56 +2268,56 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
                 microgear.connect(appid);
             });
-        });
+});
 
 ///pre-re: run helper.js 4 first to publish topic
-        describe('Code 5: Case 3 Subscribe topic after unsubscribe before', function () {
-            var message;
-            var topic;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 5: Case 3 Subscribe topic after unsubscribe before', function () {
+    var message;
+    var topic;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                topic = "/firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        topic = "/firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should receive message when helper publishes topic', function (done) {
-                this.timeout(itTimeout);
+    it('should receive message when helper publishes topic', function (done) {
+        this.timeout(itTimeout);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected and there is no message initially
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
@@ -2244,60 +2345,60 @@ describe('Code 1: Create', function() {
                             }, messageTimeout + 2000);
                         }, messageTimeout + 1000);
                     }, messageTimeout);
-                }, connectTimeout);
+}, connectTimeout);
 
-                microgear.connect(appid);
+microgear.connect(appid);
 
-            });
+});
+});
+
+describe('Code 5: Case 4 Subscribe topic that it publishes', function () {
+    var message;
+    var topic;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        topic = "/firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        expect(microgear).to.be.undefined;
+
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
         });
 
-        describe('Code 5: Case 4 Subscribe topic that it publishes', function () {
-            var message;
-            var topic;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                topic = "/firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                expect(microgear).to.be.undefined;
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
+    it('should receive message', function (done) {
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
+        microgear.connect(appid);
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
-
-            afterEach(function () {
-                microgear.client.end();
-            });
-
-            it('should receive message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
-                microgear.connect(appid);
-
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected, then subscribe
                     expect(stubConnect.called).to.be.true;
                     microgear.subscribe(topic);
@@ -2315,57 +2416,57 @@ describe('Code 1: Create', function() {
 
                 }, connectTimeout);
 
-            });
+    });
 
-        });
+});
 
 
 ///pre-re: should run helper.js 9 first to publish invalid topic
-        describe('Code 5: Case 5 Subscribe invalid topic - no slash', function () {
-            var message;
-            var invalidTopic;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 5: Case 5 Subscribe invalid topic - no slash', function () {
+    var message;
+    var invalidTopic;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                invalidTopic = "firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        invalidTopic = "firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should not receive message from invalid topic', function (done) {
-                this.timeout(itTimeout);
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    it('should not receive message from invalid topic', function (done) {
+        this.timeout(itTimeout);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected then subscribe the invalid topic
                     expect(stubConnect.called).to.be.true;
                     microgear.subscribe(invalidTopic);
@@ -2377,58 +2478,58 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-                microgear.connect(appid);
-            }, itTimeout);
-        });
+        microgear.connect(appid);
+    }, itTimeout);
+});
 
         //fail
 ///pre-re: should run helper.js 8 first to publish empty topic
-        describe.skip('Code 5: Case 6 Subscribe special topic - empty string', function () {
-            var message;
-            var emptyTopic;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe.skip('Code 5: Case 6 Subscribe special topic - empty string', function () {
+    var message;
+    var emptyTopic;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-                emptyTopic = "";
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        emptyTopic = "";
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should not receive message from empty string topic', function (done) {
-                this.timeout(itTimeout);
+    it('should not receive message from empty string topic', function (done) {
+        this.timeout(itTimeout);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected then subscribe empty string topic
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
@@ -2441,9 +2542,9 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-                microgear.connect(appid);
-            });
-        });
+        microgear.connect(appid);
+    });
+});
 
         //require helper.js 4 to publish to topic
         //TODO
@@ -2501,20 +2602,20 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            after(function () {
-                microgear.client.end();
-            });
+after(function () {
+    microgear.client.end();
+});
 
-            it('should not receive any message after resettoken', function (done) {
-                this.timeout(itTimeout);
+it('should not receive any message after resettoken', function (done) {
+    this.timeout(itTimeout);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
-                expect(stubConnect.called).to.be.false;
-                expect(stubMessage.called).to.be.false;
+    var stubMessage = sinon.stub();
+    microgear.on('message', stubMessage);
+    expect(stubConnect.called).to.be.false;
+    expect(stubMessage.called).to.be.false;
                 //ensure microgear.cache file is not empty
                 var data = fs.readFileSync(filePath, 'utf8');
                 expect(data.toString()).not.to.equal('{"_":null}');
@@ -2539,9 +2640,9 @@ describe('Code 1: Create', function() {
 
             });
 
-        });
-    });
-    describe('Code 6: Unsubscribe', function () {
+});
+});
+describe('Code 6: Unsubscribe', function () {
         ///pre-re: should run helper.js 4 first to publish to topic
         describe('Code 6: Case 1 Unsubscribe topic after subscribe', function () {
             var topic;
@@ -2609,57 +2710,57 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-                microgear.connect(appid);
-            });
-        });
+microgear.connect(appid);
+});
+});
 
 ///pre-re: should run helper.js 4 first to publish to topic
-        describe('Code 6: Case 2 Unsubscribe topic before subscribe', function () {
-            var topic;
-            var message;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 6: Case 2 Unsubscribe topic before subscribe', function () {
+    var topic;
+    var message;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                topic = "/firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        topic = "/firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should not affect subscribe', function (done) {
-                this.timeout(itTimeout);
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    it('should not affect subscribe', function (done) {
+        this.timeout(itTimeout);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected, then unsubscribe topic
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
@@ -2677,63 +2778,63 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-                microgear.connect(appid);
-            });
-        });
+        microgear.connect(appid);
+    });
+});
 
 ///pre-re: should run helper.js 4 first to publish to topic
-        describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/unsubscribe', function () {
-            var message;
-            var topic;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/unsubscribe', function () {
+    var message;
+    var topic;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                topic = "/firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        topic = "/firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-                fs.unlinkSync(filePath);
-            });
+    afterEach(function () {
+        microgear.client.end();
+        fs.unlinkSync(filePath);
+    });
 
-            it('should receive message - starts from unsubscribe', function (done) {
-                this.timeout(itTimeout);
+    it('should receive message - starts from unsubscribe', function (done) {
+        this.timeout(itTimeout);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                microgear.connect(appid);
+        microgear.connect(appid);
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected then unsubscribe the topic
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
@@ -2758,23 +2859,23 @@ describe('Code 1: Create', function() {
                             }, messageTimeout + 2000);
                         }, messageTimeout + 1000);
                     }, messageTimeout);
-                }, connectTimeout);
+}, connectTimeout);
 
-            });
+});
 
-            it('should not receive message - starts from subscribe', function (done) {
-                this.timeout(itTimeout);
+it('should not receive message - starts from subscribe', function (done) {
+    this.timeout(itTimeout);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    var stubMessage = sinon.stub();
+    microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                microgear.connect(appid);
+    microgear.connect(appid);
 
 
-                setTimeout(function () {
+    setTimeout(function () {
                     //ensure microgear is connected then subscribe the topic
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
@@ -2802,63 +2903,63 @@ describe('Code 1: Create', function() {
                             }, messageTimeout + 4000);
                         }, messageTimeout + 2000);
                     }, messageTimeout);
-                }, connectTimeout);
+}, connectTimeout);
 
-                microgear.connect(appid);
-            });
-        });
+microgear.connect(appid);
+});
+});
 
 //fail due to subscribe test case fail
 ///pre-re: should run helper.js 8 first to publish to empty topic
-        describe.skip('Code 6: Case 4 Unsubscribe the empty string topic', function () {
-            var emptyTopic;
-            var message;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe.skip('Code 6: Case 4 Unsubscribe the empty string topic', function () {
+    var emptyTopic;
+    var message;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                emptyTopic = "";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        emptyTopic = "";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should still not receive message after unsubscribe', function (done) {
-                this.timeout(itTimeout);
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    it('should still not receive message after unsubscribe', function (done) {
+        this.timeout(itTimeout);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                expect(stubConnect.called).to.be.false;
-                expect(stubMessage.called).to.be.false;
+        expect(stubConnect.called).to.be.false;
+        expect(stubMessage.called).to.be.false;
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected, then subscribe the empty string topic
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
@@ -2876,57 +2977,57 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-                microgear.connect(appid);
-            });
-        });
+        microgear.connect(appid);
+    });
+});
 
 ///pre-re: should run helper.js 9 first to publish invalid topic
-        describe('Code 6: Case 5 Unsubscribe invalid topic - no slash', function () {
-            var invalidTopic;
-            var message;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Code 6: Case 5 Unsubscribe invalid topic - no slash', function () {
+    var invalidTopic;
+    var message;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(beforeTimeout);
-                microgear = undefined;
-                gearname = 'main';
-                invalidTopic = "firstTopic";
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        gearname = 'main';
+        invalidTopic = "firstTopic";
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                    done();
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+            done();
+        });
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-            });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
+    });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+    afterEach(function () {
+        microgear.client.end();
+    });
 
-            it('should not receive message after unsubscribe', function (done) {
-                this.timeout(itTimeout);
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    it('should not receive message after unsubscribe', function (done) {
+        this.timeout(itTimeout);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //ensure microgear is connected then subscribe invalid topic
                     expect(stubConnect.called).to.be.true;
                     expect(stubMessage.called).to.be.false;
@@ -2942,11 +3043,11 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-                microgear.connect(appid);
-            });
-        });
+        microgear.connect(appid);
     });
-    describe('Code 7: Publish', function () {
+});
+});
+describe('Code 7: Publish', function () {
         ////prerequisite: need to call helper before/later code 22. publish_helper.js
         describe('Code 7: Case 1 Publish to topic that subscribe after', function () {
             var message;
@@ -2989,10 +3090,10 @@ describe('Code 1: Create', function() {
                 });
             });
 
-            afterEach(function () {
-                fs.unwatchFile(pathToFile);
-                microgear.client.end();
-            });
+afterEach(function () {
+    fs.unwatchFile(pathToFile);
+    microgear.client.end();
+});
 
             //pre-re: should run helper.js 22 first
             //TODO: time sensitive
@@ -3031,9 +3132,9 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
 
                 }, connectTimeout);
-            });
+});
 
-        });
+});
 
         ////prerequisite: need to call helper before/later code 15. publish_helper.js
         describe('Code 7: Case 2 Publish to topic that subscribe before', function () {
@@ -3078,11 +3179,11 @@ describe('Code 1: Create', function() {
                 });
             });
 
-            afterEach(function () {
-                clearInterval();
-                fs.unwatchFile(pathToFile);
-                microgear.client.end();
-            });
+afterEach(function () {
+    clearInterval();
+    fs.unwatchFile(pathToFile);
+    microgear.client.end();
+});
 
             //pre-re: should run helper.js 15 first
             //TODO: not yet
@@ -3119,9 +3220,9 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
 
                 }, connectTimeout);
-            });
+});
 
-        });
+});
 
         ///pre-re: should run helper.js 4 to publish topic
         describe('Code 7: Case 3 Publish to microgear that subscribe other topic', function () {
@@ -3199,8 +3300,8 @@ describe('Code 1: Create', function() {
                     }, messageTimeout);
                 }, connectTimeout);
 
-            });
-        });
+});
+});
 
         //fail
         ///pre-re: should run helper.js 20 to publish topic
@@ -3246,21 +3347,21 @@ describe('Code 1: Create', function() {
                 });
             });
 
-            afterEach(function () {
-                fs.unwatchFile(pathToFile);
-                microgear.client.end();
+afterEach(function () {
+    fs.unwatchFile(pathToFile);
+    microgear.client.end();
 
-            });
+});
 
 
-            it('should not be able to publish message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
-                expect(stubConnect.called).to.be.false;
-                microgear.connect(appid);
+it('should not be able to publish message', function (done) {
+    this.timeout(itTimeout);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+    expect(stubConnect.called).to.be.false;
+    microgear.connect(appid);
 
-                setTimeout(function () {
+    setTimeout(function () {
                     //ensure microgear is connected before publish to the topic the helper subscribes
                     expect(stubConnect.called).to.be.true;
                     expect(stubConnect.callCount).to.equal(1);
@@ -3288,9 +3389,9 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
 
 
-            });
+});
 
-        });
+});
 
         ///pre-re: should run helper.js 21 to publish topic
         describe('Code 7: Case 5 Publish to invalid topic - no slash', function () {
@@ -3335,20 +3436,20 @@ describe('Code 1: Create', function() {
                 });
             });
 
-            afterEach(function () {
-                fs.unwatchFile(pathToFile);
-                microgear.client.end();
-            });
+afterEach(function () {
+    fs.unwatchFile(pathToFile);
+    microgear.client.end();
+});
 
 
-            it('should not be able to publish message', function (done) {
-                this.timeout(itTimeout);
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
-                expect(stubConnect.called).to.be.false;
-                microgear.connect(appid);
+it('should not be able to publish message', function (done) {
+    this.timeout(itTimeout);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
+    expect(stubConnect.called).to.be.false;
+    microgear.connect(appid);
 
-                setTimeout(function () {
+    setTimeout(function () {
                     //ensure microgear is connected before publish to the topic the helper subscribes
                     expect(stubConnect.called).to.be.true;
                     expect(stubConnect.callCount).to.equal(1);
@@ -3377,15 +3478,15 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
 
 
-            });
+});
 
-        });
-
-
+});
 
 
-    });
-    describe('Code 8: Resettoken', function () {
+
+
+});
+describe('Code 8: Resettoken', function () {
         ///pre-re: should run helper.js 10 to chat with gearname
 
         describe('Code 8: Case 1 Resettoken when no cache file', function () {
@@ -3424,42 +3525,42 @@ describe('Code 1: Create', function() {
             }, itTimeout);
         });
 
-        describe('Case 8: Case 2 Resettoken when have microgear.cache and microgear is offline', function () {
-            var message;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+describe('Case 8: Case 2 Resettoken when have microgear.cache and microgear is offline', function () {
+    var message;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(itTimeout);
-                microgear = undefined;
-                gearname = 'myself';
-                message = "Hello myself.";
-                appkey     = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+    beforeEach(function (done) {
+        this.timeout(itTimeout);
+        microgear = undefined;
+        gearname = 'myself';
+        message = "Hello myself.";
+        appkey     = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
+        });
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                var stubDisconnect = sinon.stub();
-                microgear.on('disconnected', stubDisconnect);
+        var stubDisconnect = sinon.stub();
+        microgear.on('disconnected', stubDisconnect);
 
-                microgear.connect(appid);
+        microgear.connect(appid);
 
                 //create state that have microgear.cache but offline
                 setTimeout(function () {
@@ -3475,12 +3576,12 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+afterEach(function () {
+    microgear.client.end();
+});
 
-            it('should clear the cache in resettoken', function (done) {
-                this.timeout(itTimeout);
+it('should clear the cache in resettoken', function (done) {
+    this.timeout(itTimeout);
                 //check the content of microgear cache is not null
 
                 var data = fs.readFileSync(filePath, 'utf8');
@@ -3493,78 +3594,78 @@ describe('Code 1: Create', function() {
                     done();
                 });
             });
+});
+
+describe('Code 8: Case 3 Resettoken twice', function () {
+    var message;
+    var gearname;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
+
+    beforeEach(function (done) {
+        this.timeout(itTimeout);
+        microgear = undefined;
+        gearname = 'myself';
+        message = "Hello myself.";
+        appkey     = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret
         });
 
-        describe('Code 8: Case 3 Resettoken twice', function () {
-            var message;
-            var gearname;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
-
-            beforeEach(function (done) {
-                this.timeout(itTimeout);
-                microgear = undefined;
-                gearname = 'myself';
-                message = "Hello myself.";
-                appkey     = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
-
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret
-                });
-
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
-
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
-
-                var stubDisconnect = sinon.stub();
-                microgear.on('disconnected', stubDisconnect);
-
-                microgear.connect(appid);
-
-                setTimeout(function () {
-                    expect(stubConnect.called).to.be.true;
-                    microgear.disconnect();
-                    setTimeout(function () {
-                        expect(stubDisconnect.called).to.be.true;
-                        done();
-                    }, connectTimeout);
-                }, connectTimeout);
-            });
-
-            afterEach(function () {
-                microgear.client.end();
-            });
-
-            it('should just resettoken like usual', function (done) {
-                this.timeout(itTimeout);
-
-                var data = fs.readFileSync(filePath, 'utf8');
-                expect(data.toString()).not.to.equal('{"_":null}');
-
-                microgear.resettoken(function (result) {
-                    var data2 = fs.readFileSync(filePath, 'utf8');
-                    expect(data2.toString()).to.equal('{"_":null}');
-
-                    microgear.resettoken(function (result2) {
-                        var data4 = fs.readFileSync(filePath, 'utf8');
-                        expect(data4.toString()).to.equal('{"_":null}');
-                        done();
-                    });
-                });
-
-            });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
         });
+
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
+
+        var stubDisconnect = sinon.stub();
+        microgear.on('disconnected', stubDisconnect);
+
+        microgear.connect(appid);
+
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
+            microgear.disconnect();
+            setTimeout(function () {
+                expect(stubDisconnect.called).to.be.true;
+                done();
+            }, connectTimeout);
+        }, connectTimeout);
+    });
+
+afterEach(function () {
+    microgear.client.end();
+});
+
+it('should just resettoken like usual', function (done) {
+    this.timeout(itTimeout);
+
+    var data = fs.readFileSync(filePath, 'utf8');
+    expect(data.toString()).not.to.equal('{"_":null}');
+
+    microgear.resettoken(function (result) {
+        var data2 = fs.readFileSync(filePath, 'utf8');
+        expect(data2.toString()).to.equal('{"_":null}');
+
+        microgear.resettoken(function (result2) {
+            var data4 = fs.readFileSync(filePath, 'utf8');
+            expect(data4.toString()).to.equal('{"_":null}');
+            done();
+        });
+    });
+
+});
+});
         //TODO: need to implemnt
         describe('Code 8: Case 4 Resettoken while still online', function () {
             var message;
@@ -3613,73 +3714,73 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            afterEach(function () {
-                microgear.client.end();
-            });
+afterEach(function () {
+    microgear.client.end();
+});
 
-            it('should just resettoken like usual', function (done) {
-                this.timeout(itTimeout);
+it('should just resettoken like usual', function (done) {
+    this.timeout(itTimeout);
 
-                var data = fs.readFileSync(filePath, 'utf8');
-                expect(data.toString()).not.to.equal('{"_":null}');
+    var data = fs.readFileSync(filePath, 'utf8');
+    expect(data.toString()).not.to.equal('{"_":null}');
 
-                microgear.resettoken(function (result) {
-                    var data2 = fs.readFileSync(filePath, 'utf8');
-                    expect(data2.toString()).to.equal('{"_":null}');
+    microgear.resettoken(function (result) {
+        var data2 = fs.readFileSync(filePath, 'utf8');
+        expect(data2.toString()).to.equal('{"_":null}');
 
-                    microgear.resettoken(function (result2) {
-                        var data4 = fs.readFileSync(filePath, 'utf8');
-                        expect(data4.toString()).to.equal('{"_":null}');
-                        done();
-                    });
-                });
-
-            });
+        microgear.resettoken(function (result2) {
+            var data4 = fs.readFileSync(filePath, 'utf8');
+            expect(data4.toString()).to.equal('{"_":null}');
+            done();
         });
+    });
+
+});
+});
 
 ///pre-re: should run helper.js 10 to chat with gearname
-        describe('Code 8: Case 5 Resettoken when offline, after create', function () {
-            var message;
-            var gearname;
+describe('Code 8: Case 5 Resettoken when offline, after create', function () {
+    var message;
+    var gearname;
 
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
+    var microgear;
+    var appkey;
+    var appsecret;
+    var appid;
 
-            beforeEach(function (done) {
-                this.timeout(itTimeout);
-                microgear = undefined;
-                gearname = 'main';
+    beforeEach(function (done) {
+        this.timeout(itTimeout);
+        microgear = undefined;
+        gearname = 'main';
 
-                message = "Hello";
-                appkey = 'jX2viqgprq3XRhv';
-                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-                appid = 'testNodeJs';
+        message = "Hello";
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
 
 
-                fs.writeFile(filePath, '{"_":null}', function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    console.log("clear cache");
-                });
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
 
-                microgear = MicroGear.create({
-                    key: appkey,
-                    secret: appsecret,
-                    alias: gearname
-                });
+        microgear = MicroGear.create({
+            key: appkey,
+            secret: appsecret,
+            alias: gearname
+        });
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
 
-                microgear.connect(appid);
+        microgear.connect(appid);
 
-                setTimeout(function () {
+        setTimeout(function () {
                     //setalias when microgear is connected
                     expect(stubConnect.called).to.be.true;
                     expect(microgear.gearalias).to.equal(gearname);
@@ -3693,22 +3794,22 @@ describe('Code 1: Create', function() {
                         done();
                     }, messageTimeout);
                 }, connectTimeout);
-            });
+    });
 
-            after(function () {
-                microgear.client.end();
-            });
+after(function () {
+    microgear.client.end();
+});
 
-            it('should not receive any message after resettoken', function (done) {
-                this.timeout(itTimeout);
+it('should not receive any message after resettoken', function (done) {
+    this.timeout(itTimeout);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
-                expect(stubConnect.called).to.be.false;
-                expect(stubMessage.called).to.be.false;
+    var stubMessage = sinon.stub();
+    microgear.on('message', stubMessage);
+    expect(stubConnect.called).to.be.false;
+    expect(stubMessage.called).to.be.false;
                 //ensure microgear.cache file is not empty
                 var data = fs.readFileSync(filePath, 'utf8');
                 expect(data.toString()).not.to.equal('{"_":null}');
@@ -3734,7 +3835,7 @@ describe('Code 1: Create', function() {
 
             });
 
-        });
+});
 
         ///pre-re: should run helper.js 10 to chat with gearname
         describe('Code 8: Case 6 Resettoken when offline, after setalias', function () {
@@ -3793,21 +3894,21 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            after(function () {
-                microgear.client.end();
-            });
+after(function () {
+    microgear.client.end();
+});
 
-            it('should not receive any message after resettoken', function (done) {
-                this.timeout(itTimeout);
+it('should not receive any message after resettoken', function (done) {
+    this.timeout(itTimeout);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    var stubMessage = sinon.stub();
+    microgear.on('message', stubMessage);
 
-                expect(stubConnect.called).to.be.false;
-                expect(stubMessage.called).to.be.false;
+    expect(stubConnect.called).to.be.false;
+    expect(stubMessage.called).to.be.false;
                 //ensure microgear.cache file is not empty
                 var data = fs.readFileSync(filePath, 'utf8');
                 expect(data.toString()).not.to.equal('{"_":null}');
@@ -3834,7 +3935,7 @@ describe('Code 1: Create', function() {
 
             });
 
-        });
+});
 
         //require helper.js 4 to publish to topic
         describe('Code 8: Case 7 Resettoken when offline, after subscribe', function () {
@@ -3891,21 +3992,21 @@ describe('Code 1: Create', function() {
                 }, connectTimeout);
             });
 
-            after(function () {
-                microgear.client.end();
-            });
+after(function () {
+    microgear.client.end();
+});
 
-            it('should not receive any message after resettoken', function (done) {
-                this.timeout(itTimeout);
+it('should not receive any message after resettoken', function (done) {
+    this.timeout(itTimeout);
 
-                var stubConnect = sinon.stub();
-                microgear.on('connected', stubConnect);
+    var stubConnect = sinon.stub();
+    microgear.on('connected', stubConnect);
 
-                var stubMessage = sinon.stub();
-                microgear.on('message', stubMessage);
+    var stubMessage = sinon.stub();
+    microgear.on('message', stubMessage);
 
-                expect(stubConnect.called).to.be.false;
-                expect(stubMessage.called).to.be.false;
+    expect(stubConnect.called).to.be.false;
+    expect(stubMessage.called).to.be.false;
                 //ensure microgear.cache file is not empty
                 var data = fs.readFileSync(filePath, 'utf8');
                 expect(data.toString()).not.to.equal('{"_":null}');
@@ -3931,5 +4032,5 @@ describe('Code 1: Create', function() {
 
             });
 
-        });
-    });
+});
+});

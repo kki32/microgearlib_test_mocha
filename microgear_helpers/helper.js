@@ -94,7 +94,9 @@ console.log("Incoming message: "+msg);
 	}
 });
 microgear.on('connected', function() {
+	// process.stdout.write("Connected~");
 	console.log("Connected...");
+
 	if(setaliasx){
 		console.log('setaliasx to ' + helperGearname);
 		microgear.setalias(helperGearname);
@@ -103,10 +105,10 @@ microgear.on('connected', function() {
 	if(chatx){
 			// console.log(helperGearname);
 
-			console.log(helperGearname + ' chatx to ' + gearname);
+			// console.log(helperGearname + ' chatx to ' + gearname);
 			var cleanIntervalChat = setInterval(function() {
 				microgear.chat(gearname, message);
-				console.log("chat message");
+				// console.log("chat message");
 
 			},1000);
 		}
@@ -158,8 +160,6 @@ microgear.on('disconnected', function() {
   // 	console.log("publish..");
   //           }, 1000);
 });
-
-
 microgear.connect(appid);
 };
 
