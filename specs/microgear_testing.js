@@ -3,9 +3,8 @@ var chai = require('chai');
 var fs = require('fs');
 var sinon = require('sinon');
 var child_process = require('child_process');
-var fork = require('child_process').fork;
+var spawn = require('child_process').spawn;
 //TODO: when one fail it does not go aftereach
-//"node":"4.2.4","npm":"3.5.2"
 
 //mocha specs --require specs/helpers/chai.js
 //TODO: depend
@@ -13,9 +12,19 @@ var fork = require('child_process').fork;
 var pathToFile = __dirname + "/receiver.txt";
 var pathToFile2 = __dirname + "/receiver2.txt";
 
+var topModule = module;
 
-// var pathToFile = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver.txt";
-// var pathToFile2 = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/receiver2.txt";
+while(topModule.parent) {
+    topModule = topModule.parent;
+}
+
+var appdir = require('path').dirname(topModule.filename);
+var filePath = appdir + "/microgear.cache";
+
+console.log("inside testing file~~~~~~~~");
+console.log("filePath to cache file: "+filePath);
+console.log("receiver file: " +pathToFile);
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 // var connectTimeout = 10000;
 // var messageTimeout = 13000;
@@ -25,37 +34,12 @@ var messageTimeout = 4000;
 var itTimeout = 30000;
 var chatInterval = 1000;
 var beforeTimeout = 10000;
-
-
-//var filePath = "/Users/Shared/Jenkins/Home/jobs/microgearlib_testing_mocha/workspace/specs/microgear.cache";
-//var topModule = module;
-// var filePath = "/Users/tsn/Desktop/MyMochaChaiSinonExample/specs/microgear.cache";
-
-
-var topModule = module;
-
-while(topModule.parent) {
-  topModule = topModule.parent;
-}
-
-var appdir = require('path').dirname(topModule.filename);
-var filePath = appdir + "/microgear.cache";
-console.log("inside testing file~~~~~~~~");
-
-console.log("in microgear-testing");
-console.log("filePath to cache file: "+filePath);
-console.log("receiver file: " +pathToFile);
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-// var filePath = appdir + "/microgear.cache";
-// console.log((pathToFile, pathToFile2, appdir, 'good'));
-
-
-const spawn = require('child_process').spawn;
 var bat;
+
 function helper(code, callback){
 bat = spawn('node', ["microgear_helpers/helper.js", " "+code]);
 
-bat.stdout.on('data', (data) => {
+bat.stdout.on('data', function(data){
   console.log("from helper got: "+data);
   if(data.toString().trim() === 'Connected...'){
     console.log("is connected + +");
@@ -68,73 +52,14 @@ bat.stdout.on('data', (data) => {
 //   console.log(data+"");
 // });
 
-bat.on('exit', (code) => {
+bat.on('exit', function(code){
   console.log('Child exited with code' + code);
 });
 
 }
-
-
-// function helper(code, callback){
-//     console.log("w");
-
-//     var options = {
-//   timeout: 30000,
-//   killSignal: 'SIGKILL'
-// }
-//   var exec = child_process.exec;
-//   var toExecute = 'node ./microgear_helpers/helper.js ' + code.toString();
-// //exec(command, [options], callback);
-// exec(toExecute, function(err,stdout,stderr) {
-//     if(stdout){
-//         console.log(stdout.toString() + "pass");
-//         callback();
-//         }
-//     });
-//   // if (err) {
-//   //       console.log("hellojal");
-//   //   return
-// }
-// process.stdin.on('data', function(data) { console.log("inini");
-// })
-
-// process.stdout.on('data', (data) => {
-//   console.log(data+" good");
-//   if(data == "Yes"){
-//     console.log("yes");
-//     // callback();
-//   }
-//   else{
-//     console.log("no");
-//   }
-// });
-
-
 function quit(code){
         bat.kill('SIGINT');
-//     var options = {
-//       timeout: itTimeout,
-//       killSignal: 'SIGKILL'
-//   }
-//   var exec = child_process.execSync;
-//     var toExecute = 'pkill -f "node ./microgear_helpers/helper.js ' + code.toString() + '"';
-
-// exec(toExecute, function(err,stdout,stderr) {
-//   if (err) {
-//     console.log("helloja");
-//     return
-// }
-// // console.log(stdout);
-// });
-
 }
-
-// process.on('SIGKILL',function(){
-//     console.log("a");
-// });
-
-
-
 
 
 describe('Code 1: Create', function() {
@@ -681,8 +606,6 @@ it('Code 1: Case 4.2 should be able to connect when gearalias is empty string', 
 });
 
 });
-
-
 describe('Code 2: Connect', function () {
     describe('Code 2: Case 1 Connect with valid appid', function () {
         var microgear;
@@ -964,10 +887,10 @@ describe('Code 2: Case 3 Connect microgear when no microgear.cache file', functi
 
     });
 
-describe('Code 3: Setalias', function () {
+describe.only('Code 3: Setalias', function () {
 
         //pre-re: run helper.js 10 first to chat
-        describe('Code 3: Case 1, 2, 3 Setalias', function () {
+        describe.only('Code 3: Case 1, 2, 3 Setalias', function () {
             var microgear;
             var message
             var appkey;
@@ -1000,6 +923,7 @@ describe('Code 3: Setalias', function () {
             });
 
             afterEach(function () {
+                console.log("error");
                 microgear.client.end();
                 quit(10);
 
