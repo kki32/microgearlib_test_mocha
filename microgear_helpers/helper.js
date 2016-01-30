@@ -49,6 +49,8 @@ fs.writeFile(filePath, '{"_":null}', function (err) {
 });
 
 var helper = function(setaliasx, chatx, publishx, subscribex, unsubscribex, appid2, secondHelper) {
+	var cleanIntervalChat;
+	var cleanIntervalPublish;
 
 	if(appid2){
 		console.log("different app id");
@@ -62,13 +64,7 @@ var helper = function(setaliasx, chatx, publishx, subscribex, unsubscribex, appi
 		alias : helperGearname
 	});
 
-// microgear.on("message", function(topic,msg) {
-// // 	console.log(topic);
-// 	console.log("Incoming message: "+msg);
-// });
-
 microgear.on("message", function(topic,msg) {
-// 	console.log(topic);
 console.log("Incoming message: "+msg);
 
 	// 	//check if receiver file exists then write down message when received
@@ -79,6 +75,7 @@ console.log("Incoming message: "+msg);
 			}
 			console.log("The file was saved!");
 			if(chatx){
+				//TODO:did it clear
 				clearInterval(cleanIntervalChat);
 			}
 			//TODO: should it be here?
@@ -98,45 +95,39 @@ microgear.on('connected', function() {
 	console.log("Connected...");
 
 	if(setaliasx){
-		console.log('setaliasx to ' + helperGearname);
+		console.log('setaliasx to ' + helperGearname + ";");
 		microgear.setalias(helperGearname);
-		console.log(helperGearname);
 	}
 	if(chatx){
-			// console.log(helperGearname);
-
-			// console.log(helperGearname + ' chatx to ' + gearname);
-			var cleanIntervalChat = setInterval(function() {
+			 console.log(helperGearname + ' chatx to ' + gearname + ";");
+			cleanIntervalChat = setInterval(function() {
 				microgear.chat(gearname, message);
-				// console.log("chat message");
-
 			},1000);
 		}
 
 		if(subscribex){
 			if(subscribeAfter){
 				setTimeout(function(){
-					console.log('subscribe');
+					console.log('subscribe to' + topic + ';');
 					microgear.subscribe(topic);
 				},12000);
 			}
 			else{
 
-			console.log('subscribex to' + topic);
+			console.log('subscribex to' + topic + ";");
 			microgear.subscribe(topic);
 			}
 		}
 
 		if(unsubscribex){
-			console.log('unsubscribex to' + topic);
+			console.log('unsubscribex to' + topic + ';');
 			microgear.unsubscribex(topic);
 		}
 		if(publishx){
-			console.log('publishx to' + topic);
-			var cleanIntervalPublish = setInterval(function() {
+			console.log('publishx to' + topic + ';');
+			cleanIntervalPublish = setInterval(function() {
 
 				microgear.publish(topic, message);
-				console.log("publish message");
 			},1000);
 		}
 	});
