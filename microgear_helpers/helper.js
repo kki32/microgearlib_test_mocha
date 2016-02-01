@@ -37,6 +37,7 @@ appkey = 'jX2viqgprq3XRhv';
 appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
 appid = 'testNodeJs';
 subscribeAfter = false;
+console.log("yeahhh in helper");
 // if (fs.existsSync(filePath)) {
 // 	fs.unlinkSync(filePath);
 // }
@@ -65,7 +66,7 @@ var helper = function(setaliasx, chatx, publishx, subscribex, unsubscribex, appi
 	});
 
 microgear.on("message", function(topic,msg) {
-console.log("Incoming message: "+msg);
+console.log("Incoming message: "+msg + ";");
 
 	// 	//check if receiver file exists then write down message when received
 	if (fs.existsSync(pathToFile)) {
@@ -99,7 +100,7 @@ microgear.on('connected', function() {
 		microgear.setalias(helperGearname);
 	}
 	if(chatx){
-			 console.log(helperGearname + ' chatx to ' + gearname + ";");
+			 console.log("chat to" + helperGearname + ' chatx to ' + gearname + ";");
 			cleanIntervalChat = setInterval(function() {
 				microgear.chat(gearname, message);
 			},1000);
@@ -141,7 +142,7 @@ microgear.on('info', function(err) {
 });
 
 microgear.on("error", function(err) {
-	console.log("!! Error: "+err);
+	// console.log("Error: "+err + ';');
 });
 
 microgear.on('disconnected', function() {
@@ -213,7 +214,6 @@ for(var i = 0; i < args.length; i++){
 		//unsubscribe twice, unsubscribe topic after subscribe, unsubscribe topic before subscribe, unsubscribe invalid topic
 		//publish only topic
 		helper(setaliasx=false, chatx=false, publishx=true, subscribex=false, unsubscribex=false, appid2=false, secondHelper=false);
-		console.log(topic);
 		// subscribe_helper();
 		break;
 
