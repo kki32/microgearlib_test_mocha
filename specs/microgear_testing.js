@@ -2,6 +2,7 @@ var MicroGear = require('microgear');
 var chai = require('chai');
 var fs = require('fs');
 var sinon = require('sinon');
+var child_process = require('child_process');
 
 //TODO: when one fail it does not go aftereach
 
@@ -29,72 +30,14 @@ console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 // var messageTimeout = 13000;
 // var itTimeout = 60000;
 //var beforeTimeout = 60000;
-var connectTimeout = 3000;
-var messageTimeout = 4000;
+var connectTimeout = 5000;
+var messageTimeout = 6000;
 var itTimeout = 40000;
 var chatInterval = 1000;
 var beforeTimeout = 20000;
 var afterTimeout = 20000;
-var child_process = null;
-var bat = null;
 
-function helper(code, callback){
-    console.log("call helper");
-child_process = spawn('node', ["microgear_helpers/helper.js", " "+code]);
-    setTimeout(function() {
-        callback();
-    }, 3000);
-child_process.stdout.on('data', function(data){
-    console.log("data" + data);
-    if(data != null && data != undefined){
-        console.log("from helper got: "+data);
-        if(data.indexOf("Connected") > -1){
-            console.log("is connected + +");
-            callback();
-        }
-    }
-    console.log("got null");
-
-//
-});
-//
-//    child_process.on('exit', function(code){
-//        console.log('Child exited with code' + code);
-//    });
-//    child_process.stderr.on('data', function(data){
-//        console.log(data+ "error");
-//});
-
-}
-
-// bat.stderr.on('data', (data) => {
-//   console.log(data+"");
-// });
-
-
-function quit(code, callback) {
-    //console.log("going to quit");
-    //bat = spawn('pkill',['-f', 'node microgear_helpers/helper.js']);
-    console.log('going to kill');
-    child_process.kill('SIGINT');
-
-
-    child_process.on('exit', function(code){
-        console.log("i am exiting");
-        setTimeout(function(){
-            callback();
-        },3000);
-
-    });
-
-//child_process_quit = spawn('pkill',['-f', 'node microgear_helpers/helper.js']);
-//
-
-
-
-}
-
-describe.skip('Code 1: Create', function() {
+describe('Code 1: Create', function() {
     var microgear;
     var message
     var appkey;
@@ -934,6 +877,8 @@ describe('Code 3: Setalias', function () {
     var newGearname;
     var connected;
     var code;
+    var child_processes;
+    var spawn;
         //pre-re: run helper.js 10 first to chat
         describe('Code 3: Case 1, 2, 3 Setalias', function () {
             beforeEach(function (done) {
@@ -955,14 +900,21 @@ describe('Code 3: Setalias', function () {
                     console.log("clear cache");
 
                 });
-                helper(code, done);
+                console.log("spawnning2.");
+                spawn = child_process.spawn;
+                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+
+                done();
+
             });
 
-            afterEach(function () {
-                quit(code);
+            afterEach(function (done) {
+
                 if (connected) {
                     microgear.client.end();
                 }
+                child_processes.kill('SIGINT');
+                done();
             });
 
             it('Code 3: Case 1 should receive message from helper', function (done) {
@@ -1164,14 +1116,19 @@ describe('Code 3: Setalias', function () {
                 expect(microgear.gearkey).to.equal(appkey);
                 expect(microgear.gearsecret).to.equal(appsecret);
 
-                helper(code, done);
+                console.log("spawnning2.");
+                spawn = child_process.spawn;
+                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                done();
             });
 
-            afterEach(function () {
-                quit(code);
+            afterEach(function (done) {
+
                 if (connected) {
                     microgear.client.end();
                 }
+                child_processes.kill('SIGINT');
+                done();
             });
             it('Code 3: Case 4 should not be able to setalias as empty string', function (done) {
                 this.timeout(itTimeout);
@@ -1223,14 +1180,19 @@ describe('Code 3: Setalias', function () {
                 expect(microgear).to.be.an('object');
                 expect(microgear.gearkey).to.equal(appkey);
                 expect(microgear.gearsecret).to.equal(appsecret);
-                helper(code, done);
+                console.log("spawnning2.");
+                spawn = child_process.spawn;
+                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                done();
             });
 
-            afterEach(function () {
-                quit(code);
+            afterEach(function (done) {
+
                 if (connected) {
                     microgear.client.end();
                 }
+                child_processes.kill('SIGINT');
+                done();
             });
 
             it('should not receive message when helper publishes the topic', function (done) {
@@ -1277,476 +1239,493 @@ var gearname;
 var connected;
 var code;
     var modified;
+    var child_processes;
+    var spawn;
 
-//    describe('Code 4: Case 1 Chat with itself', function () {
-//
-//        beforeEach(function (done) {
-//            this.timeout(beforeTimeout);
-//            microgear = undefined;
-//            gearname = 'main';
-//            message = "Hello";
-//            appkey = 'jX2viqgprq3XRhv';
-//            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-//            appid = 'testNodeJs';
-//              connected = false;
-//
-//            expect(microgear).to.be.undefined;
-//
-//            microgear = MicroGear.create({
-//                key: appkey,
-//                secret: appsecret,
-//                alias: gearname
-//            });
-//          expect(microgear.gearalias).to.equal(gearname);
-//
-//                //clear cache file
-//                fs.writeFile(filePath, '{"_":null}', function (err) {
-//                    if (err) {
-//                        return console.log(err);
-//                    }
-//                    console.log("clear cache");
-//
-//                });
-//               done();
-//            });
-//
-//        afterEach(function () {
-//    if (connected) {
-//        microgear.client.end();
-//    }
-//});
-//
-//        it('should receive message', function (done) {
-//            this.timeout(itTimeout);
-//            var stubConnect = sinon.stub();
-//            microgear.on('connected', stubConnect);
-//
-//            var stubMessage = sinon.stub();
-//            microgear.on('message', stubMessage);
-//
-//                //chat
-//                setTimeout(function () {
-//                    expect(stubConnect.called).to.be.true;
-//      connected = true;
-//                    microgear.chat(gearname, message);
-//                    setTimeout(function () {
-//                        expect(stubMessage.called).to.be.true;
-//                        expect(stubConnect.callCount).to.equal(1);
-//                        expect(stubMessage.callCount).to.equal(1);
-//                        expect(stubConnect.calledBefore(stubMessage)).to.be.true;
-//                        expect("" + stubMessage.args[0][1]).to.equal(message);
-//                        //expect(topic).to.be(appid + "/" + "gearname" + "/" + microgear.gearalias);
-//                        done();
-//                    }, messageTimeout);
-//                }, connectTimeout);
-//                microgear.connect(appid);
-//            });
-//});
-//    //pre-re: should run helper.js 1 first. receive message
-//    describe('Code 4: Case 2 Chat with other online microgear in same appid', function () {
-//        beforeEach(function (done) {
-//            this.timeout(beforeTimeout);
-//            microgear = undefined;
-//            appkey = 'jX2viqgprq3XRhv';
-//            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-//            appid = 'testNodeJs';
-//            gearname = "main";
-//            helperGearname = 'helper';
-//            message = 'Hello';
-//            modified = false;
-//            connected = false;
-//            code = 1;
-//
-//
-//            fs.writeFile(filePath, '{"_":null}', function (err) {
-//                if (err) {
-//                    return console.log(err);
-//                }
-//                console.log("clear cache");
-//            });
-//
-//                    //create receiver file with empty string
-//                    fs.writeFile(pathToFile, "", function (err) {
-//                        if (err) {
-//                            return console.log(err);
-//                        }
-//                        console.log("create empty file!")
-//                    });
-//            expect(microgear).to.be.undefined;
-//                    microgear = MicroGear.create({
-//                        key: appkey,
-//                        secret: appsecret,
-//                        alias: gearname
-//                    });
-//            helper(code, done);
-//                });
-//
-//        afterEach(function () {
-//            quit(code);
-//            fs.unwatchFile(pathToFile);
-//            fs.unlinkSync(pathToFile);
-//            if (connected) {
-//                microgear.client.end();
-//            }
-//        });
-//
-//    it('should send the message to helper', function (done) {
-//        this.timeout(itTimeout);
-//        var stubConnect = sinon.stub();
-//        microgear.on('connected', stubConnect);
-//
-//        microgear.connect(appid);
-//        setTimeout(function () {
-//            console.log("good");
-//
-//            expect(stubConnect.called).to.be.true;
-//            connected = true;
-//            microgear.setalias('main');
-//            microgear.chat(helperGearname, message + helperGearname);
-//
-//                        //watch if helper wrote something on receiver file
-//                        fs.watchFile(pathToFile, function (curr, prev) {
-//                            modified = true;
-//                            //if changes, check the content
-//                            fs.readFile(pathToFile, 'utf8', function (err, data) {
-//                                if (err) {
-//                                    console.log("error: no file");
-//                                    return console.log(err);
-//                                }
-//                                console.log("message: (" + data.toString() + ")");
-//                                //check message that is written by helper
-//                                expect(data.toString()).to.equal(message + helperGearname);
-//
-//                            });
-//                        });
-//
-//                        setTimeout(function () {
-//                            expect(modified).to.be.true;
-//                            done();
-//                        }, messageTimeout);
-//
-//                    }, connectTimeout);
-//
-//    });
-//    });
-//
-//    //pre-re: should run helper.js 6 first. chat with same name but different id
-//    describe('Code 4: Case 3 Chat with other microgear in different appid', function () {
-//        beforeEach(function (done) {
-//            microgear = undefined;
-//            appkey = 'jX2viqgprq3XRhv';
-//            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-//            appid = 'testNodeJs';
-//            gearname = "main";
-//            helperGearname = 'helper';
-//            message = 'Hello';
-//            modified = false;
-//            connected = false;
-//            code = 6;
-//
-//            fs.writeFile(filePath, '{"_":null}', function (err) {
-//                if (err) {
-//                    return console.log(err);
-//                }
-//                console.log("clear cache");
-//            });
-//
-//            //create receiver file with empty string
-//            fs.writeFile(pathToFile, "", function (err) {
-//                if (err) {
-//                    return console.log(err);
-//                }
-//                console.log("create empty file!")
-//            });
-//            expect(microgear).to.be.undefined;
-//            microgear = MicroGear.create({
-//                key: appkey,
-//                secret: appsecret
-//            });
-//            done();
-//
-//        });
-//
-//        afterEach(function () {
-//            quit(code);
-//            fs.unwatchFile(pathToFile);
-//            fs.unlinkSync(pathToFile);
-//            if (connected) {
-//                microgear.client.end();
-//            }
-//        });
-//
-//it('should not receive the message', function (done) {
-//this.timeout(itTimeout);
-//var stubConnect = sinon.stub();
-//microgear.on('connected', stubConnect);
-//
-//setTimeout(function () {
-//    expect(stubConnect.called).to.be.true;
-//    connected = true;
-//    microgear.setalias(gearname);
-//    microgear.chat(helperGearname, message);
-//
-//                //watch receive file for changes
-//                fs.watchFile(pathToFile, function (curr, prev) {
-//                    modified = true;
-//                    //if changes, check the content
-//                    fs.readFile(pathToFile, 'utf8', function (err, data) {
-//                        if (err) {
-//                            console.log("error: no file");
-//                            return console.log(err);
-//                        }
-//                        console.log("message: (" + data.toString() + ")");
-//                        expect(data.toString()).to.equal(message);
-//                    });
-//                });
-//                setTimeout(function () {
-//                    expect(modified).to.be.false;
-//                    done();
-//                }, messageTimeout);
-//            }, connectTimeout);
-//microgear.connect(appid);
-//});
-//});
-//
-////pre-re: should run helper.js 7 first
-//describe('Code 4: Case 5 Chat with other microgear that shares the same name', function () {
-//
-//    beforeEach(function (done) {
-//        this.timeout(beforeTimeout);
-//        microgear = undefined;
-//        appkey = 'jX2viqgprq3XRhv';
-//        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-//        appid = 'testNodeJs';
-//        gearname = "main";
-//        message = 'Hello';
-//        modified = false;
-//        connected = false;
-//        code = 7;
-//
-//        fs.writeFile(filePath, '{"_":null}', function (err) {
-//            if (err) {
-//                return console.log(err);
-//            }
-//            console.log("clear cache");
-//        });
-//
-//                //create receiver file with empty string
-//                fs.writeFile(pathToFile, "", function (err) {
-//                    if (err) {
-//                        return console.log(err);
-//                    }
-//                    console.log("create empty file!")
-//                });
-//        expect(microgear).to.be.undefined;
-//                microgear = MicroGear.create({
-//                    key: appkey,
-//                    secret: appsecret,
-//                    alias: gearname
-//                });
-//        helper(code, done);
-//            });
-//
-//    afterEach(function () {
-//        quit(code);
-//        fs.unwatchFile(pathToFile);
-//        fs.unlinkSync(pathToFile);
-//        if (connected) {
-//            microgear.client.end();
-//        }
-//
-//    });
-//
-//
-//    it('the helper should receive the message', function (done) {
-//        console.log("hello");
-//        this.timeout(itTimeout);
-//        var stubConnect = sinon.stub();
-//        microgear.on('connected', stubConnect);
-//
-//        var stubMessage = sinon.stub();
-//        microgear.on('message', stubMessage);
-//
-//        setTimeout(function () {
-//            expect(stubConnect.called).to.be.true;
-//                    //watch receive file for changes
-//                    fs.watchFile(pathToFile, function (curr, prev) {
-//                        modified = true;
-//                        //if changes, check the content
-//                        fs.readFile(pathToFile, 'utf8', function (err, data) {
-//                            if (err) {
-//                                console.log("error: no file");
-//                                return console.log(err);
-//                            }
-//                            console.log("message: (" + data.toString() + ")");
-//
-//                        });
-//                    });
-//                    microgear.chat(gearname, message);
-//
-//
-//                    setTimeout(function () {
-//                        expect(modified).to.be.true;
-//                        expect(stubMessage.called).to.be.true;
-//                        expect("" + stubMessage.args[0][1]).to.equal(message);
-//                        expect(stubConnect.calledBefore(stubMessage)).to.be.true;
-//
-//                        done();
-//                    }, messageTimeout + 2000);
-//                }, connectTimeout);
-//
-//microgear.connect(appid);
-//});
-//});
-//
-//        //TODO: not sure
-//        describe.skip('Code 4: Case 7 Chat when not connect', function () {
-//            beforeEach(function (done) {
-//                this.timeout(beforeTimeout);
-//                microgear = undefined;
-//                gearname = 'main';
-//                message = "Hello";
-//                appkey = 'jX2viqgprq3XRhv';
-//                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-//                appid = 'testNodeJs';
-//
-//                expect(microgear).to.be.undefined;
-//
-//                microgear = MicroGear.create({
-//                    key: appkey,
-//                    secret: appsecret
-//                });
-//
-//                fs.writeFile(filePath, '{"_":null}', function (err) {
-//                    if (err) {
-//                        return console.log(err);
-//                    }
-//                    console.log("clear cache");
-//
-//                });
-//                done();
-//            });
-//            afterEach(function () {
-//                quit(code);
-//                if (connected) {
-//                    microgear.client.end();
-//                }
-//            });
-//
-//
-//            it('should trigger error event', function (done) {
-//                this.timeout(itTimeout);
-//                var stubConnect = sinon.stub();
-//                microgear.on('connected', stubConnect);
-//
-//                var stubError = sinon.stub();
-//                microgear.on('error', stubError);
-//
-//                //setTimeout(function () {
-//                //    expect(stubConnect.called).to.be.true;
-//                // connected = true;
-//                //    microgear.setalias(gearname);
-//                //    microgear.chat(gearname, message);
-//                //    setTimeout(function () {
-//                //        console.log("checking");
-//                //        expect(stubMessage.called).to.be.true;
-//                //        expect(stubConnect.callCount).to.equal(1);
-//                //        expect(stubMessage.callCount).to.equal(1);
-//                //        expect(stubConnect.calledBefore(stubMessage)).to.be.true;
-//                //        expect(""+stubMessage.args[0][1]).to.equal(message);
-//                //        //TODO: gearalias not set.
-//                //        //expect(topic).to.be(appid + "/" + "gearname" + "/" + microgear.gearalias);
-//                //        done();
-//                //    }, messageTimeout);
-//                //}, connectTimeout);
-//microgear.connect(appid, function () {
-//    expect(stubConnect.called).to.be.false;
-//    expect(stubError.called).to.be.false;
-//    done();
-//
-//});
-//});
-//});
-//
-////fail
-////pre-re: should run helper.js 14 first to change gearname to topic
-//describe.skip('Code 4: Case 8 Chat to microgear that has gearname as topic', function () {
-//    var helperGearnameTopic;
-//
-//    beforeEach(function () {
-//        this.timeout(beforeTimeout);
-//        microgear = undefined;
-//        appkey = 'jX2viqgprq3XRhv';
-//        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
-//        appid = 'testNodeJs';
-//        helperGearnameTopic = '/firstTopic';
-//        message = 'Hello';
-//        modified = false;
-//
-//        fs.writeFile(filePath, '{"_":null}', function (err) {
-//            if (err) {
-//                return console.log(err);
-//            }
-//            console.log("clear cache");
-//        });
-//
-//                //create receiver file with empty string
-//                fs.writeFile(pathToFile, "", function (err) {
-//                    if (err) {
-//                        return console.log(err);
-//                    }
-//                    console.log("create empty file!")
-//                });
-//        expect(microgear).to.be.undefined;
-//                microgear = MicroGear.create({
-//                    key: appkey,
-//                    secret: appsecret,
-//                    alias: helperGearnameTopic
-//                });
-//
-//            });
-//    afterEach(function () {
-//        quit(code);
-//
-//        if (connected) {
-//            microgear.client.end();
-//        }
-//        fs.unwatchFile(pathToFile);
-//        fs.unlinkSync(pathToFile);
-//    });
-//
-//
-//    it('should not receive the message', function (done) {
-//        this.timeout(itTimeout);
-//        var stubConnect = sinon.stub();
-//        microgear.on('connected', stubConnect);
-//
-//        setTimeout(function () {
-//            expect(stubConnect.called).to.be.true;
-//            connected = true;
-//            microgear.chat(helperGearnameTopic, message);
-//
-//                    //watch receive file for changes
-//                    fs.watchFile(pathToFile, function (curr, prev) {
-//                        modified = true;
-//                        //if changes, check the content
-//                        fs.readFile(pathToFile, 'utf8', function (err, data) {
-//                            if (err) {
-//                                console.log("error: no file");
-//                                return console.log(err);
-//                            }
-//                            console.log("message: (" + data.toString() + ")");
-//                        });
-//                    });
-//                    setTimeout(function () {
-//                        expect(modified).to.be.false;
-//                        done();
-//                    }, messageTimeout);
-//                }, connectTimeout);
-//        microgear.connect(appid);
-//    });
-//});
-//
+    describe('Code 4: Case 1 Chat with itself', function () {
+
+        beforeEach(function (done) {
+            this.timeout(beforeTimeout);
+            microgear = undefined;
+            gearname = 'main';
+            message = "Hello";
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+            appid = 'testNodeJs';
+              connected = false;
+
+            expect(microgear).to.be.undefined;
+
+            microgear = MicroGear.create({
+                key: appkey,
+                secret: appsecret,
+                alias: gearname
+            });
+          expect(microgear.gearalias).to.equal(gearname);
+
+                //clear cache file
+                fs.writeFile(filePath, '{"_":null}', function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    console.log("clear cache");
+
+                });
+               done();
+            });
+
+        afterEach(function () {
+    if (connected) {
+        microgear.client.end();
+    }
+});
+
+        it('should receive message', function (done) {
+            this.timeout(itTimeout);
+            var stubConnect = sinon.stub();
+            microgear.on('connected', stubConnect);
+
+            var stubMessage = sinon.stub();
+            microgear.on('message', stubMessage);
+
+                //chat
+                setTimeout(function () {
+                    expect(stubConnect.called).to.be.true;
+      connected = true;
+                    microgear.chat(gearname, message);
+                    setTimeout(function () {
+                        expect(stubMessage.called).to.be.true;
+                        expect(stubConnect.callCount).to.equal(1);
+                        expect(stubMessage.callCount).to.equal(1);
+                        expect(stubConnect.calledBefore(stubMessage)).to.be.true;
+                        expect("" + stubMessage.args[0][1]).to.equal(message);
+                        //expect(topic).to.be(appid + "/" + "gearname" + "/" + microgear.gearalias);
+                        done();
+                    }, messageTimeout);
+                }, connectTimeout);
+                microgear.connect(appid);
+            });
+});
+    //pre-re: should run helper.js 1 first. receive message
+    describe('Code 4: Case 2 Chat with other online microgear in same appid', function () {
+        beforeEach(function (done) {
+            this.timeout(beforeTimeout);
+            microgear = undefined;
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+            appid = 'testNodeJs';
+            gearname = "main";
+            helperGearname = 'helper';
+            message = 'Hello';
+            modified = false;
+            connected = false;
+            code = 1;
+
+
+
+            fs.writeFile(filePath, '{"_":null}', function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("clear cache");
+            });
+
+                    //create receiver file with empty string
+                    fs.writeFile(pathToFile, "", function (err) {
+                        if (err) {
+                            return console.log(err);
+                        }
+                        console.log("create empty file!")
+                    });
+            expect(microgear).to.be.undefined;
+                    microgear = MicroGear.create({
+                        key: appkey,
+                        secret: appsecret,
+                        alias: gearname
+                    });
+            console.log("spawnning2.");
+            spawn = child_process.spawn;
+            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            done();
+                });
+
+        afterEach(function (done) {
+            this.timeout(afterTimeout);
+            fs.unwatchFile(pathToFile);
+            fs.unlinkSync(pathToFile);
+            if (connected) {
+                microgear.client.end();
+            }
+            child_processes.kill('SIGINT');
+            done();
+        });
+
+    it('should send the message to helper', function (done) {
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
+
+        microgear.connect(appid);
+        setTimeout(function () {
+            console.log("good");
+
+            expect(stubConnect.called).to.be.true;
+            connected = true;
+            microgear.setalias('main');
+            microgear.chat(helperGearname, message + helperGearname);
+
+                        //watch if helper wrote something on receiver file
+                        fs.watchFile(pathToFile, function (curr, prev) {
+                            modified = true;
+                            //if changes, check the content
+                            fs.readFile(pathToFile, 'utf8', function (err, data) {
+                                if (err) {
+                                    console.log("error: no file");
+                                    return console.log(err);
+                                }
+                                console.log("message: (" + data.toString() + ")");
+                                //check message that is written by helper
+                                expect(data.toString()).to.equal(message + helperGearname);
+
+                            });
+                        });
+
+                        setTimeout(function () {
+                            expect(modified).to.be.true;
+                            done();
+                        }, messageTimeout);
+
+                    }, connectTimeout);
+
+    });
+    });
+
+    //pre-re: should run helper.js 6 first. chat with same name but different id
+    describe('Code 4: Case 3 Chat with other microgear in different appid', function () {
+        beforeEach(function (done) {
+            microgear = undefined;
+            appkey = 'jX2viqgprq3XRhv';
+            appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+            appid = 'testNodeJs';
+            gearname = "main";
+            helperGearname = 'helper';
+            message = 'Hello';
+            modified = false;
+            connected = false;
+            code = 6;
+
+            fs.writeFile(filePath, '{"_":null}', function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("clear cache");
+            });
+
+            //create receiver file with empty string
+            fs.writeFile(pathToFile, "", function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("create empty file!")
+            });
+            expect(microgear).to.be.undefined;
+            microgear = MicroGear.create({
+                key: appkey,
+                secret: appsecret
+            });
+            console.log("spawnning2.");
+            spawn = child_process.spawn;
+            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            done();
+        });
+
+        afterEach(function (done) {
+            this.timeout(afterTimeout);
+            fs.unwatchFile(pathToFile);
+            fs.unlinkSync(pathToFile);
+            if (connected) {
+                microgear.client.end();
+            }
+            child_processes.kill('SIGINT');
+            done();
+        });
+
+it('should not receive the message', function (done) {
+this.timeout(itTimeout);
+var stubConnect = sinon.stub();
+microgear.on('connected', stubConnect);
+
+setTimeout(function () {
+    expect(stubConnect.called).to.be.true;
+    connected = true;
+    microgear.setalias(gearname);
+    microgear.chat(helperGearname, message);
+
+                //watch receive file for changes
+                fs.watchFile(pathToFile, function (curr, prev) {
+                    modified = true;
+                    //if changes, check the content
+                    fs.readFile(pathToFile, 'utf8', function (err, data) {
+                        if (err) {
+                            console.log("error: no file");
+                            return console.log(err);
+                        }
+                        console.log("message: (" + data.toString() + ")");
+                        expect(data.toString()).to.equal(message);
+                    });
+                });
+                setTimeout(function () {
+                    expect(modified).to.be.false;
+                    done();
+                }, messageTimeout);
+            }, connectTimeout);
+microgear.connect(appid);
+});
+});
+
+//pre-re: should run helper.js 7 first
+describe('Code 4: Case 5 Chat with other microgear that shares the same name', function () {
+
+    beforeEach(function (done) {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        gearname = "main";
+        message = 'Hello';
+        modified = false;
+        connected = false;
+        code = 7;
+
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
+
+                //create receiver file with empty string
+                fs.writeFile(pathToFile, "", function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    console.log("create empty file!")
+                });
+        expect(microgear).to.be.undefined;
+                microgear = MicroGear.create({
+                    key: appkey,
+                    secret: appsecret,
+                    alias: gearname
+                });
+        console.log("spawnning2.");
+        spawn = child_process.spawn;
+        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        done();
+            });
+
+    afterEach(function (done) {
+        this.timeout(afterTimeout);
+        fs.unwatchFile(pathToFile);
+        fs.unlinkSync(pathToFile);
+        if (connected) {
+            microgear.client.end();
+        }
+        child_processes.kill('SIGINT');
+        done();
+
+    });
+
+
+    it('the helper should receive the message', function (done) {
+        console.log("hello");
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
+
+        var stubMessage = sinon.stub();
+        microgear.on('message', stubMessage);
+
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
+                    //watch receive file for changes
+                    fs.watchFile(pathToFile, function (curr, prev) {
+                        modified = true;
+                        //if changes, check the content
+                        fs.readFile(pathToFile, 'utf8', function (err, data) {
+                            if (err) {
+                                console.log("error: no file");
+                                return console.log(err);
+                            }
+                            console.log("message: (" + data.toString() + ")");
+
+                        });
+                    });
+                    microgear.chat(gearname, message);
+
+
+                    setTimeout(function () {
+                        expect(modified).to.be.true;
+                        expect(stubMessage.called).to.be.true;
+                        expect("" + stubMessage.args[0][1]).to.equal(message);
+                        expect(stubConnect.calledBefore(stubMessage)).to.be.true;
+
+                        done();
+                    }, messageTimeout + 2000);
+                }, connectTimeout);
+
+microgear.connect(appid);
+});
+});
+
+        //TODO: not sure
+        describe.skip('Code 4: Case 7 Chat when not connect', function () {
+            beforeEach(function (done) {
+                this.timeout(beforeTimeout);
+                microgear = undefined;
+                gearname = 'main';
+                message = "Hello";
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+                appid = 'testNodeJs';
+
+                expect(microgear).to.be.undefined;
+
+                microgear = MicroGear.create({
+                    key: appkey,
+                    secret: appsecret
+                });
+
+                fs.writeFile(filePath, '{"_":null}', function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    console.log("clear cache");
+
+                });
+                done();
+            });
+            afterEach(function () {
+                quit(code);
+                if (connected) {
+                    microgear.client.end();
+                }
+            });
+
+
+            it('should trigger error event', function (done) {
+                this.timeout(itTimeout);
+                var stubConnect = sinon.stub();
+                microgear.on('connected', stubConnect);
+
+                var stubError = sinon.stub();
+                microgear.on('error', stubError);
+
+                //setTimeout(function () {
+                //    expect(stubConnect.called).to.be.true;
+                // connected = true;
+                //    microgear.setalias(gearname);
+                //    microgear.chat(gearname, message);
+                //    setTimeout(function () {
+                //        console.log("checking");
+                //        expect(stubMessage.called).to.be.true;
+                //        expect(stubConnect.callCount).to.equal(1);
+                //        expect(stubMessage.callCount).to.equal(1);
+                //        expect(stubConnect.calledBefore(stubMessage)).to.be.true;
+                //        expect(""+stubMessage.args[0][1]).to.equal(message);
+                //        //TODO: gearalias not set.
+                //        //expect(topic).to.be(appid + "/" + "gearname" + "/" + microgear.gearalias);
+                //        done();
+                //    }, messageTimeout);
+                //}, connectTimeout);
+microgear.connect(appid, function () {
+    expect(stubConnect.called).to.be.false;
+    expect(stubError.called).to.be.false;
+    done();
+
+});
+});
+});
+
+//fail
+//pre-re: should run helper.js 14 first to change gearname to topic
+describe.skip('Code 4: Case 8 Chat to microgear that has gearname as topic', function () {
+    var helperGearnameTopic;
+
+    beforeEach(function () {
+        this.timeout(beforeTimeout);
+        microgear = undefined;
+        appkey = 'jX2viqgprq3XRhv';
+        appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+        appid = 'testNodeJs';
+        helperGearnameTopic = '/firstTopic';
+        message = 'Hello';
+        modified = false;
+
+        fs.writeFile(filePath, '{"_":null}', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("clear cache");
+        });
+
+                //create receiver file with empty string
+                fs.writeFile(pathToFile, "", function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    console.log("create empty file!")
+                });
+        expect(microgear).to.be.undefined;
+                microgear = MicroGear.create({
+                    key: appkey,
+                    secret: appsecret,
+                    alias: helperGearnameTopic
+                });
+
+            });
+    afterEach(function () {
+        quit(code);
+
+        if (connected) {
+            microgear.client.end();
+        }
+        fs.unwatchFile(pathToFile);
+        fs.unlinkSync(pathToFile);
+    });
+
+
+    it('should not receive the message', function (done) {
+        this.timeout(itTimeout);
+        var stubConnect = sinon.stub();
+        microgear.on('connected', stubConnect);
+
+        setTimeout(function () {
+            expect(stubConnect.called).to.be.true;
+            connected = true;
+            microgear.chat(helperGearnameTopic, message);
+
+                    //watch receive file for changes
+                    fs.watchFile(pathToFile, function (curr, prev) {
+                        modified = true;
+                        //if changes, check the content
+                        fs.readFile(pathToFile, 'utf8', function (err, data) {
+                            if (err) {
+                                console.log("error: no file");
+                                return console.log(err);
+                            }
+                            console.log("message: (" + data.toString() + ")");
+                        });
+                    });
+                    setTimeout(function () {
+                        expect(modified).to.be.false;
+                        done();
+                    }, messageTimeout);
+                }, connectTimeout);
+        microgear.connect(appid);
+    });
+});
+
 
 //pre-re: should run helper.js 11 first to change gearname to empty string
 describe('Code 4: Case 9 Chat to microgear that has empty string name', function () {
@@ -1784,18 +1763,22 @@ describe('Code 4: Case 9 Chat to microgear that has empty string name', function
                     key: appkey,
                     secret: appsecret
                 });
-        helper(code, done);
+        spawn = child_process.spawn;
+        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        done();
 
             });
 
-    afterEach(function () {
-        quit(code);
+    afterEach(function (done) {
+        this.timeout(afterTimeout);
 
         if (connected) {
             microgear.client.end();
         }
         fs.unwatchFile(pathToFile);
         fs.unlinkSync(pathToFile);
+        child_processes.kill('SIGINT');
+        done();
     });
 
     it('should not receive the message', function (done) {
@@ -1871,17 +1854,21 @@ describe('Code 4: Case 10 Chat to topic that has subscriber', function () {
                     secret: appsecret,
                     alias: helperGearnameTopic
                 });
-        helper(code, done);
+        console.log("spawnning2.");
+        spawn = child_process.spawn;
+        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        done();
 
             });
-    afterEach(function () {
-        quit(code);
+    afterEach(function (done) {
 
         if (connected) {
             microgear.client.end();
         }
         fs.unwatchFile(pathToFile);
         fs.unlinkSync(pathToFile);
+        child_processes.kill('SIGINT');
+        done();
     });
 
 
@@ -2045,6 +2032,8 @@ describe('Code 5: Subscribe', function () {
     var gearname;
     var connected;
     var code;
+    var child_processes;
+    var spawn;
 
     //TODO: not sure
     describe.skip('Code 5: Case 8 Subscribe more than one topic', function () {
@@ -2140,14 +2129,19 @@ describe('Code 5: Subscribe', function () {
                 secret: appsecret,
                 alias: gearname
             });
-            helper(code, done);
+            console.log("spawnning2.");
+            spawn = child_process.spawn;
+            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            done();
         });
 
-        afterEach(function () {
-            quit(code);
+        afterEach(function (done) {
+            this.timeout(afterTimeout);
             if (connected) {
                 microgear.client.end();
             }
+            child_processes.kill('SIGINT');
+            done();
         });
 
         it('should receive message from that topic when the helper publishes', function (done) {
@@ -2206,14 +2200,18 @@ describe('Code 5: Subscribe', function () {
                 key: appkey,
                 secret: appsecret
             });
-            helper(code, done);
+            console.log("spawnning2.");
+            spawn = child_process.spawn;
+            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            done();
         });
 
-        afterEach(function () {
-            quit(code);
+        afterEach(function (done) {
             if (connected) {
                 microgear.client.end();
             }
+            child_processes.kill('SIGINT');
+            done();
         });
 
         it('should not change its behavior -> should still receive message from that topic when the helper publishes', function (done) {
@@ -2278,14 +2276,19 @@ describe('Code 5: Subscribe', function () {
                 key: appkey,
                 secret: appsecret
             });
-            helper(code, done);
+            console.log("spawnning2.");
+            spawn = child_process.spawn;
+            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            done();
         });
 
-        afterEach(function () {
-            quit(code);
+        afterEach(function (done) {
+
             if (connected) {
                 microgear.client.end();
             }
+            child_processes.kill('SIGINT');
+            done();
         });
 
         it('should receive message when helper publishes topic', function (done) {
@@ -2631,15 +2634,9 @@ describe('Code 6: Unsubscribe', function () {
     var gearname;
     var connected;
     var code;
-    var child_process;
     var child_processes;
-    var child_process2;
-    var child_processes2;
     var spawn;
-    var spawn2;
-    var child_process3;
-    var child_processes3;
-    var spawn3;
+
 
 //    ///pre-re: should run helper.js 4 first to publish to topic
 //    describe('Code 6: Case 1 Unsubscribe topic after subscribe', function () {
@@ -2743,7 +2740,7 @@ describe('Code 6: Unsubscribe', function () {
         //helper(code, done);
 
         console.log("spawnning");
-        child_process = require('child_process');
+
         spawn = child_process.spawn;
         child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
         done();
@@ -2824,9 +2821,8 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
         //console.log("helper code: " + code);
         //helper(code, done);
         console.log("spawnning2");
-        child_process2 = require('child_process');
-        spawn2 = child_process2.spawn;
-        child_processes2 = spawn2('node', ["microgear_helpers/helper.js", " " + code]);
+        spawn = child_process.spawn;
+        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
         done();
     });
 
@@ -2836,7 +2832,7 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
             microgear.client.end();
         }
         //quit(code, done);
-        child_processes2.kill('SIGINT');
+        child_processes.kill('SIGINT');
         setTimeout(function () {
             done();
         }, 3000);
@@ -3041,9 +3037,8 @@ describe('Code 6: Case 5 Unsubscribe invalid topic - no slash', function () {
         });
         //helper(code, done);
         console.log("spawnning3");
-        child_process3 = require('child_process');
-        spawn = child_process3.spawn;
-        child_processes3 = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        spawn = child_process.spawn;
+        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
         done();
     });
 
@@ -3054,7 +3049,7 @@ describe('Code 6: Case 5 Unsubscribe invalid topic - no slash', function () {
         if (connected) {
             microgear.client.end();
         }
-        child_processes3.kill('SIGINT');
+        child_processes.kill('SIGINT');
         done();
     });
     it('should not receive message after unsubscribe', function (done) {
@@ -3100,9 +3095,14 @@ describe('Code 7: Publish', function () {
     var connected;
     var code;
     var modified;
+    var child_processes;
+    var spawn;
+    var cleanInterval;
 
+
+        //TODO: to think
         ////prerequisite: need to call helper before/later code 22. publish_helper.js
-        describe('Code 7: Case 1 Publish to topic that subscribe after', function () {
+        describe.skip('Code 7: Case 1 Publish to topic that subscribe after', function () {
 
             beforeEach(function (done) {
 
@@ -3137,16 +3137,18 @@ describe('Code 7: Publish', function () {
                     }
                     console.log("create empty file!");
                 });
-                helper(code, done);
+                done();
             });
 
-            afterEach(function () {
-                quit(code);
+            afterEach(function (done) {
+                this.timeout(afterTimeout);
                 fs.unwatchFile(pathToFile);
                 fs.unlinkSync(pathToFile);
                 if (connected) {
                     microgear.client.end();
                 }
+                child_processes.kill('SIGINT');
+                done();
             });
 
             //pre-re: should run helper.js 22 first
@@ -3162,6 +3164,7 @@ describe('Code 7: Publish', function () {
                     expect(stubConnect.called).to.be.true;
                     connected =true;
 
+                    expect(modified).to.be.false;
                     fs.watchFile(pathToFile, function (curr, prev) {
                         modified = true;
 
@@ -3174,16 +3177,22 @@ describe('Code 7: Publish', function () {
                             expect(data.toString()).to.equal(message);
                         });
                     });
-                    expect(modified).to.be.false;
+
 
                     setInterval(function () {
                         microgear.publish(topic, message);
                         console.log("publish message");
                     }, chatInterval);
 
+
                     setTimeout(function () {
+                        console.log("spawnning3");
+                        spawn = child_process.spawn;
+                        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                        setTimeout(function () {
                         expect(modified).to.be.true;
                         done();
+                        }, messageTimeout + 2000);
                     }, messageTimeout);
 
                 }, connectTimeout);
@@ -3203,6 +3212,7 @@ describe('Code 7: Publish', function () {
                 appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
                 appid = 'testNodeJs';
                 modified = false;
+                connected = false;
                 code = 15;
                 expect(microgear).to.be.undefined;
 
@@ -3224,17 +3234,22 @@ describe('Code 7: Publish', function () {
                     }
                     console.log("create empty file!");
                 });
-                helper(code, done);
+                console.log("spawnning2.");
+                spawn = child_process.spawn;
+                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                done();
             });
 
-    afterEach(function () {
-        quit(code);
-        clearInterval();
+    afterEach(function (done) {
+        this.timeout(afterTimeout);
+        clearInterval(cleanInterval);
         fs.unwatchFile(pathToFile);
         fs.unlinkSync(pathToFile);
         if (connected) {
             microgear.client.end();
         }
+        child_processes.kill('SIGINT');
+        done();
     });
 
             //pre-re: should run helper.js 15 first
@@ -3248,28 +3263,31 @@ describe('Code 7: Publish', function () {
 
                 setTimeout(function () {
                     expect(stubConnect.called).to.be.true;
+                    connected = true;
+
                     fs.watchFile(pathToFile, function (curr, prev) {
-                        modified = true;
+                        console.log("yes");
+
                         fs.readFile(pathToFile, 'utf8', function (err, data) {
                             if (err) {
                                 console.log("no file");
                                 return console.log(err);
                             }
+                            modified = true;
                             console.log("( " + data.toString() + " )");
                             expect(data.toString()).to.equal(message);
                         });
                     });
                     expect(modified).to.be.false;
-                    setInterval(function () {
+                    cleanInterval = setInterval(function () {
                         microgear.publish(topic, message);
                         console.log("publish message");
                     }, 1000);
-
-
                     setTimeout(function () {
+                        //the helper should not modify the file
                         expect(modified).to.be.true;
                         done();
-                    }, messageTimeout);
+                    }, connectTimeout + messageTimeout);
 
                 }, connectTimeout);
 });
@@ -3278,9 +3296,19 @@ describe('Code 7: Publish', function () {
 
         ///pre-re: should run helper.js 4 to publish topic
         describe('Code 7: Case 3 Publish to microgear that subscribe other topic', function () {
-            beforeEach(function () {
-                var anotherTopic;
+            var anotherTopic;
+            beforeEach(function (done) {
+                this.timeout(beforeTimeout);
+                microgear = undefined;
+                gearname = 'main';
+                topic = "/firstTopic";
+                message = "Hello";
+                appkey = 'jX2viqgprq3XRhv';
+                appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
+                appid = 'testNodeJs';
                 connected = false;
+                modified =false;
+
                 code = 4;
                 anotherTopic = '/secondTopic';
 
@@ -3304,15 +3332,22 @@ describe('Code 7: Publish', function () {
                     key: appkey,
                     secret: appsecret
                 });
+                console.log("spawnning2");
+                spawn = child_process.spawn;
+                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                done();
             });
 
-            afterEach(function () {
-                quit(code);
+            afterEach(function (done) {
+                this.timeout(afterTimeout);
                 fs.unwatchFile(pathToFile);
                 fs.unlinkSync(pathToFile);
+                clearInterval(cleanInterval);
                 if (connected) {
                     microgear.client.end();
                 }
+                child_processes.kill('SIGINT');
+                done();
             });
 
             it('subscribers should not receive message from topic it does not subscribe', function (done) {
@@ -3326,9 +3361,7 @@ describe('Code 7: Publish', function () {
                 setTimeout(function () {
                     //ensure microgear is connected before publish to the topic the helper subscribes
                     expect(stubConnect.called).to.be.true;
-                    expect(modified).to.be.false;
-                    microgear.publish(anotherTopic, message);
-
+                    connected = true;
                     //watch the receiver file for changes. this happens when the helper writes down the message
                     fs.watchFile(pathToFile, function (curr, prev) {
                         modified = true;
@@ -3340,12 +3373,19 @@ describe('Code 7: Publish', function () {
                             console.log("this is da" + data.toString() + "her");
                         });
                     });
+                    expect(modified).to.be.false;
+
+
+                   cleanInterval = setInterval(function () {
+                        microgear.publish(anotherTopic, message);
+                        console.log("publish message");
+                    }, 1000);
 
                     setTimeout(function () {
                         //the helper should not modify the file
                         expect(modified).to.be.false;
                         done();
-                    }, messageTimeout);
+                    }, connectTimeout + messageTimeout);
                 }, connectTimeout);
 
 });
@@ -3354,13 +3394,8 @@ describe('Code 7: Publish', function () {
         //fail
         ///pre-re: should run helper.js 20 to publish topic
         describe.skip('Code 7: Case 4 Publish to topic empty string', function () {
-            var message;
             var emptyTopic;
-            var microgear;
-            var appkey;
-            var appsecret;
-            var appid;
-            var modified;
+
 
             beforeEach(function (done) {
                 this.timeout(beforeTimeout);
@@ -3395,16 +3430,21 @@ describe('Code 7: Publish', function () {
                     key: appkey,
                     secret: appsecret
                 });
-                helper(code, done);
+                console.log("spawnning4");
+                spawn = child_process.spawn;
+                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                done();
             });
 
             afterEach(function () {
-                quit(code);
+                this.timeout(afterTimeout);
                 fs.unwatchFile(pathToFile);
                 fs.unlinkSync(pathToFile);
                 if (connected) {
                     microgear.client.end();
                 }
+                child_processes.kill('SIGINT');
+                done();
             });
 
 
@@ -3447,11 +3487,10 @@ it('should not be able to publish message', function (done) {
 
 });
 
+    //TODO: another way? handle error
         ///pre-re: should run helper.js 21 to publish topic
         describe('Code 7: Case 5 Publish to invalid topic - no slash', function () {
             var invalidTopic;
-
-
 
             beforeEach(function (done) {
                 this.timeout(beforeTimeout);
@@ -3485,16 +3524,22 @@ it('should not be able to publish message', function (done) {
                     key: appkey,
                     secret: appsecret
                 });
-                helper(code, done);
+                console.log("spawnning5");
+                spawn = child_process.spawn;
+                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                done();
             });
 
-            afterEach(function () {
-                quit(code);
+            afterEach(function (done) {
+                this.timeout(afterTimeout);
+
                 fs.unwatchFile(pathToFile);
                 fs.unlinkSync(pathToFile);
                 if (connected) {
                     microgear.client.end();
                 }
+                child_processes.kill('SIGINT');
+                done();
             });
 
 it('should not be able to publish message', function (done) {
@@ -3509,6 +3554,7 @@ it('should not be able to publish message', function (done) {
                     expect(stubConnect.called).to.be.true;
                     expect(stubConnect.callCount).to.equal(1);
                     microgear.publish(invalidTopic, message);
+
 
                     //watch the receiver file for changes. this happens when the helper writes down the message
                     fs.watchFile(pathToFile, function (curr, prev) {
@@ -3553,6 +3599,8 @@ describe('Code 8: Resettoken', function () {
     var connected;
     var code;
     var modified;
+    var child_processes;
+    var spawn;
     //TODO: have a look at connected var
         describe('Code 8: Case 1 Resettoken when no cache file', function () {
 
@@ -3607,6 +3655,7 @@ describe('Case 8: Case 2 Resettoken when have microgear.cache and microgear is o
         appkey     = 'jX2viqgprq3XRhv';
         appsecret = '3uscc5uX4Hh6lYkmtKJbljxMtMl1tL';
         appid = 'testNodeJs';
+        connected = false;
 
         expect(microgear).to.be.undefined;
 
@@ -3722,7 +3771,7 @@ describe('Code 8: Case 3 Resettoken twice', function () {
         }
     });
 
-it('should just resettoken like usual', function (done) {
+    it('should just resettoken like usual', function (done) {
     this.timeout(itTimeout);
 
     var data = fs.readFileSync(filePath, 'utf8');
@@ -3740,9 +3789,9 @@ it('should just resettoken like usual', function (done) {
     });
 
 });
-});
+    });
         //TODO: need to implemnt
-        describe('Code 8: Case 4 Resettoken while still online', function () {
+describe('Code 8: Case 4 Resettoken while still online', function () {
 
 
             beforeEach(function (done) {
@@ -3794,7 +3843,7 @@ it('should just resettoken like usual', function (done) {
                 }
             });
 
-it('should just resettoken like usual', function (done) {
+    it('should just resettoken like usual', function (done) {
     this.timeout(itTimeout);
 
     var data = fs.readFileSync(filePath, 'utf8');
