@@ -727,6 +727,7 @@ describe('Code 2: Connect', function () {
             microgear.connect(emptyAppid);
             setTimeout(function () {
                 expect(stubConnect.called).to.be.false;
+                connected = true;
                 done();
             }, connectTimeout);
         });
@@ -2972,6 +2973,7 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
         setTimeout(function () {
             //ensure microgear is connected then subscribe the topic
             expect(stubConnect.called).to.be.true;
+            connected = true;
             expect(stubMessage.called).to.be.false;
             microgear.subscribe(topic);
             console.log("sub");
@@ -3543,6 +3545,7 @@ it('should not be able to publish message', function (done) {
     setTimeout(function () {
                     //ensure microgear is connected before publish to the topic the helper subscribes
                     expect(stubConnect.called).to.be.true;
+        connected = true;
                     expect(stubConnect.callCount).to.equal(1);
                     microgear.publish(emptyTopic, message);
 
@@ -4000,6 +4003,7 @@ describe.skip('Code 8: Case 5 Resettoken when offline, after create', function (
         setTimeout(function () {
                     //setalias when microgear is connected
                     expect(stubConnect.called).to.be.true;
+            connected = true;
                     expect(microgear.gearalias).to.equal(gearname);
                     setTimeout(function () {
                         //should receive message
@@ -4152,6 +4156,7 @@ it('should not receive any message after resettoken', function (done) {
                     setTimeout(function () {
                         //set to the new name
                         expect(stubConnect.called).to.be.true;
+                        connected = true;
                         expect(stubMessage.called).to.be.false;
                         setTimeout(function () {
                             //should not receive message from the gearname before
@@ -4214,6 +4219,7 @@ it('should not receive any message after resettoken', function (done) {
                 setTimeout(function () {
                     //setalias when microgear is connected
                     expect(stubConnect.called).to.be.true;
+                    connected = true;
                     microgear.subscribe(topic);
                     setTimeout(function () {
                         //should receive message
@@ -4260,6 +4266,7 @@ it('should not receive any message after resettoken', function (done) {
                     microgear.connect(appid);
                     setTimeout(function () {
                         expect(stubConnect.called).to.be.true;
+                        connected = true;
                         setTimeout(function () {
                             //should not receive message from the gearname before
                             //expect(stubMessage.called).to.be.false;

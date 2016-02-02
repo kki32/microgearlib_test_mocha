@@ -29,16 +29,11 @@
           <file leaf-file-name="microgear_testing.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.96579474">
-                  <caret line="1299" column="34" selection-start-line="1299" selection-start-column="34" selection-end-line="1299" selection-end-column="34" />
+                <state vertical-scroll-proportion="0.63380283">
+                  <caret line="1065" column="48" selection-start-line="1065" selection-start-column="48" selection-end-line="1065" selection-end-column="48" />
                   <folding>
                     <element signature="e#1354#2156#0" expanded="false" />
-                    <element signature="e#5075#6120#0" expanded="false" />
-                    <element signature="e#13459#16033#0" expanded="false" />
                     <element signature="e#13496#14232#0" expanded="false" />
-                    <element signature="e#22795#31308#0" expanded="false" />
-                    <element signature="e#31353#45927#0" expanded="false" />
-                    <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
                   </folding>
                 </state>
               </provider>
@@ -66,7 +61,6 @@
                   <folding>
                     <element signature="e#1354#2156#0" expanded="false" />
                     <element signature="e#2240#13302#0" expanded="false" />
-                    <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
                   </folding>
                 </state>
               </provider>
@@ -113,7 +107,7 @@
     <data>$USER_HOME$/node_modules/mocha</data>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-238" />
+    <option name="x" value="-14" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="621" />
@@ -355,12 +349,6 @@
       <created>1451889821454</created>
       <option name="number" value="Default" />
       <updated>1451889821454</updated>
-    </task>
-    <task id="LOCAL-00004" summary="tests together.&#10;ensure each test runs properly then ensure it runs when runs with other tests">
-      <created>1453192308356</created>
-      <option name="number" value="00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1453192308356</updated>
     </task>
     <task id="LOCAL-00005" summary="change package.json in order to integrate with jenkins">
       <created>1453219113781</created>
@@ -650,7 +638,13 @@
       <option name="project" value="LOCAL" />
       <updated>1454393931608</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="try the rest&#10;jenkins">
+      <created>1454394297356</created>
+      <option name="number" value="00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1454394297356</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -671,7 +665,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-238" y="23" width="1280" height="621" extended-state="0" />
+    <frame x="-14" y="23" width="1280" height="621" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.175" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -706,7 +700,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="try helper on bash" />
     <MESSAGE value="try git push wth jenkins" />
     <MESSAGE value="current test cases" />
     <MESSAGE value="organize test files" />
@@ -731,7 +724,8 @@
     <MESSAGE value="for jenkins to run" />
     <MESSAGE value="for jenkins to run.&#10;change directory for receiver.txt" />
     <MESSAGE value="try only a few&#10;jenkins" />
-    <option name="LAST_COMMIT_MESSAGE" value="try only a few&#10;jenkins" />
+    <MESSAGE value="try the rest&#10;jenkins" />
+    <option name="LAST_COMMIT_MESSAGE" value="try the rest&#10;jenkins" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -747,57 +741,57 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2511</line>
+          <line>2512</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2854</line>
+          <line>2855</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2078</line>
+          <line>2079</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1600</line>
+          <line>1601</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1339</line>
+          <line>1340</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1680</line>
+          <line>1681</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3172</line>
+          <line>3174</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3123</line>
+          <line>3125</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>4129</line>
+          <line>4133</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3962</line>
+          <line>3965</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3108</line>
+          <line>3110</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -817,97 +811,97 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>969</line>
+          <line>970</line>
           <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1215</line>
+          <line>1216</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1373</line>
+          <line>1374</line>
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1638</line>
+          <line>1639</line>
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1830</line>
+          <line>1831</line>
           <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2167</line>
+          <line>2168</line>
           <option name="timeStamp" value="87" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3811</line>
+          <line>3814</line>
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2694</line>
+          <line>2695</line>
           <option name="timeStamp" value="95" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2805</line>
+          <line>2806</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2852</line>
+          <line>2853</line>
           <option name="timeStamp" value="102" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3008</line>
+          <line>3010</line>
           <option name="timeStamp" value="103" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2872</line>
+          <line>2873</line>
           <option name="timeStamp" value="104" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2906</line>
+          <line>2907</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3888</line>
+          <line>3891</line>
           <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3216</line>
+          <line>3218</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3310</line>
+          <line>3312</line>
           <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2037</line>
+          <line>2038</line>
           <option name="timeStamp" value="111" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1181</line>
+          <line>1182</line>
           <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3734</line>
+          <line>3737</line>
           <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -917,22 +911,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1115</line>
+          <line>1116</line>
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>905</line>
+          <line>906</line>
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1019</line>
+          <line>1020</line>
           <option name="timeStamp" value="121" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>976</line>
+          <line>977</line>
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -942,37 +936,37 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2809</line>
+          <line>2810</line>
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3314</line>
+          <line>3316</line>
           <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>3865</line>
+          <line>3868</line>
           <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2155</line>
+          <line>2156</line>
           <option name="timeStamp" value="130" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2230</line>
+          <line>2231</line>
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>2600</line>
+          <line>2601</line>
           <option name="timeStamp" value="133" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/specs/microgear_testing.js</url>
-          <line>1269</line>
+          <line>1270</line>
           <option name="timeStamp" value="134" />
         </line-breakpoint>
       </breakpoints>
@@ -987,12 +981,7 @@
           <caret line="3817" column="35" selection-start-line="3817" selection-start-column="35" selection-end-line="3817" selection-end-column="35" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1003,12 +992,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1019,12 +1003,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1049,12 +1028,7 @@
           <caret line="845" column="2" selection-start-line="845" selection-start-column="2" selection-end-line="845" selection-end-column="2" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1079,12 +1053,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1109,12 +1078,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1125,12 +1089,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1141,12 +1100,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1157,12 +1111,7 @@
           <caret line="163" column="21" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="21" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1180,12 +1129,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -1242,16 +1186,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/specs/microgear_testing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.96579474">
-          <caret line="1299" column="34" selection-start-line="1299" selection-start-column="34" selection-end-line="1299" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.63380283">
+          <caret line="1065" column="48" selection-start-line="1065" selection-start-column="48" selection-end-line="1065" selection-end-column="48" />
           <folding>
             <element signature="e#1354#2156#0" expanded="false" />
-            <element signature="e#5075#6120#0" expanded="false" />
-            <element signature="e#13459#16033#0" expanded="false" />
             <element signature="e#13496#14232#0" expanded="false" />
-            <element signature="e#22795#31308#0" expanded="false" />
-            <element signature="e#31353#45927#0" expanded="false" />
-            <marker date="1454394280000" expanded="true" signature="45931:153091" placeholder="//..." />
           </folding>
         </state>
       </provider>
