@@ -197,17 +197,6 @@ for(var i = 0; i < args.length; i++){
 		helper(setaliasx=false, chatx=false, publishx=false, subscribex=false, unsubscribex=false, appid2=false, secondHelper=false);
 		break;
 
-		// //receive message, 
-		// case 2:
-		// topic = '';
-		// helper();
-		// break;
-
-		// case 3:
-		// topic = "/notFirstTopic";
-		// helper();
-		// break;
-
 		//publish to topic
 		case 4:
 		//subscribe one topic, subscribe the same topic twice, subscribe topic after unsubscribe before, subscribe invalid topic
@@ -217,12 +206,6 @@ for(var i = 0; i < args.length; i++){
 		// subscribe_helper();
 		break;
 
-		//chat, 
-		// case 5:
-		// //chat with other online microgear in same appid
-		// helper();
-		// break;
-
 		//create microgear in different id then wait to receive message from gearname
 		case 6:
 		//chat with other online microgear in other appid
@@ -230,7 +213,7 @@ for(var i = 0; i < args.length; i++){
 		helper(setaliasx=false, chatx=false, publishx=false, subscribex=false, unsubscribex=false, appid2=true, secondHelper=false);
 		break;
 
-		//receive message from gearname
+		//setalias to same name as main
 		case 7:
 		//chat with microgear sharing the same name
 		helperGearname = 'main';
@@ -260,7 +243,7 @@ for(var i = 0; i < args.length; i++){
 //(subscribex, publishx, differentAppId, name, chatx)
 		//setalias to empty 
 		case 11:
-		//chat with empty setalias
+		//set name to empty setalias
 		helperGearname = "";
 		helper(setaliasx=true, chatx=false, publishx=false, subscribex=false, unsubscribex=false, appid2=false, secondHelper=false);
 		break;
@@ -295,27 +278,27 @@ for(var i = 0; i < args.length; i++){
 		case 16:
 		//	subscribe more than one topic
 		topic = '/secondTopic';
-		helper(setaliasx=false, chatx=false, publishx=true, subscribex=false, unsubscribex=false, appid2=false, secondHelper=true);
+		helper(setaliasx=false, chatx=false, publishx=true, subscribex=false, unsubscribex=false, appid2=false, secondHelper=false);
 		break;
+		//subscribe different topic
 		case 17:
 		//	publish more than one topic
 		topic = '/secondTopic';
-		helper(setaliasx=false, chatx=false, publishx=false, subscribex=true, unsubscribex=false, appid2=false, secondHelper=true);
+		helper(setaliasx=false, chatx=false, publishx=false, subscribex=true, unsubscribex=false, appid2=false, secondHelper=false);
 		break;
+		//subscribe invalid topic
 		case 18:
 		topic = 'firstTopic';
 		helper(setaliasx=false, chatx=false, publishx=false, subscribex=true, unsubscribex=false, appid2=false, secondHelper=false);
 		break;
-		//chat to invalid topic
+		//chat to topic
 		case 19:
-
 		gearname = '/firstTopic';
 		helper(setaliasx=false, chatx=true, publishx=false, subscribex=false, unsubscribex=false, appid2=false, secondHelper=false);
 		break;
 
 		//subscribe empty topic
 		case 20:
-
 		topic = '';
 		helper(setaliasx=false, chatx=false, publishx=false, subscribex=true, unsubscribex=false, appid2=false, secondHelper=false);
 		break;
