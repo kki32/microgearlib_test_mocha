@@ -44,12 +44,8 @@ console.log("yeahhh in helper");
 // 	fs.unlinkSync(filePath);
 // }
 //
-fs.writeFile(filePath, '{"_":null}', function (err) {
-	if (err) {
-		return console.log(err);
-	}
-	console.log("clear cache");
-});
+var data = fs.writeFileSync(filePath, '{"_":null}');
+console.log(data);
 
 var helper = function(setaliasx, chatx, publishx, subscribex, unsubscribex, appid2, secondHelper) {
 	var cleanIntervalChat;
