@@ -9,8 +9,8 @@ var child_process = require('child_process');
 //mocha specs --require specs/helpers/chai.js
 //TODO: depend
 
-var pathToFile = __dirname + "/receiver.txt";
-var pathToFile2 = __dirname + "/receiver2.txt";
+var pathToFile = __dirname + "/helpers/receiver.txt";
+var pathToFile2 = __dirname + "/helpers/receiver2.txt";
 
 var topModule = module;
 
@@ -393,7 +393,7 @@ describe('Code 1: Create', function() {
             });
             console.log("spawning");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
         });
         afterEach(function (done) {
@@ -467,7 +467,7 @@ describe('Code 1: Create', function() {
             });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
         });
         afterEach(function (done) {
@@ -534,7 +534,7 @@ describe('Code 1: Create', function() {
             });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
         });
 
@@ -931,7 +931,7 @@ describe('Code 3: Setalias', function () {
                 });
                 console.log("spawnning2.");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
 
                 done();
 
@@ -1153,7 +1153,7 @@ describe('Code 3: Setalias', function () {
 
                 console.log("spawnning2.");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                 done();
             });
 
@@ -1218,7 +1218,7 @@ describe('Code 3: Setalias', function () {
                 expect(microgear.gearsecret).to.equal(appsecret);
                 console.log("spawnning2.");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                 done();
             });
 
@@ -1387,7 +1387,7 @@ var code;
                     });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
                 });
 
@@ -1478,7 +1478,7 @@ var code;
             });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
         });
 
@@ -1565,7 +1565,7 @@ microgear.connect(appid);
                 });
         console.log("spawnning2.");
         spawn = child_process.spawn;
-        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
         done();
             });
 
@@ -1812,7 +1812,7 @@ microgear.connect(appid, function () {
                         secret: appsecret
                     });
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
 
                 });
@@ -1906,7 +1906,7 @@ microgear.connect(appid, function () {
                     });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
 
                 });
@@ -2182,7 +2182,7 @@ describe('Code 5: Subscribe', function () {
             });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
         });
 
@@ -2256,7 +2256,7 @@ describe('Code 5: Subscribe', function () {
             });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
         });
 
@@ -2335,7 +2335,7 @@ describe('Code 5: Subscribe', function () {
             });
             console.log("spawnning2.");
             spawn = child_process.spawn;
-            child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
             done();
         });
 
@@ -2496,7 +2496,7 @@ describe('Code 5: Subscribe', function () {
                 });
                 console.log("spawnning2.");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                 done();
             });
 
@@ -2811,7 +2811,7 @@ describe('Code 6: Unsubscribe', function () {
         console.log("spawnning");
 
         spawn = child_process.spawn;
-        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
         done();
 
     });
@@ -2894,7 +2894,7 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
         //helper(code, done);
         console.log("spawnning2");
         spawn = child_process.spawn;
-        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
         done();
     });
 
@@ -3116,7 +3116,7 @@ describe('Code 6: Case 5 Unsubscribe invalid topic - no slash', function () {
         //helper(code, done);
         console.log("spawnning3");
         spawn = child_process.spawn;
-        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+        child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
         done();
     });
 
@@ -3269,7 +3269,7 @@ describe('Code 7: Publish', function () {
                     setTimeout(function () {
                         console.log("spawnning3");
                         spawn = child_process.spawn;
-                        child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                        child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                         setTimeout(function () {
                         expect(modified).to.be.true;
                         done();
@@ -3317,7 +3317,7 @@ describe('Code 7: Publish', function () {
                 });
                 console.log("spawnning2.");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                 done();
             });
 
@@ -3417,7 +3417,7 @@ describe('Code 7: Publish', function () {
                 });
                 console.log("spawnning2");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                 done();
             });
 
@@ -3517,7 +3517,7 @@ describe('Code 7: Publish', function () {
                 });
                 console.log("spawnning4");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                 done();
             });
 
@@ -3611,7 +3611,7 @@ it('should not be able to publish message', function (done) {
                 });
                 console.log("spawnning5");
                 spawn = child_process.spawn;
-                child_processes = spawn('node', ["microgear_helpers/helper.js", " " + code]);
+                child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
                 done();
             });
 
