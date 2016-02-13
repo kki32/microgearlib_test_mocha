@@ -6,7 +6,7 @@ var child_process = require('child_process');
 
 //TODO: when one fail it does not go aftereach
 
-//mocha specs --require specs/helpers/chai.js
+//node_modules/mocha/bin/mocha specs --require specs/helpers/chai.js
 
 var pathToFile = __dirname + "/helpers/receiver.txt";
 var pathToFile2 = __dirname + "/helpers/receiver2.txt";
@@ -27,6 +27,8 @@ console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 var connectTimeout = 10000;
 var messageTimeout = 13000;
+var messageTimeout2 = 16000;
+
 var itTimeout = 60000;
 var beforeTimeout = 60000;
 //var connectTimeout = 5000;
@@ -2560,7 +2562,7 @@ describe('Code 6: Unsubscribe', function () {
     var child_processes;
     var spawn;
 
-
+//TODO: not yet
 //    ///pre-re: should run helper.js 4 first to publish to topic
 //    describe('Code 6: Case 1 Unsubscribe topic after subscribe', function () {
 //            beforeEach(function (done) {
@@ -2633,9 +2635,10 @@ describe('Code 6: Unsubscribe', function () {
 //});
 
     ///pre-re: should run helper.js 4 first to publish to topic
-    describe('Code 6: Case 2 Unsubscribe topic before subscribe', function () {
+describe('Code 6: Case 2 Unsubscribe topic before subscribe', function () {
 
     beforeEach(function (done) {
+      // var MicroGear = require('microgear');
         this.timeout(beforeTimeout);
         microgear = undefined;
         gearname = 'main';
@@ -2656,13 +2659,13 @@ describe('Code 6: Unsubscribe', function () {
             key: appkey,
             secret: appsecret
         });
-        //helper(code, done);
 
         console.log("spawnning");
 
         spawn = child_process.spawn;
         child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
         done();
+      
 
     });
 
@@ -2673,8 +2676,6 @@ describe('Code 6: Unsubscribe', function () {
         }
         child_processes.kill('SIGINT');
         done();
-        //quit(code, done);
-
     });
 
     it('should not affect subscribe', function (done) {
@@ -2684,6 +2685,9 @@ describe('Code 6: Unsubscribe', function () {
 
         var stubConnect = sinon.stub();
         microgear.on('connected', stubConnect);
+      expect(stubMessage.called).to.be.false;
+         expect(stubConnect.called).to.be.false;
+
         microgear.connect(appid);
         setTimeout(function () {
                     //ensure microgear is connected, then unsubscribe topic
@@ -2717,6 +2721,7 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
 
     beforeEach(function (done) {
         this.timeout(beforeTimeout);
+         // var MicroGear = require('microgear');
         microgear = undefined;
         gearname = 'main';
         topic = "/firstTopic";
@@ -2751,9 +2756,8 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
         }
         //quit(code, done);
         child_processes.kill('SIGINT');
-        setTimeout(function () {
-            done();
-        }, 3000);
+        done();
+      
 
 
     });
@@ -2773,7 +2777,7 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
         setTimeout(function () {
                     //ensure microgear is connected then unsubscribe the topic
                     expect(stubConnect.called).to.be.true;
-            connected = true;
+                  connected = true;
                     expect(stubMessage.called).to.be.false;
                     console.log("unsubscribe");
                     microgear.unsubscribe(topic);
@@ -2830,7 +2834,7 @@ describe('Code 6: Case 3 Unsubscribe the same topic twice starts from subscribe/
                 console.log("unsub");
                 microgear.unsubscribe(topic);
                 stubMessage.reset();
-
+                expect(stubMessage.called).to.be.false;
                 setTimeout(function () {
                     //should not receive message after unsubscribe
                     expect(stubMessage.called).to.be.false;
@@ -2879,13 +2883,12 @@ describe.skip('Code 6: Case 4 Unsubscribe the empty string topic', function () {
             key: appkey,
             secret: appsecret
         });
-        helper(code, done);
+
     });
 
     afterEach(function () {
         this.timeout(afterTimeout);
 
-        quit(code);
         if (connected) {
             microgear.client.end();
         }
@@ -2932,6 +2935,7 @@ describe('Code 6: Case 5 Unsubscribe invalid topic - no slash', function () {
 
     beforeEach(function (done) {
         this.timeout(beforeTimeout);
+          // var MicroGear = require('microgear');
         microgear = undefined;
         gearname = 'main';
         invalidTopic = "firstTopic";
@@ -2981,7 +2985,7 @@ describe('Code 6: Case 5 Unsubscribe invalid topic - no slash', function () {
         setTimeout(function () {
                     //ensure microgear is connected then subscribe invalid topic
                     expect(stubConnect.called).to.be.true;
-            connected =true;
+                    connected =true;
                     expect(stubMessage.called).to.be.false;
                     microgear.subscribe(invalidTopic);
                     setTimeout(function () {
