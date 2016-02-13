@@ -382,11 +382,7 @@ describe('Code 1: Create', function() {
            code = 10;
 
            var data = fs.writeFileSync(filePath, '{"_":null}');
-               if (err) {
-                   return console.log(err);
-               }
-               console.log("clear cache");
-
+          
            console.log("spawning");
            spawn = child_process.spawn;
            child_processes = spawn('node', ["specs/helpers/helper.js", " " + code]);
